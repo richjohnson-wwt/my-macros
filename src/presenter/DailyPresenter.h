@@ -2,7 +2,8 @@
 #define DAILY_PRESENTER_H
 
 #include "../model/DailyModel.h"
-#include "../view/DailyView.h"
+#include "../model/RecipeModel.h"
+#include "../view/TopDailyView.h"
 
 enum class DailyPage {
     FoodBook,
@@ -19,9 +20,10 @@ class DailyPresenter : public IDailyCallback {
 private:
     IDailyModel *m_dailyModel;
     IDailyView *m_dailyView;
+    IRecipeModel *m_recipeModel;
 
 public:
-    DailyPresenter(IDailyView *view, IDailyModel *model);
+    DailyPresenter(IDailyView *view, IDailyModel *model, IRecipeModel *recipeModel);
 
     void setActive();
 

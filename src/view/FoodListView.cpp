@@ -8,9 +8,9 @@ FoodListView::FoodListView(IFoodListCallback *callback): m_foodListCallback(call
 {
 }
 
-void FoodListView::createFoodListPanel2(wxPanel *parent)
+void FoodListView::createFoodListPanel(wxPanel *parent)
 {
-    spdlog::info("FoodListView::createFoodListPanel2");
+    spdlog::info("FoodListView::createFoodListPanel");
     wxBoxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 
     m_foodsListView = new wxListView(parent);
@@ -27,13 +27,12 @@ void FoodListView::createFoodListPanel2(wxPanel *parent)
     topSizer->Add(m_foodsListView, ListViewFlags);
 
     parent->SetSizer(topSizer);
-    spdlog::info("FoodListView::createFoodListPanel2 DONE");
 }
 
 
  void FoodListView::setFoods(const std::vector<Food> &foods)
 {
-    spdlog::info("FoodView::populateFoodsList");
+    spdlog::info("TopFoodView::setFoods");
     m_foodsListView->DeleteAllItems();
     int row = 0;
     for (auto &food : foods) {
@@ -45,12 +44,13 @@ void FoodListView::createFoodListPanel2(wxPanel *parent)
 
 void FoodListView::setSelected(int idx)
 {
-    m_foodsListView->SetItemState(idx, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+    m_foodsListView->Focus(idx);
 }
 
 void FoodListView::onFoodSelChange(wxListEvent &event)
 {
     wxListItem item = event.GetItem();
     int id = wxAtoi(item.GetText());
+    spdlog::info("FoodListView::onFoodSelChange ({})", id);
     m_foodListCallback->onFoodSelected(id);
 }

@@ -2,7 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
-DailyPresenter::DailyPresenter(IDailyView *view, IDailyModel *model): m_dailyModel(model), m_dailyView(view)
+DailyPresenter::DailyPresenter(IDailyView *view, IDailyModel *model, IRecipeModel *recipeModel)
+: m_dailyModel(model), m_dailyView(view), m_recipeModel(recipeModel)
 {
 }
 
@@ -15,12 +16,11 @@ void DailyPresenter::setActive()
 void DailyPresenter::onRecipeSelected(int id)
 {
     spdlog::info("DailyPresenter::onRecipeSelected({})", id);
-    m_dailyModel->setRecipeSelectedId(id);
+    m_recipeModel->setSelectedId(id);
 }
 
 void DailyPresenter::onRecipeBookPageChanged()
 {
     spdlog::info("DailyPresenter::onFoodRecipeBookPageChanged()");
-    m_dailyView->setRecipes(m_dailyModel->getRecipes());
-    m_dailyView->setRecipeSelected(0);
+    m_dailyView->setRecipes(m_recipeModel->getRecipes());
 }

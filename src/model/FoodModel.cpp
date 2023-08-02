@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-FoodModel::FoodModel():m_db("../db/my-macro.sqlite3")
+FoodModel::FoodModel():m_db("../db/my-macro.sqlite3"), m_selectedId(0)
 {
     
 }
@@ -15,6 +15,7 @@ void FoodModel::setSelectedId(int id)
 
 int FoodModel::getSelectedId()
 {
+    spdlog::info("FoodModel::getSelectedId({})", m_selectedId);
     return m_selectedId;
 }
 

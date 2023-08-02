@@ -1,31 +1,33 @@
-#include "FoodView.h"
+#include "TopFoodView.h"
 
 #include "../presenter/FoodPresenter.h"
 
 #include <spdlog/spdlog.h>
 
-FoodView::FoodView(IFoodCallback *callback, FoodListView *foodsListView)
-: m_foodCallback(callback), m_foodsListView(foodsListView) {
-}
-
-FoodView::~FoodView() {
-}
-
-wxPanel *FoodView::createFoodPanel(wxNotebook *parent)
+TopFoodView::TopFoodView(IFoodCallback *callback, FoodListView *foodsListView)
+    : m_foodCallback(callback), m_foodsListView(foodsListView)
 {
-    spdlog::info("FoodView::createFoodPanel");
+}
 
-    m_topPanel = new wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(400, 150));
+TopFoodView::~TopFoodView()
+{
+}
+
+wxPanel *TopFoodView::createFoodPanel(wxNotebook *parent)
+{
+    spdlog::info("TopFoodView::createFoodPanel");
+
+    wxPanel *topPanel = new wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(400, 150));
 
     wxBoxSizer *sizermain = new wxBoxSizer(wxVERTICAL);
-    m_splitter = new wxSplitterWindow(m_topPanel, wxID_ANY);
+    m_splitter = new wxSplitterWindow(topPanel, wxID_ANY);
     m_splitter->SetSashGravity(0.5);
     m_splitter->SetMinimumPaneSize(200); // Smalest size the
-    sizermain->Add(m_splitter, 1,wxEXPAND,0);
+    sizermain->Add(m_splitter, 1, wxEXPAND, 0);
 
     wxPanel *pnl1 = new wxPanel(m_splitter, wxID_ANY);
 
-    m_foodsListView->createFoodListPanel2(pnl1);
+    m_foodsListView->createFoodListPanel(pnl1);
 
     wxPanel *pnl2 = new wxPanel(m_splitter, wxID_ANY);
 
@@ -36,13 +38,13 @@ wxPanel *FoodView::createFoodPanel(wxNotebook *parent)
 
     m_splitter->SplitVertically(pnl1, pnl2);
 
-    m_topPanel->SetSizer(sizermain);
-    sizermain->SetSizeHints(m_topPanel);
+    topPanel->SetSizer(sizermain);
+    sizermain->SetSizeHints(topPanel);
 
-    return m_topPanel;
+    return topPanel;
 }
 
-wxSizer *FoodView::CreateTextWithLabelSizer(wxPanel *panel, const wxString& label, wxTextCtrl *text)
+wxSizer *TopFoodView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &label, wxTextCtrl *text)
 {
     wxSizer *sizerRow = new wxBoxSizer(wxHORIZONTAL);
     sizerRow->Add(new wxStaticText(panel, wxID_ANY, label), 0,
@@ -52,7 +54,7 @@ wxSizer *FoodView::CreateTextWithLabelSizer(wxPanel *panel, const wxString& labe
     return sizerRow;
 }
 
-wxPanel *FoodView::createRightFoodItemPanel(wxWindow *parent)
+wxPanel *TopFoodView::createRightFoodItemPanel(wxWindow *parent)
 {
     wxPanel *panel = new wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(400, 150));
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
@@ -80,19 +82,19 @@ wxPanel *FoodView::createRightFoodItemPanel(wxWindow *parent)
 
     wxSizer *comboSizerRow = new wxBoxSizer(wxHORIZONTAL);
     m_foodUnitComboBox = new wxComboBox(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
-    m_foodUnitComboBox->Bind(wxEVT_COMBOBOX, &FoodView::onFoodUnitComboBox, this);
+    m_foodUnitComboBox->Bind(wxEVT_COMBOBOX, &TopFoodView::onFoodUnitComboBox, this);
     comboSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Food Unit: "), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
     comboSizerRow->Add(m_foodUnitComboBox, 0, wxALIGN_CENTRE_VERTICAL);
     topsizer->Add(comboSizerRow, 0, wxALL, 10);
 
     m_foodDeleteButton = new wxButton(panel, -1, _T("Delete Food"), wxDefaultPosition, wxDefaultSize, 0);
-    m_foodDeleteButton->Bind(wxEVT_BUTTON, &FoodView::onDeleteFood, this);
+    m_foodDeleteButton->Bind(wxEVT_BUTTON, &TopFoodView::onDeleteFood, this);
 
     m_foodSaveButton = new wxButton(panel, -1, _T("Save Food"), wxDefaultPosition, wxDefaultSize, 0);
-    m_foodSaveButton->Bind(wxEVT_BUTTON, &FoodView::onSaveFood, this);
+    m_foodSaveButton->Bind(wxEVT_BUTTON, &TopFoodView::onSaveFood, this);
 
     m_foodNewButton = new wxButton(panel, -1, _T("New Food"), wxDefaultPosition, wxDefaultSize, 0);
-    m_foodNewButton->Bind(wxEVT_BUTTON, &FoodView::onNewFood, this);
+    m_foodNewButton->Bind(wxEVT_BUTTON, &TopFoodView::onNewFood, this);
 
     wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonSizer->Add(m_foodDeleteButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
@@ -105,24 +107,24 @@ wxPanel *FoodView::createRightFoodItemPanel(wxWindow *parent)
     return panel;
 }
 
-void FoodView::OnPositionChanging(wxSplitterEvent& event)
+void TopFoodView::OnPositionChanging(wxSplitterEvent &event)
 {
-    wxLogStatus(m_topPanel, "Position is changing, now = %d (or %d)",
-                event.GetSashPosition(), m_splitter->GetSashPosition());
-}
-    
-void FoodView::onDeleteFood(wxCommandEvent& event) {
-
+    // wxLogStatus(m_topPanel, "Position is changing, now = %d (or %d)",
+    //             event.GetSashPosition(), m_splitter->GetSashPosition());
 }
 
-void FoodView::onSaveFood(wxCommandEvent& event) {
-
+void TopFoodView::onDeleteFood(wxCommandEvent &event)
+{
 }
 
-void FoodView::onNewFood(wxCommandEvent& event) {
-
+void TopFoodView::onSaveFood(wxCommandEvent &event)
+{
 }
 
-void FoodView::onFoodUnitComboBox(wxCommandEvent& event) {
+void TopFoodView::onNewFood(wxCommandEvent &event)
+{
+}
 
+void TopFoodView::onFoodUnitComboBox(wxCommandEvent &event)
+{
 }

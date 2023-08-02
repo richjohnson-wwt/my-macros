@@ -13,19 +13,19 @@
 
 class IFoodCallback;
 
-class IFoodView {
+class ITopFoodView {
 public:
-
 };
 
-class FoodView : public wxEvtHandler, public IFoodView {
+class TopFoodView : public wxEvtHandler, public ITopFoodView
+{
 private:
     FoodListView *m_foodsListView;
 
-    wxSplitterWindow* m_splitter;
-    wxWindow *m_left; 
-    wxWindow *m_right;
-    wxPanel *m_topPanel;
+    wxSplitterWindow *m_splitter;
+    // wxWindow *m_left;
+    // wxWindow *m_right;
+    // wxPanel *m_topPanel;
 
     // Left List View
     IFoodCallback *m_foodCallback;
@@ -46,27 +46,25 @@ private:
     wxButton *m_foodSaveButton;
     wxButton *m_foodNewButton;
 
-    wxSizer *CreateTextWithLabelSizer(wxPanel *panel, 
-        const wxString& label,
-         wxTextCtrl *text);
+    wxSizer *CreateTextWithLabelSizer(wxPanel *panel,
+                                      const wxString &label,
+                                      wxTextCtrl *text);
 
 protected:
     // Left List View
-    void OnPositionChanging(wxSplitterEvent& event);
+    void OnPositionChanging(wxSplitterEvent &event);
 
     // Right Item View
-    void onDeleteFood(wxCommandEvent& event);
-    void onSaveFood(wxCommandEvent& event);
-    void onNewFood(wxCommandEvent& event);
-    void onFoodUnitComboBox(wxCommandEvent& event);
-    
-    
+    void onDeleteFood(wxCommandEvent &event);
+    void onSaveFood(wxCommandEvent &event);
+    void onNewFood(wxCommandEvent &event);
+    void onFoodUnitComboBox(wxCommandEvent &event);
+
 public:
-    FoodView(IFoodCallback *callback, FoodListView *foodsListView);
-    ~FoodView();
+    TopFoodView(IFoodCallback *callback, FoodListView *foodsListView);
+    ~TopFoodView();
 
     wxPanel *createFoodPanel(wxNotebook *parent);
-
 };
 
 #endif // FOOD_VIEW_H

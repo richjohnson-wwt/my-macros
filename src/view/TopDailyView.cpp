@@ -1,4 +1,4 @@
-#include "DailyView.h"
+#include "TopDailyView.h"
 #include "../presenter/DailyPresenter.h"
 #include "../presenter/FoodListPresenter.h"
 #include <spdlog/spdlog.h>
@@ -22,7 +22,7 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     wxPanel *page1 = new wxPanel(m_foodRecipeBookCtrl, wxID_ANY);
     wxPanel *page2 = new wxPanel(m_foodRecipeBookCtrl);
 
-    m_foodListView->createFoodListPanel2(page1);
+    m_foodListView->createFoodListPanel(page1);
     wxWindow *pageRecipe = createRecipePage(page2);
 
     m_foodRecipeBookCtrl->AddPage(page1, "Foods", true, wxID_ANY);

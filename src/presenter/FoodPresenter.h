@@ -2,7 +2,7 @@
 #define FOOD_VM_H
 
 #include "../model/FoodModel.h"
-#include "../view/FoodView.h"
+#include "../view/TopFoodView.h"
 
 class IFoodCallback {
 public:
@@ -12,10 +12,10 @@ public:
 class FoodPresenter : public IFoodCallback {
 private:
     IFoodModel *m_foodModel;
-    IFoodView *m_foodView;
+    ITopFoodView *m_topFoodView;
 
 public:
-    FoodPresenter(IFoodView *view, IFoodModel *model);
+    FoodPresenter(ITopFoodView *view, IFoodModel *model);
 
     void setActive();
 

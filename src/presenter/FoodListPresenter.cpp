@@ -2,7 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
-FoodListPresenter::FoodListPresenter(IFoodListView *view, IFoodModel *model): m_foodModel(model), m_foodListView(view)
+FoodListPresenter::FoodListPresenter(IFoodListView *view, IFoodModel *model)
+: m_foodModel(model), m_foodListView(view)
 {
 }
 
@@ -14,9 +15,9 @@ void FoodListPresenter::onFoodSelected(int id)
 
 void FoodListPresenter::setActive()
 {
-    spdlog::info("FoodListPresenter::setActive");
+    spdlog::info("FoodListPresenter::setActive with id({})", m_foodModel->getSelectedId());
     m_foodListView->setFoods(m_foodModel->getFoods());
-    m_foodListView->setSelected(0);
+    m_foodListView->setSelected(m_foodModel->getSelectedId());
 }
 
 void FoodListPresenter::onFoodBookPageChanged()

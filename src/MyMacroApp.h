@@ -7,10 +7,12 @@
 
 // VIEW
 #include "view/FoodView.h"
+#include "view/FoodListView.h"
 #include "view/DailyView.h"
 
 // PRESENTER
 #include "presenter/FoodPresenter.h"
+#include "presenter/FoodListPresenter.h"
 #include "presenter/DailyPresenter.h"
 
 // MODEL
@@ -22,6 +24,9 @@ private:
     FoodPresenter m_foodPresenter;
     FoodModel m_foodModel;
     FoodView m_foodView;
+
+    FoodListPresenter m_foodListPresenter;
+    FoodListView m_foodListView;
     
     DailyPresenter m_dailyPresenter;
     DailyView m_dailyView;

@@ -1,10 +1,12 @@
 #ifndef FOOD_VIEW_H
 #define FOOD_VIEW_H
 
+#include "FoodListView.h"
 
 #include "../model/MyMacroTypes.h"
 
 #include <wx/wx.h>
+#include "wx/splitter.h"
 #include "wx/notebook.h"
 #include "wx/listctrl.h"
 #include "wx/event.h"
@@ -13,26 +15,57 @@ class IFoodCallback;
 
 class IFoodView {
 public:
-    virtual void setFoods(const std::vector<Food> &foods) = 0;
-    virtual void setSelected(int idx) = 0;
+
 };
 
 class FoodView : public wxEvtHandler, public IFoodView {
 private:
-    wxListView *m_foodsListView;
+    FoodListView *m_foodsListView;
+
+    wxSplitterWindow* m_splitter;
+    wxWindow *m_left; 
+    wxWindow *m_right;
+    wxPanel *m_topPanel;
+
+    // Left List View
     IFoodCallback *m_foodCallback;
 
-protected:
-    void onFoodSelChange(wxListEvent &event);
+    wxPanel *createRightFoodItemPanel(wxWindow *parent);
 
+    // Right Item View
+    wxTextCtrl *m_foodIdTextCtrl;
+    wxTextCtrl *m_foodNameTextCtrl;
+    wxTextCtrl *m_foodFatTextCtrl;
+    wxTextCtrl *m_foodProteinTextCtrl;
+    wxTextCtrl *m_foodCarbTextCtrl;
+    wxTextCtrl *m_foodCaloriesTextCtrl;
+    wxTextCtrl *m_foodQuantityTextCtrl;
+    wxComboBox *m_foodUnitComboBox;
+
+    wxButton *m_foodDeleteButton;
+    wxButton *m_foodSaveButton;
+    wxButton *m_foodNewButton;
+
+    wxSizer *CreateTextWithLabelSizer(wxPanel *panel, 
+        const wxString& label,
+         wxTextCtrl *text);
+
+protected:
+    // Left List View
+    void OnPositionChanging(wxSplitterEvent& event);
+
+    // Right Item View
+    void onDeleteFood(wxCommandEvent& event);
+    void onSaveFood(wxCommandEvent& event);
+    void onNewFood(wxCommandEvent& event);
+    void onFoodUnitComboBox(wxCommandEvent& event);
+    
+    
 public:
-    FoodView(IFoodCallback *callback);
+    FoodView(IFoodCallback *callback, FoodListView *foodsListView);
     ~FoodView();
 
     wxPanel *createFoodPanel(wxNotebook *parent);
-
-    void setFoods(const std::vector<Food> &foods) override;
-    void setSelected(int idx) override;
 
 };
 

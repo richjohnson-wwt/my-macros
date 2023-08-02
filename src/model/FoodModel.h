@@ -17,6 +17,7 @@ class FoodModel : public IFoodModel {
 private:
     Db m_db;
     int m_selectedId;
+    std::string m_recipeNameText;
 
 public:
     FoodModel();

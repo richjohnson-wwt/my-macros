@@ -3,8 +3,12 @@
 #include <spdlog/spdlog.h>
 
 MyMacroApp::MyMacroApp() 
-: m_foodPresenter(&m_foodView, &m_foodModel), m_foodView(&m_foodPresenter), 
-    m_dailyPresenter(&m_dailyView, &m_dailyModel), m_dailyView(&m_dailyPresenter)
+: m_foodPresenter(&m_foodView, &m_foodModel), 
+    m_foodView(&m_foodPresenter, &m_foodListView), 
+    m_foodListPresenter(&m_foodListView, &m_foodModel), 
+    m_foodListView(&m_foodListPresenter),
+    m_dailyPresenter(&m_dailyView, &m_dailyModel), 
+    m_dailyView(&m_dailyPresenter, &m_foodListPresenter, &m_foodListView)
 {
 }
 
@@ -43,5 +47,6 @@ void MyMacroApp::onNotebookPageChanged(wxNotebookEvent &event)
     } else {
         spdlog::info("MyMacroApp::onNotebookPageChanged FOOD PAGE");
         m_foodPresenter.setActive();
+        m_foodListPresenter.setActive();
     }
 }

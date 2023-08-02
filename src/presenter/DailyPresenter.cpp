@@ -9,14 +9,7 @@ DailyPresenter::DailyPresenter(IDailyView *view, IDailyModel *model): m_dailyMod
 void DailyPresenter::setActive()
 {
     spdlog::info("DailyPresenter::setActive");
-    m_dailyView->setFoods(m_dailyModel->getFoods());
-    m_dailyView->setFoodSelected(0);
-}
 
-void DailyPresenter::onFoodSelected(int id)
-{
-    spdlog::info("DailyPresenter::onFoodSelected({})", id);
-    m_dailyModel->setFoodSelectedId(id);
 }
 
 void DailyPresenter::onRecipeSelected(int id)
@@ -25,14 +18,9 @@ void DailyPresenter::onRecipeSelected(int id)
     m_dailyModel->setRecipeSelectedId(id);
 }
 
-void DailyPresenter::onFoodRecipeBookPageChanged(int bookPageIndex)
+void DailyPresenter::onRecipeBookPageChanged()
 {
-    spdlog::info("DailyPresenter::onFoodRecipeBookPageChanged({})", static_cast<int>(bookPageIndex));
-    if (bookPageIndex == 0) {
-        m_dailyView->setFoods(m_dailyModel->getFoods());
-        m_dailyView->setFoodSelected(0);
-    } else {
-        m_dailyView->setRecipes(m_dailyModel->getRecipes());
-        m_dailyView->setRecipeSelected(0);
-    }
+    spdlog::info("DailyPresenter::onFoodRecipeBookPageChanged()");
+    m_dailyView->setRecipes(m_dailyModel->getRecipes());
+    m_dailyView->setRecipeSelected(0);
 }

@@ -54,9 +54,12 @@ protected:
     void OnPositionChanging(wxSplitterEvent &event);
 
     // Right Item View
-    void onDeleteFood(wxCommandEvent &event);
-    void onSaveFood(wxCommandEvent &event);
-    void onNewFood(wxCommandEvent &event);
+    void onAddIngredient(wxCommandEvent &event);
+    void onDeleteIngredient(wxCommandEvent& event);
+    void onIngredientSelChange(wxListEvent& event);
+    void onDeleteRecipe(wxCommandEvent &event);
+    void onSaveRecipe(wxCommandEvent &event);
+    void onNewRecipe(wxCommandEvent &event);
     
 public:
     TopRecipeView(IRecipeCallback *callback, RecipeListView *recipeListView);

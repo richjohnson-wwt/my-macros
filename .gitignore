@@ -1,0 +1,7 @@
+venv/*
+.vscode/*
+build/*
+src/data/*
+db/my-macro.sqlite3
+db/*.sqlite3
+.DS_Store

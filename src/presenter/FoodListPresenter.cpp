@@ -19,9 +19,3 @@ void FoodListPresenter::setActive()
     m_foodListView->setFoods(m_foodModel->getFoods());
     m_foodListView->setSelected(m_foodModel->getSelectedId());
 }
-
-void FoodListPresenter::onFoodBookPageChanged()
-{
-    spdlog::info("FoodListPresenter::onFoodBookPageChanged()");
-    m_foodListView->setFoods(m_foodModel->getFoods());
-}

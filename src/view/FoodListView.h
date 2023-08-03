@@ -14,7 +14,7 @@ class IFoodListView
 {
 public:
     virtual void setFoods(const std::vector<Food> &foods) = 0;
-    virtual void setSelected(int idx) = 0;
+    virtual void setSelected(wxInt16 idx) = 0;
 };
 
 class FoodListView : public wxEvtHandler, public IFoodListView
@@ -22,6 +22,8 @@ class FoodListView : public wxEvtHandler, public IFoodListView
 private:
     wxListView *m_foodsListView;
     IFoodListCallback *m_foodListCallback;
+
+    int getZeroBasedIndexOfItem(wxString id);
 
 protected:
     void onFoodSelChange(wxListEvent &event);
@@ -32,7 +34,7 @@ public:
     void createFoodListPanel(wxPanel *parent);
 
     void setFoods(const std::vector<Food> &foods) override;
-    void setSelected(int idx) override;
+    void setSelected(wxInt16 idx) override;
 
     void setActive();
 };

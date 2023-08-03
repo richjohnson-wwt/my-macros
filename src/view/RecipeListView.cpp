@@ -48,12 +48,23 @@ void RecipeListView::setRecipes(const std::vector<Recipe> &recipes) {
 }
 
 void RecipeListView::setSelected(int idx) {
-    m_recipesListView->Focus(idx);
+    m_recipesListView->SetItemState(idx, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 }
 
 void RecipeListView::onRecipeSelChange(wxListEvent &event) {
     wxListItem item = event.GetItem();
-    int id = wxAtoi(item.GetText());
-    spdlog::info("RecipeListView::onRecipeSelChange ({})", id);
-    m_recipeListCallback->onRecipeSelected(id);
+    int actualIndex = getZeroBasedIndexOfItem(item.GetText());
+    spdlog::info("RecipeListView::onRecipeSelChange ({})", actualIndex);
+    m_recipeListCallback->onRecipeSelected(actualIndex);
+}
+
+int RecipeListView::getZeroBasedIndexOfItem(wxString id) {
+    spdlog::info("RecipeListView::getZeroBasedIndexOfItem");
+    // iterate over the m_recipesListView
+    for (int i = 0; i < m_recipesListView->GetItemCount(); ++i) {
+        if (m_recipesListView->GetItemText(i, 0) == id) {
+            return i;
+        }    
+    }
+    return 0;
 }

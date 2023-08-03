@@ -22,6 +22,8 @@ private:
     wxListView *m_recipesListView;
     IRecipeListCallback *m_recipeListCallback;
 
+    int getZeroBasedIndexOfItem(wxString id);
+
 protected:
     void onRecipeSelChange(wxListEvent &event);
 

@@ -17,9 +17,3 @@ void RecipeListPresenter::setActive() {
     m_recipeListView->setRecipes(m_recipeModel->getRecipes());
     m_recipeListView->setSelected(m_recipeModel->getSelectedId());
 }
-
-void RecipeListPresenter::onRecipeBookPageChanged() {
-    spdlog::info("RecipeListPresenter::onRecipeBookPageChanged()");
-    m_recipeListView->setRecipes(m_recipeModel->getRecipes());
-    m_recipeListView->setSelected(m_recipeModel->getSelectedId());
-}

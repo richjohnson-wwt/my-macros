@@ -7,7 +7,6 @@
 class IFoodListCallback {
 public:
     virtual void onFoodSelected(int id) = 0;
-    virtual void onFoodBookPageChanged() = 0;
     virtual void setActive() = 0;
 };
 
@@ -22,7 +21,6 @@ public:
     void setActive() override;
 
     void onFoodSelected(int id) override;
-    void onFoodBookPageChanged() override;
 
 
 };

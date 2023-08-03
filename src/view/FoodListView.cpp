@@ -46,15 +46,27 @@ void FoodListView::setActive() {
     }
 }
 
-void FoodListView::setSelected(int idx)
+void FoodListView::setSelected(wxInt16 idx)
 {
-    m_foodsListView->Focus(idx);
+    spdlog::info("FoodListView::setSelected with id({})", idx);
+    m_foodsListView->SetItemState(idx, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 }
 
 void FoodListView::onFoodSelChange(wxListEvent &event)
 {
     wxListItem item = event.GetItem();
-    int id = wxAtoi(item.GetText());
-    spdlog::info("FoodListView::onFoodSelChange ({})", id);
-    m_foodListCallback->onFoodSelected(id);
+    int actualIndex = getZeroBasedIndexOfItem(item.GetText());
+    spdlog::info("FoodListView::onFoodSelChange actualIndex({})", actualIndex);
+    m_foodListCallback->onFoodSelected(actualIndex);
+}
+
+int FoodListView::getZeroBasedIndexOfItem(wxString id) {
+    spdlog::info("FoodListView::getZeroBasedIndexOfItem");
+    // iterate over the m_foodsListView
+    for (int i = 0; i < m_foodsListView->GetItemCount(); ++i) {
+        if (m_foodsListView->GetItemText(i, 0) == id) {
+            return i;
+        }    
+    }
+    return 0;
 }

@@ -33,6 +33,8 @@ public:
 
     void setFoods(const std::vector<Food> &foods) override;
     void setSelected(int idx) override;
+
+    void setActive();
 };
 
 #endif // FOOD_LIST_VIEW_H

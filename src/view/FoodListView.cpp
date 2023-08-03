@@ -29,6 +29,10 @@ void FoodListView::createFoodListPanel(wxPanel *parent)
     parent->SetSizer(topSizer);
 }
 
+void FoodListView::setActive() {
+    spdlog::info("FoodListView::setActive");
+    m_foodListCallback->setActive();
+}
 
  void FoodListView::setFoods(const std::vector<Food> &foods)
 {

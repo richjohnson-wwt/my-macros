@@ -17,6 +17,7 @@ public:
 
 protected:
     void onNotebookPageChanged( wxNotebookEvent &event );
+    
 private:
     wxNotebook *m_explorerBookCtrl;
     FoodListView *m_foodListView;

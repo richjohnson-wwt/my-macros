@@ -8,6 +8,8 @@ class IRecipeListCallback {
 public:
     virtual void onRecipeSelected(int id) = 0;
     virtual void onRecipeBookPageChanged() = 0;
+
+    virtual void setActive() = 0;
 };
 
 class RecipeListPresenter : public IRecipeListCallback {
@@ -18,7 +20,7 @@ private:
 public:
     RecipeListPresenter(RecipeListView *view, IRecipeModel *model);
 
-    void setActive();
+    void setActive() override;
 
     void onRecipeSelected(int id) override;
     void onRecipeBookPageChanged() override;

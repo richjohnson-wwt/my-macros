@@ -8,6 +8,7 @@ class IFoodListCallback {
 public:
     virtual void onFoodSelected(int id) = 0;
     virtual void onFoodBookPageChanged() = 0;
+    virtual void setActive() = 0;
 };
 
 class FoodListPresenter : public IFoodListCallback {
@@ -18,7 +19,7 @@ private:
 public:
     FoodListPresenter(IFoodListView *view, IFoodModel *model);
 
-    void setActive();
+    void setActive() override;
 
     void onFoodSelected(int id) override;
     void onFoodBookPageChanged() override;

@@ -6,7 +6,7 @@
 
 class IRecipeCallback {
 public:
-
+    virtual void setActive() = 0;
 };
 
 
@@ -18,7 +18,7 @@ private:
 public:
     RecipePresenter(ITopRecipeView *view, IRecipeModel *model);
 
-    void setActive();
+    void setActive() override;
 };
 
 #endif // RECIPE_PRESENTER_H

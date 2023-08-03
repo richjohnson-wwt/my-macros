@@ -59,14 +59,10 @@ private:
     FatSecretView m_fatSecretView;
     FatSecretPresenter m_fatSecretPresenter;
 
-protected:
-    void onNotebookPageChanged(wxNotebookEvent &event);
-
 public:
     MyMacroApp(wxFrame *parent);
     ~MyMacroApp();
 
-    // wxNotebook *createNotebook(wxFrame *parent);
     void run();
 
     void postInit();

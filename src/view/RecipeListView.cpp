@@ -30,6 +30,11 @@ void RecipeListView::createRecipeListPanel(wxPanel *parent)
     parent->SetSizer(topSizer);
 }
 
+void RecipeListView::setActive() {
+    spdlog::info("RecipeListView::setActive");
+    m_recipeListCallback->setActive();
+}
+
 void RecipeListView::setRecipes(const std::vector<Recipe> &recipes) {
     spdlog::info("RecipeListView::setRecipes with size {}", recipes.size());
     m_recipesListView->DeleteAllItems();

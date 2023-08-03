@@ -2,10 +2,13 @@
 #define MY_MACRO_APP_H
 
 #include <wx/wx.h>
+#include "wx/aui/aui.h"
 #include <wx/frame.h>
 #include "wx/notebook.h"
 
 // VIEW
+#include "view/ExplorerNotebook.h"
+#include "view/MainNotebook.h"
 #include "view/TopFoodView.h"
 #include "view/FoodListView.h"
 #include "view/TopDailyView.h"
@@ -29,6 +32,13 @@
 class MyMacroApp
 {
 private:
+    wxAuiManager m_mgr; 
+    wxLog *m_logOld;
+    wxTextCtrl *m_logWindow;
+    wxFrame *m_wxFrame;
+    ExplorerNotebook m_explorerNotebook;
+    MainNotebook m_mainNotebook;
+
     FoodPresenter m_foodPresenter;
     FoodModel m_foodModel;
     TopFoodView m_topFoodView;
@@ -53,10 +63,11 @@ protected:
     void onNotebookPageChanged(wxNotebookEvent &event);
 
 public:
-    MyMacroApp();
+    MyMacroApp(wxFrame *parent);
     ~MyMacroApp();
 
-    wxNotebook *createNotebook(wxFrame *parent);
+    // wxNotebook *createNotebook(wxFrame *parent);
+    void run();
 
     void postInit();
 };

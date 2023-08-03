@@ -1,12 +1,12 @@
 #ifndef TOP_RECIPE_VIEW_H
 #define TOP_RECIPE_VIEW_H
 
-#include "RecipeListView.h"
+// #include "RecipeListView.h"
 
 #include "../model/MyMacroTypes.h"
 
 #include <wx/wx.h>
-#include "wx/splitter.h"
+// #include "wx/splitter.h"
 #include "wx/notebook.h"
 #include "wx/listctrl.h"
 #include "wx/event.h"
@@ -19,13 +19,10 @@ public:
 
 class TopRecipeView : public wxEvtHandler, public ITopRecipeView {
 private:
-    RecipeListView *m_recipeListView;
-    wxSplitterWindow *m_splitter;
 
     IRecipeCallback *m_recipeCallback;
 
-    wxPanel *createRightFoodItemPanel(wxWindow *parent);
-    wxPanel *createRecipeItemPanel(wxWindow *parent);
+    void createRightFoodItemPanel(wxPanel *panel);
 
     wxTextCtrl *m_recipeIdTextCtrl;
     wxTextCtrl *m_recipeNameTextCtrl;
@@ -49,11 +46,7 @@ private:
          wxTextCtrl *text);
 
 protected:
-    protected:
-    // Left List View
-    void OnPositionChanging(wxSplitterEvent &event);
 
-    // Right Item View
     void onAddIngredient(wxCommandEvent &event);
     void onDeleteIngredient(wxCommandEvent& event);
     void onIngredientSelChange(wxListEvent& event);
@@ -62,7 +55,7 @@ protected:
     void onNewRecipe(wxCommandEvent &event);
     
 public:
-    TopRecipeView(IRecipeCallback *callback, RecipeListView *recipeListView);
+    TopRecipeView(IRecipeCallback *callback);
 
     wxPanel *createRecipePanel(wxNotebook *parent);
 };

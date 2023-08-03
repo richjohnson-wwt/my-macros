@@ -1,70 +1,93 @@
 #include "TopDailyView.h"
 #include "../presenter/DailyPresenter.h"
-#include "../presenter/FoodListPresenter.h"
-#include "../presenter/RecipeListPresenter.h"
+// #include "../presenter/FoodListPresenter.h"
+// #include "../presenter/RecipeListPresenter.h"
 #include <spdlog/spdlog.h>
 
-DailyView::DailyView(IDailyCallback *callback, 
-    IFoodListCallback * foodListCallback, 
-    FoodListView *foodListView,
-    RecipeListView *recipeListView,
-    IRecipeListCallback * recipeListCallback) 
-: m_dailyCallback(callback), 
-m_foodListView(foodListView), 
-m_foodListCallback(foodListCallback),
-m_recipeListView(recipeListView),
-m_recipeListCallback(recipeListCallback)
+DailyView::DailyView(IDailyCallback *callback) 
+: m_dailyCallback(callback)
 {
 }
 
 wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
 {
-    wxPanel *topPanel = new wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(400, 150));
+    spdlog::info("DailyView::createDailyPanel");
+    wxPanel *panel = new wxPanel(parent);
+    wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
-    wxSizer *sizerTop = new wxBoxSizer(wxHORIZONTAL);
+    topsizer->Add(new wxStaticText(panel, wxID_ANY, "Daily Food Diary"), 0, wxALIGN_CENTRE_VERTICAL | wxLEFT, 5);
+    m_datePicker = new wxDatePickerCtrl(panel, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxSize(200, 20));
+    m_datePicker->Bind(wxEVT_DATE_CHANGED, &DailyView::onDateChanged, this);
+    topsizer->Add(m_datePicker, 0, wxALL, 10);
 
-    // LEFT PANEL - Food/Recipe Explorer Notebook
-    wxSizer *leftPanelSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer *activitySizer = new wxBoxSizer(wxHORIZONTAL);
+    activitySizer->Add(new wxStaticText(panel, wxID_ANY, "Activity Bonus"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    m_dailyActivityBonusTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    activitySizer->Add(m_dailyActivityBonusTextCtrl, 0, wxALL, 10);
+    m_addActivityBonusButton = new wxButton(panel, -1, _T("Add"), wxDefaultPosition, wxDefaultSize, 0);
+    m_addActivityBonusButton->Bind(wxEVT_BUTTON, &DailyView::onAddActivityBonus, this);
+    activitySizer->Add(m_addActivityBonusButton, 0, wxALL, 10);
+    topsizer->Add(activitySizer, 0, wxALL, 10);
 
-    m_foodRecipeBookCtrl = new wxNotebook(topPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, _("Notebook"));
-    m_foodRecipeBookCtrl->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &DailyView::onFoodRecipeBookPageChanged, this);
-    wxPanel *page1 = new wxPanel(m_foodRecipeBookCtrl, wxID_ANY);
-    wxPanel *page2 = new wxPanel(m_foodRecipeBookCtrl, wxID_ANY);
+    wxBoxSizer *addFoodSizer = new wxBoxSizer(wxHORIZONTAL);
+    addFoodSizer->Add(new wxStaticText(panel, wxID_ANY, "Multiplier"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    m_foodMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    addFoodSizer->Add(m_foodMultiplierTextCtrl, 0, wxALL, 10);
+    m_addDailyFoodButton = new wxButton(panel, -1, _T("Add Food"), wxDefaultPosition, wxDefaultSize, 0);
+    m_addDailyFoodButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyFood, this);
+    addFoodSizer->Add(m_addDailyFoodButton, 0, wxALL, 10);
+    topsizer->Add(addFoodSizer, 0, wxALL, 10);
 
-    m_foodListView->createFoodListPanel(page1);
-    m_recipeListView->createRecipeListPanel(page2);
+    m_dailyFoodListView = new wxListView(panel);
+    m_dailyFoodListView->AppendColumn("Food Name");
+    m_dailyFoodListView->AppendColumn("Calories");
+    m_dailyFoodListView->AppendColumn("Fat");
+    m_dailyFoodListView->AppendColumn("Protein");
+    m_dailyFoodListView->AppendColumn("Carb");
+    m_dailyFoodListView->SetColumnWidth(0, 320);
+    m_dailyFoodListView->SetColumnWidth(1, 100);
+    m_dailyFoodListView->SetColumnWidth(2, 100);
+    m_dailyFoodListView->SetColumnWidth(3, 100);
+    m_dailyFoodListView->SetColumnWidth(4, 100);
+    topsizer->Add(m_dailyFoodListView, 1, wxEXPAND | wxALL, 10);
 
-    m_foodRecipeBookCtrl->AddPage(page1, "Foods", true, wxID_ANY);
-    m_foodRecipeBookCtrl->AddPage(page2, "Recipes", true, wxID_ANY);
+    m_deleteDailyFoodButton = new wxButton(panel, -1, _T("Delete Food"), wxDefaultPosition, wxDefaultSize, 0);
+    m_deleteDailyFoodButton->Bind(wxEVT_BUTTON, &DailyView::onDeleteDailyFood, this);
+    topsizer->Add(m_deleteDailyFoodButton, 0, wxALL, 10);
 
-    leftPanelSizer->Add(m_foodRecipeBookCtrl, 1, wxEXPAND | wxALL, 5);
+    m_totalsListView = new wxListView(panel);
+    m_totalsListView->AppendColumn("Food Name");
+    m_totalsListView->AppendColumn("Calories");
+    m_totalsListView->AppendColumn("Fat");
+    m_totalsListView->AppendColumn("Protein");
+    m_totalsListView->AppendColumn("Carb");
+    m_totalsListView->SetColumnWidth(0, 320);
+    m_totalsListView->SetColumnWidth(1, 100);
+    m_totalsListView->SetColumnWidth(2, 100);
+    m_totalsListView->SetColumnWidth(3, 100);
+    m_totalsListView->SetColumnWidth(4, 100);
+    topsizer->Add(m_totalsListView, 1, wxEXPAND | wxALL, 10);
 
-    // RIGHT PANEL - Daily Food Tracker
-    wxSizer *rightPanelSizer = new wxBoxSizer(wxVERTICAL);
+    panel->SetSizer(topsizer);
 
-    rightPanelSizer->Add(new wxStaticText(topPanel, wxID_ANY, "Right Panel1"), 0, wxALL, 5);
-    rightPanelSizer->AddSpacer(10);
-    rightPanelSizer->Add(new wxStaticText(topPanel, wxID_ANY, "Right Panel2"), 0, wxALL, 5);
-
-    // END RIGHT PANEL
-
-    sizerTop->Add(leftPanelSizer, 1, wxEXPAND | wxALL, 5);
-    sizerTop->Add(rightPanelSizer, 1, wxEXPAND | wxALL, 5);
-
-    topPanel->SetSizer(sizerTop);
-    return topPanel;
+    return panel;
 }
 
 void DailyView::postInit() {
 }
 
-void DailyView::onFoodRecipeBookPageChanged(wxNotebookEvent &event)
-{
-    spdlog::info("DailyView::onFoodRecipeBookPageChanged");
-    if (event.GetSelection() == 0) {
-        m_foodListCallback->onFoodBookPageChanged();
-    } else {
-        // m_dailyCallback->onRecipeBookPageChanged();
-        m_recipeListCallback->onRecipeBookPageChanged();
-    }
+void DailyView::onDateChanged(wxDateEvent& event) {
+    spdlog::info("DailyView::onDateChanged");
+}
+
+void DailyView::onAddDailyFood(wxCommandEvent& event) {
+    spdlog::info("DailyView::onAddDailyFood");
+}
+
+void DailyView::onDeleteDailyFood(wxCommandEvent& event) {
+    spdlog::info("DailyView::onDeleteDailyFood");
+}
+
+void DailyView::onAddActivityBonus(wxCommandEvent& event) {
+    spdlog::info("DailyView::onAddActivityBonus");
 }

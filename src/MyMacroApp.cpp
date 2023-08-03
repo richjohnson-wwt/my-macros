@@ -2,66 +2,91 @@
 
 #include <spdlog/spdlog.h>
 
-MyMacroApp::MyMacroApp() 
+MyMacroApp::MyMacroApp(wxFrame *parent)
 : m_foodPresenter(&m_topFoodView, &m_foodModel), 
-    m_topFoodView(&m_foodPresenter, &m_foodListView, &m_fatSecretView), 
+    m_topFoodView(&m_foodPresenter, &m_fatSecretView), 
     m_foodListPresenter(&m_foodListView, &m_foodModel), 
     m_foodListView(&m_foodListPresenter),
     m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_recipeModel), 
-    m_dailyView(&m_dailyPresenter, &m_foodListPresenter, &m_foodListView, &m_recipeListView, &m_recipeListPresenter),
+    m_dailyView(&m_dailyPresenter),
     m_recipePresenter(&m_topRecipeView, &m_recipeModel),
-    m_topRecipeView(&m_recipePresenter, &m_recipeListView),
+    m_topRecipeView(&m_recipePresenter),
     m_recipeListPresenter(&m_recipeListView, &m_recipeModel),
     m_recipeListView(&m_recipeListPresenter),
-    m_fatSecretView(&m_fatSecretPresenter)
+    m_fatSecretView(&m_fatSecretPresenter),
+    m_explorerNotebook(parent, &m_foodListView, &m_recipeListView),
+    m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView),
+    m_wxFrame(parent)
 {
 }
 
 MyMacroApp::~MyMacroApp() {
 }
 
-wxNotebook *MyMacroApp::createNotebook(wxFrame *parent)
-{
-    spdlog::info("MyMacroApp::createNotebook pages DailyView and FoodView");
+void MyMacroApp::run() {
+    spdlog::info("MyMacroApp::run");
+    m_logWindow = new wxTextCtrl(m_wxFrame, wxID_ANY, wxEmptyString,
+                                 wxDefaultPosition, wxDefaultSize,
+                                 wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
+    m_logOld = wxLog::SetActiveTarget(new wxLogTextCtrl(m_logWindow));
 
-    wxNotebook *notebook = new wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, _("Notebook"));
-    notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &MyMacroApp::onNotebookPageChanged, this);
+    // notify wxAUI which frame to use
+    m_mgr.SetManagedWindow(m_wxFrame);
 
-    wxPanel *dailyPanel = m_dailyView.createDailyPanel(notebook);
-    wxPanel *foodPanel = m_topFoodView.createFoodPanel(notebook);
-    wxPanel *recipePanel = m_topRecipeView.createRecipePanel(notebook);
+    // add the panes to the manager
+    m_mgr.AddPane(m_explorerNotebook.getExplorerBookCtrl(), wxLEFT, wxT("Foods/Recipes"));
+    m_mgr.AddPane(m_logWindow, wxBOTTOM, wxT("Log Console"));
+    m_mgr.AddPane(m_mainNotebook.getMainBookCtrl(), wxCENTER);
 
-    notebook->AddPage(dailyPanel, _("Daily"));
-    notebook->AddPage(foodPanel, _("Food"));
-    notebook->AddPage(recipePanel, _("Recipe"));
+    // tell the manager to "commit" all the changes just made
+    m_mgr.Update();
+    wxLogMessage("Macro App Running...");
 
-    return notebook;
 }
+
+// wxNotebook *MyMacroApp::createNotebook(wxFrame *parent)
+// {
+//     spdlog::info("MyMacroApp::createNotebook pages DailyView and FoodView");
+
+//     wxNotebook *notebook = new wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, _("Notebook"));
+//     notebook->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &MyMacroApp::onNotebookPageChanged, this);
+
+//     wxPanel *dailyPanel = m_dailyView.createDailyPanel(notebook);
+//     wxPanel *foodPanel = m_topFoodView.createFoodPanel(notebook);
+//     wxPanel *recipePanel = m_topRecipeView.createRecipePanel(notebook);
+
+//     notebook->AddPage(dailyPanel, _("Daily"));
+//     notebook->AddPage(foodPanel, _("Food"));
+//     notebook->AddPage(recipePanel, _("Recipe"));
+
+//     return notebook;
+// }
 
 void MyMacroApp::postInit()
 {
     spdlog::info("MyMacroApp::postInit");
-    // m_foodListPresenter.setActive();
-    m_dailyPresenter.setActive();
+    m_foodListPresenter.setActive();
+    m_recipeListPresenter.setActive();
+    // m_dailyPresenter.setActive();
 }
 
-void MyMacroApp::onNotebookPageChanged(wxNotebookEvent &event)
-{
+// void MyMacroApp::onNotebookPageChanged(wxNotebookEvent &event)
+// {
     
-    int page = event.GetSelection();
-    if (page == 0) {
-        spdlog::info("MyMacroApp::onNotebookPageChanged DAILY");
-        m_dailyPresenter.setActive();
-        m_foodListPresenter.setActive();
-    } else if (page == 1) {
-        spdlog::info("MyMacroApp::onNotebookPageChanged FOOD PAGE");
-        m_foodPresenter.setActive();
-        m_foodListPresenter.setActive();
-    } else if (page == 2) {
-        spdlog::info("MyMacroApp::onNotebookPageChanged RECIPE PAGE");
-        m_recipePresenter.setActive();
-        m_recipeListPresenter.setActive();
-    } else {
-        spdlog::error("MyMacroApp::onNotebookPageChanged ERROR");
-    }
-}
+//     int page = event.GetSelection();
+//     if (page == 0) {
+//         spdlog::info("MyMacroApp::onNotebookPageChanged DAILY");
+//         m_dailyPresenter.setActive();
+//         m_foodListPresenter.setActive();
+//     } else if (page == 1) {
+//         spdlog::info("MyMacroApp::onNotebookPageChanged FOOD PAGE");
+//         m_foodPresenter.setActive();
+//         m_foodListPresenter.setActive();
+//     } else if (page == 2) {
+//         spdlog::info("MyMacroApp::onNotebookPageChanged RECIPE PAGE");
+//         m_recipePresenter.setActive();
+//         m_recipeListPresenter.setActive();
+//     } else {
+//         spdlog::error("MyMacroApp::onNotebookPageChanged ERROR");
+//     }
+// }

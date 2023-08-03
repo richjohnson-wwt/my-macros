@@ -2,7 +2,10 @@
 #define FAT_SECRET_VIEW_H
 
 #include <wx/wx.h>
-#include <wx/panel.h>
+#include <wx/listctrl.h>
+#include <wx/event.h>
+#include <wx/srchctrl.h>
+#include "wx/notebook.h"
 
 class IFatSecretCallback;
 
@@ -11,14 +14,26 @@ public:
 
 };
 
-class FatSecretView : public IFatSecretView {
+class FatSecretView : public wxEvtHandler, public IFatSecretView {
 private:
     IFatSecretCallback *m_fatSecretCallback;
+
+    // wxButton *m_refreshTokenButton;
+
+    // wxSearchCtrl *m_searchText;
+    // wxListCtrl *m_searchListCtrl;
+
+protected:
+    void onRefreshToken(wxCommandEvent &event);
+    void onAddFood(wxCommandEvent &event);
+
+    void onSearch(wxCommandEvent& event);
+    void onSearchCancel(wxCommandEvent& event);
 
 public:
     FatSecretView(IFatSecretCallback *callback);
     
-    void createPanel(wxPanel *parent);
+   wxPanel *createPanel(wxBookCtrlBase *parent);
 };
 
 

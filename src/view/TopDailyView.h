@@ -1,18 +1,15 @@
 #ifndef DAILY_VIEW_H
 #define DAILY_VIEW_H
 
-#include "FoodListView.h"
-#include "RecipeListView.h"
 #include "../model/MyMacroTypes.h"
 
 #include <wx/wx.h>
 #include "wx/notebook.h"
 #include "wx/listctrl.h"
-#include "wx/event.h"
+#include <wx/datectrl.h>
+#include <wx/dateevt.h>
 
 class IDailyCallback;
-class IFoodListCallback;
-class IRecipeListCallback;
 
 class IDailyView {
 public:
@@ -21,24 +18,27 @@ public:
 
 class DailyView : public wxEvtHandler, public IDailyView {
 private:
-    FoodListView *m_foodListView;
-    RecipeListView *m_recipeListView;
-
     wxNotebook *m_foodRecipeBookCtrl;
-
     IDailyCallback *m_dailyCallback;
-    IFoodListCallback *m_foodListCallback;
-    IRecipeListCallback *m_recipeListCallback;
+
+    wxDatePickerCtrl* m_datePicker;
+    wxTextCtrl *m_dailyActivityBonusTextCtrl;
+    wxButton *m_addActivityBonusButton;
+    wxListView *m_dailyFoodListView;
+    wxTextCtrl *m_foodMultiplierTextCtrl;
+    wxButton *m_addDailyFoodButton;
+    wxButton *m_deleteDailyFoodButton;
+
+    wxListView *m_totalsListView;
 
 protected:
-    void onFoodRecipeBookPageChanged(wxNotebookEvent &event);
+    void onDateChanged(wxDateEvent& event);
+    void onAddDailyFood(wxCommandEvent& event);
+    void onDeleteDailyFood(wxCommandEvent& event);
+    void onAddActivityBonus(wxCommandEvent& event);
 
 public:
-    DailyView(IDailyCallback *callback, 
-        IFoodListCallback * foodListCallback, 
-        FoodListView *foodListView, 
-        RecipeListView *recipeListView,
-        IRecipeListCallback * recipeListCallback);
+    DailyView(IDailyCallback *callback);
 
     wxPanel *createDailyPanel(wxNotebook *parent);
 

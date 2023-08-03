@@ -20,7 +20,7 @@ protected:
 
 private:
     // wxAuiManager m_mgr;
-    wxNotebook *m_notebookCtrl;
+    // wxNotebook *m_notebookCtrl;
 
     MyMacroApp m_app;
     

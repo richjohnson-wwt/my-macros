@@ -33,7 +33,6 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
 
     m_foodListView->createFoodListPanel(page1);
     m_recipeListView->createRecipeListPanel(page2);
-    // wxWindow *pageRecipe = createRecipePage(page2);
 
     m_foodRecipeBookCtrl->AddPage(page1, "Foods", true, wxID_ANY);
     m_foodRecipeBookCtrl->AddPage(page2, "Recipes", true, wxID_ANY);
@@ -56,42 +55,8 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     return topPanel;
 }
 
-// wxPanel *DailyView::createRecipePage(wxPanel *parent) {
-//     wxPanel *panel = new wxPanel(parent);
-//     m_recipesListView = new wxListView(panel);
-//     m_recipesListView->AppendColumn("ID");
-//     m_recipesListView->AppendColumn("Name");
-//     m_recipesListView->SetColumnWidth(0, 40);
-//     m_recipesListView->SetColumnWidth(1, 320);
-//     m_recipesListView->Bind(wxEVT_LIST_ITEM_SELECTED, &DailyView::onRecipeSelChange, this);
-
-//     wxBoxSizer *sizerPanel = new wxBoxSizer(wxVERTICAL);
-//     sizerPanel->Add(m_recipesListView, wxSizerFlags(2).Expand().Border());
-//     panel->SetSizer(sizerPanel);
-//     return panel;
-// }
-
 void DailyView::postInit() {
 }
-
-// void DailyView::setRecipes(const std::vector<Recipe> &recipes)
-// {
-//     spdlog::info("DailyView::setRecipes");
-//     m_recipesListView->DeleteAllItems();
-//     int row = 0;
-//     for (auto &recipe : recipes) {
-//         m_recipesListView->InsertItem(row, std::to_string(recipe.id));
-//         m_recipesListView->SetItem(row, 1, recipe.name);
-//         row++;
-//     }
-// }
-
-// void DailyView::onRecipeSelChange(wxListEvent &event)
-// {
-//     wxListItem item = event.GetItem();
-//     int id = wxAtoi(item.GetText());
-//     m_dailyCallback->onRecipeSelected(id);
-// }
 
 void DailyView::onFoodRecipeBookPageChanged(wxNotebookEvent &event)
 {
@@ -103,8 +68,3 @@ void DailyView::onFoodRecipeBookPageChanged(wxNotebookEvent &event)
         m_recipeListCallback->onRecipeBookPageChanged();
     }
 }
-
-// void DailyView::setRecipeSelected(int idx)
-// {
-//     m_recipesListView->SetItemState(idx, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
-// }

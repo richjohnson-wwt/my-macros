@@ -23,9 +23,6 @@ private:
     FoodListView *m_foodsListView;
 
     wxSplitterWindow *m_splitter;
-    // wxWindow *m_left;
-    // wxWindow *m_right;
-    // wxPanel *m_topPanel;
 
     // Left List View
     IFoodCallback *m_foodCallback;

@@ -16,8 +16,7 @@ class IRecipeListCallback;
 
 class IDailyView {
 public:
-    // virtual void setRecipes(const std::vector<Recipe> &foods) = 0;
-    // virtual void setRecipeSelected(int idx) = 0;
+
 };
 
 class DailyView : public wxEvtHandler, public IDailyView {
@@ -27,14 +26,12 @@ private:
 
     wxNotebook *m_foodRecipeBookCtrl;
 
-    // wxListView *m_recipesListView;
     IDailyCallback *m_dailyCallback;
     IFoodListCallback *m_foodListCallback;
     IRecipeListCallback *m_recipeListCallback;
 
 protected:
     void onFoodRecipeBookPageChanged(wxNotebookEvent &event);
-    // void onRecipeSelChange(wxListEvent &event);
 
 public:
     DailyView(IDailyCallback *callback, 
@@ -44,12 +41,9 @@ public:
         IRecipeListCallback * recipeListCallback);
 
     wxPanel *createDailyPanel(wxNotebook *parent);
-    // wxPanel *createRecipePage(wxPanel *parent);
 
     void postInit();
 
-    // void setRecipes(const std::vector<Recipe> &foods) override;
-    // void setRecipeSelected(int idx) override;
 };
 
 #endif // DAILY_VIEW_H

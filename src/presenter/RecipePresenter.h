@@ -6,7 +6,7 @@
 
 class IRecipeCallback {
 public:
-    // virtual void onFoodSelected(int id) = 0;
+
 };
 
 

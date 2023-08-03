@@ -6,7 +6,7 @@
 
 class IFoodCallback {
 public:
-    // virtual void onFoodSelected(int id) = 0;
+
 };
 
 class FoodPresenter : public IFoodCallback {
@@ -18,9 +18,6 @@ public:
     FoodPresenter(ITopFoodView *view, IFoodModel *model);
 
     void setActive();
-
-    // void onFoodSelected(int id) override;
-
 
 };
 

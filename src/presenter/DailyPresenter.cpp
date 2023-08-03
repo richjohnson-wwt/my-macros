@@ -9,6 +9,6 @@ DailyPresenter::DailyPresenter(IDailyView *view, IDailyModel *model, IRecipeMode
 
 void DailyPresenter::setActive()
 {
-    spdlog::info("DailyPresenter::setActive");
+    spdlog::debug("DailyPresenter::setActive");
 
 }

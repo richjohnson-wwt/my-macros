@@ -65,3 +65,57 @@ std::vector<Recipe> Db::getRecipes()
     }
     return recipes;
 }
+
+Food Db::getFoodById(int id)
+{
+    spdlog::debug("Db::getFoodById({})", id);
+    Food food;
+    try
+    {
+        SQLite::Statement query(m_db, "SELECT * FROM Foods WHERE food_id = ?");
+        query.bind(1, id);
+        while (query.executeStep())
+        {
+            food.id = query.getColumn(0);
+            food.name = std::string(query.getColumn(1));
+            food.fat = query.getColumn(2);
+            food.protein = query.getColumn(3);
+            food.carb = query.getColumn(4);
+            food.calories = query.getColumn(5);
+            food.quantity = query.getColumn(6);
+            food.unit_id = query.getColumn(7);
+        }
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    return food;
+}
+
+Recipe Db::getRecipeById(int id)
+{
+    spdlog::debug("Db::getRecipeById({})", id);
+    Recipe recipe;
+    try
+    {
+        SQLite::Statement query(m_db, "SELECT * FROM Recipes WHERE recipe_id = ?");
+        query.bind(1, id);
+        while (query.executeStep())
+        {
+            recipe.id = query.getColumn(0);
+            recipe.name = std::string(query.getColumn(1));
+            recipe.description = std::string(query.getColumn(2));
+            recipe.instructions = std::string(query.getColumn(3));
+            recipe.url = std::string(query.getColumn(4));
+            recipe.servings = query.getColumn(5);
+        }
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    return recipe;
+}

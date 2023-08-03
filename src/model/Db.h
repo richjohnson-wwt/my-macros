@@ -18,6 +18,8 @@ public:
 
     std::vector<Food> getFoods();
     std::vector<Recipe> getRecipes();
+    Food getFoodById(int id);
+    Recipe getRecipeById(int id);
 };
 
 #endif // DB_H

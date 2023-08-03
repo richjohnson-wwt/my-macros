@@ -33,7 +33,9 @@ protected:
 public:
     FatSecretView(IFatSecretCallback *callback);
     
-   wxPanel *createPanel(wxBookCtrlBase *parent);
+    wxPanel *createPanel(wxBookCtrlBase *parent);
+
+    void setActive();
 };
 
 

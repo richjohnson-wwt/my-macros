@@ -10,7 +10,7 @@ FoodListView::FoodListView(IFoodListCallback *callback): m_foodListCallback(call
 
 void FoodListView::createFoodListPanel(wxPanel *parent)
 {
-    spdlog::info("FoodListView::createFoodListPanel");
+    spdlog::debug("FoodListView::createFoodListPanel");
     wxBoxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 
     m_foodsListView = new wxListView(parent);
@@ -30,13 +30,13 @@ void FoodListView::createFoodListPanel(wxPanel *parent)
 }
 
 void FoodListView::setActive() {
-    spdlog::info("FoodListView::setActive");
+    spdlog::debug("FoodListView::setActive");
     m_foodListCallback->setActive();
 }
 
  void FoodListView::setFoods(const std::vector<Food> &foods)
 {
-    spdlog::info("FoodListView::setFoods with size {}", foods.size());
+    spdlog::debug("FoodListView::setFoods with size {}", foods.size());
     m_foodsListView->DeleteAllItems();
     int row = 0;
     for (auto &food : foods) {
@@ -48,20 +48,21 @@ void FoodListView::setActive() {
 
 void FoodListView::setSelected(wxInt16 idx)
 {
-    spdlog::info("FoodListView::setSelected with id({})", idx);
-    m_foodsListView->SetItemState(idx, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
+    spdlog::debug("FoodListView::setSelected with id({})", idx);
+    int actualIndex = getZeroBasedIndexOfItem(wxString(std::to_string(idx)));
+    m_foodsListView->SetItemState(actualIndex, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED);
 }
 
 void FoodListView::onFoodSelChange(wxListEvent &event)
 {
     wxListItem item = event.GetItem();
-    int actualIndex = getZeroBasedIndexOfItem(item.GetText());
-    spdlog::info("FoodListView::onFoodSelChange actualIndex({})", actualIndex);
-    m_foodListCallback->onFoodSelected(actualIndex);
+    wxInt16 id = wxAtoi(item.GetText());
+    spdlog::debug("FoodListView::onFoodSelChange GetText({})", id);
+    m_foodListCallback->onFoodSelected(id);
 }
 
 int FoodListView::getZeroBasedIndexOfItem(wxString id) {
-    spdlog::info("FoodListView::getZeroBasedIndexOfItem");
+    spdlog::debug("FoodListView::getZeroBasedIndexOfItem");
     // iterate over the m_foodsListView
     for (int i = 0; i < m_foodsListView->GetItemCount(); ++i) {
         if (m_foodsListView->GetItemText(i, 0) == id) {

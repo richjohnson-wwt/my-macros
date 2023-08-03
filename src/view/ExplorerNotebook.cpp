@@ -14,7 +14,7 @@ ExplorerNotebook::ExplorerNotebook(wxFrame *parent, FoodListView *foodListView, 
 }
 
 void ExplorerNotebook::onNotebookPageChanged( wxNotebookEvent &event ) {
-    spdlog::info("ExplorerNotebook::onNotebookPageChanged");
+    spdlog::debug("ExplorerNotebook::onNotebookPageChanged");
     if (event.GetSelection() == 0) {
         m_foodListView->setActive();
     } else {

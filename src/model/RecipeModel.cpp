@@ -16,12 +16,31 @@ std::vector<Recipe> RecipeModel::getRecipes()
 
 void RecipeModel::setSelectedId(int id)
 {
-    spdlog::info("RecipeModel::setSelectedId({})", id);
+    spdlog::debug("RecipeModel::setSelectedId({})", id);
     m_selectedId = id;
+    notify();
 }
 
 int RecipeModel::getSelectedId()
 {
-    spdlog::info("RecipeModel::getSelectedId({})", m_selectedId);
+    spdlog::debug("RecipeModel::getSelectedId({})", m_selectedId);
     return m_selectedId;
+}
+Recipe RecipeModel::getRecipeById(int id)
+{
+    return m_db.getRecipeById(id);
+}
+
+void RecipeModel::attach(IRecipeObserver *observer)
+{
+    spdlog::debug("RecipeModel::attach");
+    m_observers.push_back(observer);
+}
+
+void RecipeModel::notify()
+{
+    for (auto observer : m_observers)
+    {
+        observer->update();
+    }
 }

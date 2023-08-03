@@ -9,13 +9,13 @@ FoodListPresenter::FoodListPresenter(IFoodListView *view, IFoodModel *model)
 
 void FoodListPresenter::onFoodSelected(int id)
 {
-    spdlog::info("FoodListPresenter::onFoodSelected({})", id);
+    spdlog::debug("FoodListPresenter::onFoodSelected({})", id);
     m_foodModel->setSelectedId(id);
 }
 
 void FoodListPresenter::setActive()
 {
-    spdlog::info("FoodListPresenter::setActive with id({})", m_foodModel->getSelectedId());
+    spdlog::debug("FoodListPresenter::setActive with id({})", m_foodModel->getSelectedId());
     m_foodListView->setFoods(m_foodModel->getFoods());
     m_foodListView->setSelected(m_foodModel->getSelectedId());
 }

@@ -15,7 +15,7 @@ TopFoodView::~TopFoodView()
 
 wxPanel *TopFoodView::createFoodPanel(wxNotebook *parent)
 {
-    spdlog::info("TopFoodView::createFoodPanel");
+    spdlog::debug("TopFoodView::createFoodPanel");
 
     wxPanel *topPanel = new wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(400, 150));
 
@@ -33,6 +33,11 @@ wxPanel *TopFoodView::createFoodPanel(wxNotebook *parent)
     topPanel->SetSizer(notebookSizer);
 
     return topPanel;
+}
+
+void TopFoodView::setFoodId(const std::string &id)
+{
+    m_foodIdTextCtrl->SetValue(id);
 }
 
 wxSizer *TopFoodView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &label, wxTextCtrl *text)
@@ -118,4 +123,11 @@ void TopFoodView::onFoodUnitComboBox(wxCommandEvent &event)
 
 void TopFoodView::onFoodFatSecretBookPageChanged(wxNotebookEvent &event)
 {
+    if (event.GetSelection() == 0) {
+        spdlog::debug("TopFoodView::onFoodFatSecretBookPageChanged - Food Item");
+        // m_foodCallback->onFoodFatSecretBookPageChanged();
+    } else {
+        spdlog::debug("TopFoodView::onFoodFatSecretBookPageChanged - Fat Secret");
+        m_fatSecretView->setActive();
+    }
 }

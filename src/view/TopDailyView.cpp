@@ -11,7 +11,7 @@ DailyView::DailyView(IDailyCallback *callback)
 
 wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
 {
-    spdlog::info("DailyView::createDailyPanel");
+    spdlog::debug("DailyView::createDailyPanel");
     wxPanel *panel = new wxPanel(parent);
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
@@ -77,17 +77,17 @@ void DailyView::postInit() {
 }
 
 void DailyView::onDateChanged(wxDateEvent& event) {
-    spdlog::info("DailyView::onDateChanged");
+    spdlog::debug("DailyView::onDateChanged");
 }
 
 void DailyView::onAddDailyFood(wxCommandEvent& event) {
-    spdlog::info("DailyView::onAddDailyFood");
+    spdlog::debug("DailyView::onAddDailyFood");
 }
 
 void DailyView::onDeleteDailyFood(wxCommandEvent& event) {
-    spdlog::info("DailyView::onDeleteDailyFood");
+    spdlog::debug("DailyView::onDeleteDailyFood");
 }
 
 void DailyView::onAddActivityBonus(wxCommandEvent& event) {
-    spdlog::info("DailyView::onAddActivityBonus");
+    spdlog::debug("DailyView::onAddActivityBonus");
 }

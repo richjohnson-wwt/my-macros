@@ -44,6 +44,8 @@ public:
 
     void postInit();
 
+    void setActive(){}
+
 };
 
 #endif // DAILY_VIEW_H

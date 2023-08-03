@@ -16,6 +16,7 @@ class IFoodCallback;
 
 class ITopFoodView {
 public:
+    virtual void setFoodId(const std::string& id) = 0;
 };
 
 class TopFoodView : public wxEvtHandler, public ITopFoodView
@@ -59,6 +60,10 @@ public:
     ~TopFoodView();
 
     wxPanel *createFoodPanel(wxNotebook *parent);
+
+    void setFoodId(const std::string& id) override;
+
+    // void setActive();
 };
 
 #endif // FOOD_VIEW_H

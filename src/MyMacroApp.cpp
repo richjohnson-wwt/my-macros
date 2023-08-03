@@ -3,13 +3,13 @@
 #include <spdlog/spdlog.h>
 
 MyMacroApp::MyMacroApp(wxFrame *parent)
-: m_foodPresenter(&m_topFoodView, &m_foodModel), 
+: m_foodPresenter(&m_topFoodView, &m_foodModel, &m_foodModel), 
     m_topFoodView(&m_foodPresenter, &m_fatSecretView), 
     m_foodListPresenter(&m_foodListView, &m_foodModel), 
     m_foodListView(&m_foodListPresenter),
     m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_recipeModel), 
     m_dailyView(&m_dailyPresenter),
-    m_recipePresenter(&m_topRecipeView, &m_recipeModel),
+    m_recipePresenter(&m_topRecipeView, &m_recipeModel, &m_recipeModel),
     m_topRecipeView(&m_recipePresenter),
     m_recipeListPresenter(&m_recipeListView, &m_recipeModel),
     m_recipeListView(&m_recipeListPresenter),
@@ -24,7 +24,10 @@ MyMacroApp::~MyMacroApp() {
 }
 
 void MyMacroApp::run() {
-    spdlog::info("MyMacroApp::run");
+    
+    spdlog::set_level(spdlog::level::info);
+
+    spdlog::debug("MyMacroApp::run");
     m_logWindow = new wxTextCtrl(m_wxFrame, wxID_ANY, wxEmptyString,
                                  wxDefaultPosition, wxDefaultSize,
                                  wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
@@ -46,6 +49,9 @@ void MyMacroApp::run() {
 
 void MyMacroApp::postInit()
 {
-    spdlog::info("MyMacroApp::postInit");
+    spdlog::debug("MyMacroApp::postInit");
+    m_foodPresenter.postInit();
+    m_recipePresenter.postInit();
+
     m_foodListPresenter.setActive();
 }

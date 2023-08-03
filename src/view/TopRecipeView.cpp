@@ -10,12 +10,17 @@ TopRecipeView::TopRecipeView(IRecipeCallback *callback)
 }
 
 wxPanel *TopRecipeView::createRecipePanel(wxNotebook *parent) {
-    spdlog::info("TopRecipeView::createRecipePanel");
+    spdlog::debug("TopRecipeView::createRecipePanel");
     wxPanel *topPanel = new wxPanel(parent);
 
     createRightFoodItemPanel(topPanel);
-
+    spdlog::debug("TopRecipeView::createRecipePanel bye");
     return topPanel;
+}
+
+void TopRecipeView::setRecipeId(const std::string &id)
+{
+    m_recipeIdTextCtrl->SetValue(id);
 }
 
 wxSizer *TopRecipeView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &label, wxTextCtrl *text) {

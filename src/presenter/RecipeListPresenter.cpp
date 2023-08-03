@@ -8,12 +8,12 @@ RecipeListPresenter::RecipeListPresenter(RecipeListView *view, IRecipeModel *mod
 }
 
 void RecipeListPresenter::onRecipeSelected(int id) {
-    spdlog::info("RecipeListPresenter::onRecipeSelected({})", id);
+    spdlog::debug("RecipeListPresenter::onRecipeSelected({})", id);
     m_recipeModel->setSelectedId(id);
 }
 
 void RecipeListPresenter::setActive() {
-    spdlog::info("RecipeListPresenter::setActive with id({})", m_recipeModel->getSelectedId());
+    spdlog::debug("RecipeListPresenter::setActive with id({})", m_recipeModel->getSelectedId());
     m_recipeListView->setRecipes(m_recipeModel->getRecipes());
     m_recipeListView->setSelected(m_recipeModel->getSelectedId());
 }

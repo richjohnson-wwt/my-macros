@@ -14,7 +14,8 @@
 class IRecipeCallback;
 
 class ITopRecipeView {
-public:    
+public:
+    virtual void setRecipeId(const std::string& id) = 0;
 };
 
 class TopRecipeView : public wxEvtHandler, public ITopRecipeView {
@@ -58,6 +59,10 @@ public:
     TopRecipeView(IRecipeCallback *callback);
 
     wxPanel *createRecipePanel(wxNotebook *parent);
+
+    void setActive(){}
+
+    void setRecipeId(const std::string& id) override;
 };
 
 #endif // TOP_RECIPE_VIEW_H

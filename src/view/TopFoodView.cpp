@@ -4,8 +4,8 @@
 
 #include <spdlog/spdlog.h>
 
-TopFoodView::TopFoodView(IFoodCallback *callback, FoodListView *foodsListView)
-    : m_foodCallback(callback), m_foodsListView(foodsListView)
+TopFoodView::TopFoodView(IFoodCallback *callback, FoodListView *foodsListView, FatSecretView *fatSecretView)
+    : m_foodCallback(callback), m_foodsListView(foodsListView), m_fatSecretView(fatSecretView)
 {
 }
 
@@ -19,11 +19,11 @@ wxPanel *TopFoodView::createFoodPanel(wxNotebook *parent)
 
     wxPanel *topPanel = new wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(400, 150));
 
-    wxBoxSizer *sizermain = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer *sizerTop = new wxBoxSizer(wxVERTICAL);
     m_splitter = new wxSplitterWindow(topPanel, wxID_ANY);
     m_splitter->SetSashGravity(0.5);
     m_splitter->SetMinimumPaneSize(200); // Smalest size the
-    sizermain->Add(m_splitter, 1, wxEXPAND, 0);
+    sizerTop->Add(m_splitter, 1, wxEXPAND, 0);
 
     wxPanel *pnl1 = new wxPanel(m_splitter, wxID_ANY);
 
@@ -31,15 +31,25 @@ wxPanel *TopFoodView::createFoodPanel(wxNotebook *parent)
 
     wxPanel *pnl2 = new wxPanel(m_splitter, wxID_ANY);
 
-    wxBoxSizer *txt2sizer = new wxBoxSizer(wxHORIZONTAL);
-    wxPanel *itemPanel = createRightFoodItemPanel(pnl2);
-    txt2sizer->Add(itemPanel, 0, wxEXPAND, 0);
-    pnl2->SetSizer(txt2sizer);
+    wxBoxSizer *notebookSizer = new wxBoxSizer(wxVERTICAL);
+    m_foodFatSecretBookCtrl = new wxNotebook(pnl2, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, _("Notebook"));
+    m_foodFatSecretBookCtrl->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TopFoodView::onFoodFatSecretBookPageChanged, this);
+    wxPanel *page1 = new wxPanel(m_foodFatSecretBookCtrl, wxID_ANY);
+    wxPanel *page2 = new wxPanel(m_foodFatSecretBookCtrl, wxID_ANY);
+
+    createRightFoodItemPanel(page1);
+    m_fatSecretView->createPanel(page2);
+    
+    m_foodFatSecretBookCtrl->AddPage(page1, "Foods", true, wxID_ANY);
+    m_foodFatSecretBookCtrl->AddPage(page2, "Fat Secret", true, wxID_ANY);
+
+    notebookSizer->Add(m_foodFatSecretBookCtrl, 0, wxEXPAND, 0);
+    pnl2->SetSizer(notebookSizer);
 
     m_splitter->SplitVertically(pnl1, pnl2);
 
-    topPanel->SetSizer(sizermain);
-    sizermain->SetSizeHints(topPanel);
+    topPanel->SetSizer(sizerTop);
+    sizerTop->SetSizeHints(topPanel);
 
     return topPanel;
 }
@@ -54,9 +64,8 @@ wxSizer *TopFoodView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &l
     return sizerRow;
 }
 
-wxPanel *TopFoodView::createRightFoodItemPanel(wxWindow *parent)
+void TopFoodView::createRightFoodItemPanel(wxPanel *panel)
 {
-    wxPanel *panel = new wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(400, 150));
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
     m_foodIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
@@ -104,7 +113,6 @@ wxPanel *TopFoodView::createRightFoodItemPanel(wxWindow *parent)
     topsizer->Add(buttonSizer, 0, wxALIGN_CENTRE_VERTICAL | wxLEFT, 5);
 
     panel->SetSizer(topsizer);
-    return panel;
 }
 
 void TopFoodView::OnPositionChanging(wxSplitterEvent &event)
@@ -126,5 +134,9 @@ void TopFoodView::onNewFood(wxCommandEvent &event)
 }
 
 void TopFoodView::onFoodUnitComboBox(wxCommandEvent &event)
+{
+}
+
+void TopFoodView::onFoodFatSecretBookPageChanged(wxNotebookEvent &event)
 {
 }

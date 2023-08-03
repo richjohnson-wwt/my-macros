@@ -11,6 +11,7 @@
 #include "view/TopDailyView.h"
 #include "view/TopRecipeView.h"
 #include "view/RecipeListView.h"
+#include "view/FatSecretView.h"
 
 // PRESENTER
 #include "presenter/FoodPresenter.h"
@@ -18,6 +19,7 @@
 #include "presenter/DailyPresenter.h"
 #include "presenter/RecipeListPresenter.h"
 #include "presenter/RecipePresenter.h"
+#include "presenter/FatSecretPresenter.h"
 
 // MODEL
 #include "model/FoodModel.h"
@@ -43,6 +45,9 @@ private:
     RecipeListView m_recipeListView;
     TopRecipeView m_topRecipeView;
     RecipePresenter m_recipePresenter;
+
+    FatSecretView m_fatSecretView;
+    FatSecretPresenter m_fatSecretPresenter;
 
 protected:
     void onNotebookPageChanged(wxNotebookEvent &event);

@@ -4,7 +4,7 @@
 
 MyMacroApp::MyMacroApp() 
 : m_foodPresenter(&m_topFoodView, &m_foodModel), 
-    m_topFoodView(&m_foodPresenter, &m_foodListView), 
+    m_topFoodView(&m_foodPresenter, &m_foodListView, &m_fatSecretView), 
     m_foodListPresenter(&m_foodListView, &m_foodModel), 
     m_foodListView(&m_foodListPresenter),
     m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_recipeModel), 
@@ -12,7 +12,8 @@ MyMacroApp::MyMacroApp()
     m_recipePresenter(&m_topRecipeView, &m_recipeModel),
     m_topRecipeView(&m_recipePresenter, &m_recipeListView),
     m_recipeListPresenter(&m_recipeListView, &m_recipeModel),
-    m_recipeListView(&m_recipeListPresenter)
+    m_recipeListView(&m_recipeListPresenter),
+    m_fatSecretView(&m_fatSecretPresenter)
 {
 }
 

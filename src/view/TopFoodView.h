@@ -2,6 +2,7 @@
 #define FOOD_VIEW_H
 
 #include "FoodListView.h"
+#include "FatSecretView.h"
 
 #include "../model/MyMacroTypes.h"
 
@@ -21,13 +22,16 @@ class TopFoodView : public wxEvtHandler, public ITopFoodView
 {
 private:
     FoodListView *m_foodsListView;
+    FatSecretView *m_fatSecretView;
+
+    wxNotebook *m_foodFatSecretBookCtrl;
 
     wxSplitterWindow *m_splitter;
 
     // Left List View
     IFoodCallback *m_foodCallback;
 
-    wxPanel *createRightFoodItemPanel(wxWindow *parent);
+    void createRightFoodItemPanel(wxPanel *panel);
 
     // Right Item View
     wxTextCtrl *m_foodIdTextCtrl;
@@ -56,9 +60,10 @@ protected:
     void onSaveFood(wxCommandEvent &event);
     void onNewFood(wxCommandEvent &event);
     void onFoodUnitComboBox(wxCommandEvent &event);
+    void onFoodFatSecretBookPageChanged(wxNotebookEvent &event);
 
 public:
-    TopFoodView(IFoodCallback *callback, FoodListView *foodsListView);
+    TopFoodView(IFoodCallback *callback, FoodListView *foodsListView, FatSecretView *fatSecretView);
     ~TopFoodView();
 
     wxPanel *createFoodPanel(wxNotebook *parent);

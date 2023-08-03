@@ -12,8 +12,8 @@ enum class DailyPage {
 
 class IDailyCallback {
 public:
-    virtual void onRecipeBookPageChanged() = 0;
-    virtual void onRecipeSelected(int id) = 0;
+    // virtual void onRecipeBookPageChanged() = 0;
+    // virtual void onRecipeSelected(int id) = 0;
 };
 
 class DailyPresenter : public IDailyCallback {
@@ -27,8 +27,8 @@ public:
 
     void setActive();
 
-    void onRecipeBookPageChanged() override;
-    void onRecipeSelected(int id) override;
+    // void onRecipeBookPageChanged() override;
+    // void onRecipeSelected(int id) override;
 
 };
 

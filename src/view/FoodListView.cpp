@@ -32,7 +32,7 @@ void FoodListView::createFoodListPanel(wxPanel *parent)
 
  void FoodListView::setFoods(const std::vector<Food> &foods)
 {
-    spdlog::info("TopFoodView::setFoods");
+    spdlog::info("FoodListView::setFoods with size {}", foods.size());
     m_foodsListView->DeleteAllItems();
     int row = 0;
     for (auto &food : foods) {

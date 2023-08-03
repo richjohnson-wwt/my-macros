@@ -13,14 +13,14 @@ void DailyPresenter::setActive()
 
 }
 
-void DailyPresenter::onRecipeSelected(int id)
-{
-    spdlog::info("DailyPresenter::onRecipeSelected({})", id);
-    m_recipeModel->setSelectedId(id);
-}
+// void DailyPresenter::onRecipeSelected(int id)
+// {
+//     spdlog::info("DailyPresenter::onRecipeSelected({})", id);
+//     m_recipeModel->setSelectedId(id);
+// }
 
-void DailyPresenter::onRecipeBookPageChanged()
-{
-    spdlog::info("DailyPresenter::onFoodRecipeBookPageChanged()");
-    m_dailyView->setRecipes(m_recipeModel->getRecipes());
-}
+// void DailyPresenter::onRecipeBookPageChanged()
+// {
+//     spdlog::info("DailyPresenter::onFoodRecipeBookPageChanged()");
+//     m_dailyView->setRecipes(m_recipeModel->getRecipes());
+// }

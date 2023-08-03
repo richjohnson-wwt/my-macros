@@ -8,7 +8,7 @@ MyMacroApp::MyMacroApp()
     m_foodListPresenter(&m_foodListView, &m_foodModel), 
     m_foodListView(&m_foodListPresenter),
     m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_recipeModel), 
-    m_dailyView(&m_dailyPresenter, &m_foodListPresenter, &m_foodListView),
+    m_dailyView(&m_dailyPresenter, &m_foodListPresenter, &m_foodListView, &m_recipeListView, &m_recipeListPresenter),
     m_recipePresenter(&m_topRecipeView, &m_recipeModel),
     m_topRecipeView(&m_recipePresenter, &m_recipeListView),
     m_recipeListPresenter(&m_recipeListView, &m_recipeModel),

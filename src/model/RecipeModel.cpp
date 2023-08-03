@@ -3,7 +3,7 @@
 
 #include <spdlog/spdlog.h>
 
-RecipeModel::RecipeModel():m_db("../db/my-macro.sqlite3")
+RecipeModel::RecipeModel():m_db("../db/my-macro.sqlite3"), m_selectedId(0)
 {
     
 }

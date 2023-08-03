@@ -31,12 +31,13 @@ void RecipeListView::createRecipeListPanel(wxPanel *parent)
 }
 
 void RecipeListView::setRecipes(const std::vector<Recipe> &recipes) {
-    spdlog::info("RecipeListView::setRecipes");
+    spdlog::info("RecipeListView::setRecipes with size {}", recipes.size());
     m_recipesListView->DeleteAllItems();
     int row = 0;
     for (auto &recipe : recipes) {
         m_recipesListView->InsertItem(row, std::to_string(recipe.id));
         m_recipesListView->SetItem(row, 1, recipe.name);
+        spdlog::info("RecipeListView::setRecipes with name {}", recipe.name);
         row++;
     }
 }

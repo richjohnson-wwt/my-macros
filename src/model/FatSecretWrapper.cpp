@@ -54,12 +54,13 @@ FatSecret::GetFood FatSecretWrapper::getFood(const std::string& id)
     const std::string response = m_curlWrapper.executeCurl(command);
     
     FatSecret::GetFood getFood = m_fatSecretModel.handleGetResponse(response);
+
     return getFood;
 }
 
-void FatSecretWrapper::addFoodById(const std::string& id)
+void FatSecretWrapper::addGetFoodToDb()
 {
-    spdlog::info("FatSecretWrapper::addFoodById {}", id);
+    spdlog::info("FatSecretWrapper::addGetFoodToDb");
     FatSecret::GetFood getFoodWithServingIndex = m_fatSecretModel.retrieveGetFood(0);
 
     Unit u = m_dbConnection.getUnit(getFoodWithServingIndex.servings.serving[0].metric_serving_unit);

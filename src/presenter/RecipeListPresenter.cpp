@@ -2,18 +2,24 @@
 
 #include <spdlog/spdlog.h>
 
-RecipeListPresenter::RecipeListPresenter(RecipeListView *view, IRecipeModel *model)
-: m_recipeModel(model), m_recipeListView(view) {
+RecipeListPresenter::RecipeListPresenter(RecipeListView *view, IRecipeListModel *model, IRecipeSubject *recipeSubject)
+: m_recipeListModel(model), m_recipeListView(view), m_recipeSubject(recipeSubject) {
 
+}
+
+void RecipeListPresenter::postInit() {
+    spdlog::debug("RecipeListPresenter::postInit");
+    m_recipeSubject->attach(this);
+    update();
 }
 
 void RecipeListPresenter::onRecipeSelected(int id) {
     spdlog::debug("RecipeListPresenter::onRecipeSelected({})", id);
-    m_recipeModel->setSelectedId(id);
+    m_recipeListModel->setSelectedId(id);
 }
 
-void RecipeListPresenter::setActive() {
-    spdlog::debug("RecipeListPresenter::setActive with id({})", m_recipeModel->getSelectedId());
-    m_recipeListView->setRecipes(m_recipeModel->getRecipes());
-    m_recipeListView->setSelected(m_recipeModel->getSelectedId());
+void RecipeListPresenter::update() {
+    spdlog::debug("RecipeListPresenter::update");
+    m_recipeListView->setRecipes(m_recipeListModel->getRecipes());
+    m_recipeListView->setSelected(m_recipeListModel->getSelectedId());
 }

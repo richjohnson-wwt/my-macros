@@ -8,7 +8,8 @@ class IFatSecretCallback {
 public:
     virtual void onRefreshToken() = 0;
     virtual void onSearch(std::string& searchText) = 0;
-    // virtual void onGetResult(const std::string& id) = 0;
+    virtual void onGetResult(const std::string& id) = 0;
+    virtual void onAddFoodToMyDatabase() = 0;
 };
 
 class FatSecretPresenter : public IFatSecretCallback {
@@ -21,7 +22,8 @@ public:
 
     void onRefreshToken() override;
     void onSearch(std::string& searchText) override;
-    // void onGetResult(const std::string& id) override;
+    void onGetResult(const std::string& id) override;
+    void onAddFoodToMyDatabase() override;
 };
 
 

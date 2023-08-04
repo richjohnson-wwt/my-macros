@@ -3,15 +3,17 @@
 #include <spdlog/spdlog.h>
 
 MyMacroApp::MyMacroApp(wxFrame *parent)
-: m_foodPresenter(&m_topFoodView, &m_foodModel, &m_foodModel), 
+: m_foodModel(&m_foodListModel), 
+    m_recipeModel(&m_recipeListModel),
+    m_foodPresenter(&m_topFoodView, &m_foodModel, &m_foodListModel), 
     m_topFoodView(&m_foodPresenter, &m_fatSecretView), 
-    m_foodListPresenter(&m_foodListView, &m_foodModel), 
+    m_foodListPresenter(&m_foodListView, &m_foodListModel, &m_foodModel), 
     m_foodListView(&m_foodListPresenter),
     m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_recipeModel), 
     m_dailyView(&m_dailyPresenter),
-    m_recipePresenter(&m_topRecipeView, &m_recipeModel, &m_recipeModel),
+    m_recipePresenter(&m_topRecipeView, &m_recipeModel, &m_recipeListModel),
     m_topRecipeView(&m_recipePresenter),
-    m_recipeListPresenter(&m_recipeListView, &m_recipeModel),
+    m_recipeListPresenter(&m_recipeListView, &m_recipeListModel, &m_recipeModel),
     m_recipeListView(&m_recipeListPresenter),
     m_fatSecretView(&m_fatSecretPresenter),
     m_fatSecretPresenter(&m_fatSecretView, &m_fatSecretWrapper),
@@ -52,7 +54,9 @@ void MyMacroApp::postInit()
 {
     spdlog::info("MyMacroApp::postInit");
     m_foodPresenter.postInit();
+    m_foodListPresenter.postInit();
     m_recipePresenter.postInit();
+    m_recipeListPresenter.postInit();
 
-    m_foodListPresenter.setActive();
+
 }

@@ -35,7 +35,6 @@ public:
     void setRecipes(const std::vector<Recipe> &recipes) override;
     void setSelected(int idx) override;
 
-    void setActive();
 };
 
 #endif // RECIPE_LIST_VIEW_H

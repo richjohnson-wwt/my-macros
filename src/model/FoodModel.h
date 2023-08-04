@@ -1,6 +1,7 @@
 #ifndef FOOD_H
 #define FOOD_H
 
+#include "FoodListModel.h"
 #include "Db.h"
 #include "MyMacroTypes.h"
 #include <vector>
@@ -20,25 +21,24 @@ public:
 
 class IFoodModel {
 public:
-    virtual void setSelectedId(int id) = 0;
-    virtual int getSelectedId() = 0;
-    virtual std::vector<Food> getFoods() = 0;
+    
     virtual Food getFoodById(int id) = 0;
+    virtual int getSelectedId() = 0;
 };
 
 class FoodModel : public IFoodModel, public IFoodSubject {
 private:
     Db m_db;
-    int m_selectedId;
+    FoodListModel *m_foodListModel;
+    
     std::vector<IFoodObserver*> m_observers;
 
 public:
-    FoodModel();
+    FoodModel(FoodListModel *foodListModel);
 
-    void setSelectedId(int idx) override;
-    int getSelectedId() override;
-    std::vector<Food> getFoods() override;
+    
     Food getFoodById(int id) override;
+    int getSelectedId() override;
 
     void attach(IFoodObserver* observer) override;
     void notify() override;

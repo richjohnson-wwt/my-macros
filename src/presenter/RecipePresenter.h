@@ -2,28 +2,24 @@
 #define RECIPE_PRESENTER_H
 
 #include "../model/RecipeModel.h"
+#include "../model/RecipeListModel.h"
 #include "../view/TopRecipeView.h"
-
-class IRecipeSubject;
 
 class IRecipeCallback {
 public:
-    virtual void setActive() = 0;
 };
 
 
-class RecipePresenter : public IRecipeCallback, public IRecipeObserver {
+class RecipePresenter : public IRecipeCallback, public IRecipeListObserver {
 private:
     IRecipeModel *m_recipeModel;
     ITopRecipeView *m_topRecipeView;
-    IRecipeSubject *m_recipeSubject;
+    IRecipeListSubject *m_recipeListSubject;
     
 public:
-    RecipePresenter(ITopRecipeView *view, IRecipeModel *model, IRecipeSubject *recipeSubject);
+    RecipePresenter(ITopRecipeView *view, IRecipeModel *model, IRecipeListSubject *recipeListSubject);
 
     void postInit();
-
-    void setActive() override;
 
     void update() override;
 };

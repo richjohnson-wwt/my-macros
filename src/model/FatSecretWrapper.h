@@ -14,13 +14,14 @@ public:
     void refreshToken();
     FatSecret::SearchFoods searchFoods(std::string& name);
     FatSecret::GetFood getFood(const std::string& id);
-    void addFoodById(const std::string& id);
+    void addGetFoodToDb();
 
 private:
     Db m_dbConnection;
     CurlWrapper m_curlWrapper;
     FatSecret::FatSecretModel m_fatSecretModel;
     Transformer m_transformer;
+    
 
     void writeTokenToFile(const std::string& token);
 };

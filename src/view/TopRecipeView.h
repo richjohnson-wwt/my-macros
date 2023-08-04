@@ -1,12 +1,9 @@
 #ifndef TOP_RECIPE_VIEW_H
 #define TOP_RECIPE_VIEW_H
 
-// #include "RecipeListView.h"
-
 #include "../model/MyMacroTypes.h"
 
 #include <wx/wx.h>
-// #include "wx/splitter.h"
 #include "wx/notebook.h"
 #include "wx/listctrl.h"
 #include "wx/event.h"

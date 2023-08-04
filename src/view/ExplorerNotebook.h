@@ -16,7 +16,6 @@ public:
     wxNotebook *createExplorerBookCtrl();
 
 protected:
-    void onNotebookPageChanged( wxNotebookEvent &event );
     
 private:
     wxFrame *m_wxFrame;

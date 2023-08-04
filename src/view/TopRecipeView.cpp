@@ -25,9 +25,8 @@ void TopRecipeView::setRecipeId(const std::string &id)
 
 wxSizer *TopRecipeView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &label, wxTextCtrl *text) {
     wxSizer *sizerRow = new wxBoxSizer(wxHORIZONTAL);
-    sizerRow->Add(new wxStaticText(panel, wxID_ANY, label), 0,
-                  wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    sizerRow->Add(text, 0, wxALIGN_CENTRE_VERTICAL);
+    sizerRow->Add(new wxStaticText(panel, wxID_ANY, label, wxDefaultPosition, wxSize(200, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
+    sizerRow->Add(text, 0, wxALIGN_LEFT);
     return sizerRow;
 }
 
@@ -100,7 +99,6 @@ void TopRecipeView::createRightFoodItemPanel(wxPanel *panel) {
 
     panel->SetSizer(topsizer);
 
-    // return panel;
 }
 
 void TopRecipeView::onDeleteRecipe(wxCommandEvent &event)

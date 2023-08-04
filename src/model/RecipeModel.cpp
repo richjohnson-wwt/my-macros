@@ -3,32 +3,10 @@
 
 #include <spdlog/spdlog.h>
 
-RecipeModel::RecipeModel():m_db("../db/my-macro.sqlite3"), m_selectedId(0)
+RecipeModel::RecipeModel(RecipeListModel *recipeListModel)
+:m_db("../db/my-macro.sqlite3"), m_recipeListModel(recipeListModel)
 {
     
-}
-
-
-std::vector<Recipe> RecipeModel::getRecipes()
-{
-    return m_db.getRecipes();
-}
-
-void RecipeModel::setSelectedId(int id)
-{
-    spdlog::debug("RecipeModel::setSelectedId({})", id);
-    m_selectedId = id;
-    notify();
-}
-
-int RecipeModel::getSelectedId()
-{
-    spdlog::debug("RecipeModel::getSelectedId({})", m_selectedId);
-    return m_selectedId;
-}
-Recipe RecipeModel::getRecipeById(int id)
-{
-    return m_db.getRecipeById(id);
 }
 
 void RecipeModel::attach(IRecipeObserver *observer)
@@ -43,4 +21,15 @@ void RecipeModel::notify()
     {
         observer->update();
     }
+}
+
+int RecipeModel::getSelectedId()
+{
+    spdlog::debug("RecipeModel::getSelectedId({})", m_selectedId);
+    return m_recipeListModel->getSelectedId();
+}
+
+Recipe RecipeModel::getRecipeById(int id)
+{
+    return m_db.getRecipeById(id);
 }

@@ -1,6 +1,7 @@
 #ifndef RECIPE_MODEL_H
 #define RECIPE_MODEL_H
 
+#include "RecipeListModel.h"
 #include "Db.h"
 #include "MyMacroTypes.h"
 #include <vector>
@@ -18,8 +19,6 @@ public:
 
 class IRecipeModel {
 public:
-    virtual std::vector<Recipe> getRecipes() = 0;
-    virtual void setSelectedId(int idx) = 0;
     virtual int getSelectedId() = 0;
     virtual Recipe getRecipeById(int id) = 0;
 };
@@ -29,12 +28,11 @@ private:
     Db m_db;
     int m_selectedId;
     std::vector<IRecipeObserver*> m_observers;
+    RecipeListModel *m_recipeListModel;
 
 public:
-    RecipeModel();
+    RecipeModel(RecipeListModel *recipeListModel);
 
-    std::vector<Recipe> getRecipes() override;
-    void setSelectedId(int idx) override;
     int getSelectedId() override;
     Recipe getRecipeById(int id) override;
 

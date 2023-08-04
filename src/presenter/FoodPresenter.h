@@ -2,6 +2,7 @@
 #define FOOD_PRESENTER_H
 
 #include "../model/FoodModel.h"
+#include "../model/FoodListModel.h"
 #include "../view/TopFoodView.h"
 
 class IFoodSubject;
@@ -12,14 +13,14 @@ public:
 
 };
 
-class FoodPresenter : public IFoodCallback, public IFoodObserver {
+class FoodPresenter : public IFoodCallback, public IFoodListObserver {
 private:
     IFoodModel *m_foodModel;
     ITopFoodView *m_topFoodView;
-    IFoodSubject *m_foodSubject;
+    IFoodListSubject *m_foodListSubject;
 
 public:
-    FoodPresenter(ITopFoodView *view, IFoodModel *model, IFoodSubject *foodSubject);
+    FoodPresenter(ITopFoodView *view, IFoodModel *model, IFoodListSubject *foodListSubject);
 
     void update() override;
 

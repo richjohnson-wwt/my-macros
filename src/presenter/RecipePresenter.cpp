@@ -2,21 +2,15 @@
 
 #include <spdlog/spdlog.h>
 
-RecipePresenter::RecipePresenter(ITopRecipeView *view, IRecipeModel *model, IRecipeSubject *recipeSubject)
-: m_recipeModel(model), m_topRecipeView(view), m_recipeSubject(recipeSubject)
+RecipePresenter::RecipePresenter(ITopRecipeView *view, IRecipeModel *model, IRecipeListSubject *recipeListSubject)
+: m_recipeModel(model), m_topRecipeView(view), m_recipeListSubject(recipeListSubject)
 {
 }
 
 void RecipePresenter::postInit()
 {
     spdlog::debug("RecipePresenter::postInit");
-    m_recipeSubject->attach(this);
-}
-
-void RecipePresenter::setActive()
-{
-    spdlog::debug("RecipePresenter::setActive");
-    
+    m_recipeListSubject->attach(this);
 }
 
 void RecipePresenter::update() {

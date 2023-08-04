@@ -110,13 +110,10 @@ namespace FatSecret
 
     SearchFoods FatSecretModel::handleSearchResponse(const std::string &response)
     {
-        // write response to ../src/data/search_food.json
-        // std::ofstream ofs("../src/data/search_food.json", std::ios::out | std::ios::trunc);
         try {
             json j = json::parse(response);
             m_searchFoodsResponse = j["foods"];
-            // ofs << j;
-            // ofs.close();
+
         } catch (nlohmann::json_abi_v3_11_2::detail::type_error& e) {
             spdlog::error(e.what());
             spdlog::error("Error response: {}", response);
@@ -128,9 +125,6 @@ namespace FatSecret
     SearchFood FatSecretModel::retrieveFoodById(std::string foodId)
     {
         spdlog::debug("SearchResultJson::retrieveFoodById {}", foodId);
-        // std::ifstream ifs(foodJsonFile);
-        // json j = json::parse(ifs);
-        // m_searchFoodsResponse = j["foods"];
         for (auto food : m_searchFoodsResponse.food)
         {
             if (food.food_id == foodId)
@@ -144,28 +138,23 @@ namespace FatSecret
 
     GetFood FatSecretModel::handleGetResponse(const string &response)
     {
-        // std::ofstream ofs("../src/data/get_food.json", std::ios::out | std::ios::trunc);
         json j = json::parse(response);
         m_getFoodResponse = j["food"];
-        // ofs << j;
-        // ofs.close();
+
         return m_getFoodResponse;
     }
 
     GetFood FatSecretModel::retrieveGetFood(int servingIndex)
     {
-        // std::ifstream ifs(getFoodJsonFile);
-        // json j = json::parse(ifs);
-        // GetFood food = j["food"];
-        // auto serving = m_getFoodResponse.servings.serving[servingIndex];
+        auto serving = m_getFoodResponse.servings.serving[servingIndex];
 
-        // GetFood newFood;
-        // newFood.brand_name = food.brand_name;
-        // newFood.food_id = food.food_id;
-        // newFood.food_name = food.food_name;
-        // newFood.servings.serving.push_back(serving);
+        GetFood newFood;
+        newFood.brand_name = m_getFoodResponse.brand_name;
+        newFood.food_id = m_getFoodResponse.food_id;
+        newFood.food_name = m_getFoodResponse.food_name;
+        newFood.servings.serving.push_back(serving);
         
-        return m_getFoodResponse;
+        return newFood;
     }
 
 } // namespace Macro

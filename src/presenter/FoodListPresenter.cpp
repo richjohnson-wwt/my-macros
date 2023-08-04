@@ -2,20 +2,27 @@
 
 #include <spdlog/spdlog.h>
 
-FoodListPresenter::FoodListPresenter(IFoodListView *view, IFoodModel *model)
-: m_foodModel(model), m_foodListView(view)
+FoodListPresenter::FoodListPresenter(IFoodListView *view, IFoodListModel *model, IFoodSubject *foodSubject)
+: m_foodListModel(model), m_foodListView(view), m_foodSubject(foodSubject)
 {
+}
+
+void FoodListPresenter::postInit()
+{
+    spdlog::debug("FoodListPresenter::postInit");
+    m_foodSubject->attach(this);
+    update();
 }
 
 void FoodListPresenter::onFoodSelected(int id)
 {
     spdlog::debug("FoodListPresenter::onFoodSelected({})", id);
-    m_foodModel->setSelectedId(id);
+    m_foodListModel->setSelectedId(id);
 }
 
-void FoodListPresenter::setActive()
+void FoodListPresenter::update()
 {
-    spdlog::debug("FoodListPresenter::setActive with id({})", m_foodModel->getSelectedId());
-    m_foodListView->setFoods(m_foodModel->getFoods());
-    m_foodListView->setSelected(m_foodModel->getSelectedId());
+    spdlog::debug("FoodListPresenter::update");
+    m_foodListView->setFoods(m_foodListModel->getFoods());
+    m_foodListView->setSelected(m_foodListModel->getSelectedId());
 }

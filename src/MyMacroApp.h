@@ -26,8 +26,10 @@
 
 // MODEL
 #include "model/FoodModel.h"
+#include "model/FoodListModel.h"
 #include "model/DailyModel.h"
 #include "model/RecipeModel.h"
+#include "model/RecipeListModel.h"
 #include "model/FatSecretWrapper.h"
 
 class MyMacroApp
@@ -46,16 +48,19 @@ private:
 
     FoodListPresenter m_foodListPresenter;
     FoodListView m_foodListView;
+    FoodListModel m_foodListModel;
 
     DailyPresenter m_dailyPresenter;
     DailyView m_dailyView;
     DailyModel m_dailyModel;
 
-    RecipeModel m_recipeModel;
+    RecipeListModel m_recipeListModel;
     RecipeListPresenter m_recipeListPresenter;
     RecipeListView m_recipeListView;
+
     TopRecipeView m_topRecipeView;
     RecipePresenter m_recipePresenter;
+    RecipeModel m_recipeModel;
 
     FatSecretView m_fatSecretView;
     FatSecretPresenter m_fatSecretPresenter;

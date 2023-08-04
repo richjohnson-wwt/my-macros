@@ -29,11 +29,6 @@ void FoodListView::createFoodListPanel(wxPanel *parent)
     parent->SetSizer(topSizer);
 }
 
-void FoodListView::setActive() {
-    spdlog::debug("FoodListView::setActive");
-    m_foodListCallback->setActive();
-}
-
  void FoodListView::setFoods(const std::vector<Food> &foods)
 {
     spdlog::debug("FoodListView::setFoods with size {}", foods.size());
@@ -57,7 +52,7 @@ void FoodListView::onFoodSelChange(wxListEvent &event)
 {
     wxListItem item = event.GetItem();
     wxInt16 id = wxAtoi(item.GetText());
-    spdlog::debug("FoodListView::onFoodSelChange GetText({})", id);
+    spdlog::info("FoodListView::onFoodSelChange GetText({})", id);
     m_foodListCallback->onFoodSelected(id);
 }
 

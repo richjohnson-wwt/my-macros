@@ -21,13 +21,7 @@ void FoodModel::notify()
     }
 }
 
-
-int FoodModel::getSelectedId()
+Food FoodModel::getFood()
 {
-    return m_foodListModel->getSelectedId();
-}
-
-Food FoodModel::getFoodById(int id)
-{
-    return m_db.getFoodById(id);
+    return m_db.getFoodById(m_foodListModel->getSelectedId());
 }

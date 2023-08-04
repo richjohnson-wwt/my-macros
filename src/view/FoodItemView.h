@@ -13,6 +13,13 @@ class IFoodCallback;
 class IFoodItemView {
 public:
     virtual void setFoodId(const std::string& id) = 0;
+    virtual void setFoodName(const std::string& name) = 0;
+    virtual void setFoodFat(const std::string& fat) = 0;
+    virtual void setFoodProtein(const std::string& protein) = 0;
+    virtual void setFoodCarb(const std::string& carb) = 0;
+    virtual void setFoodCalories(const std::string& calories) = 0;
+    virtual void setFoodQuantity(const std::string& quantity) = 0;
+    virtual void setFoodUnit(const std::string& unit) = 0;
 };
 
 class FoodItemView : public wxEvtHandler, public IFoodItemView {
@@ -49,6 +56,13 @@ public:
     wxPanel *createFoodItemPanel(wxNotebook *parent);
 
     void setFoodId(const std::string& id);
+    void setFoodName(const std::string& name);
+    void setFoodFat(const std::string& fat);
+    void setFoodProtein(const std::string& protein);
+    void setFoodCarb(const std::string& carb);
+    void setFoodCalories(const std::string& calories);
+    void setFoodQuantity(const std::string& quantity);
+    void setFoodUnit(const std::string& unit);
 
 };
 

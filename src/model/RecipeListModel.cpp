@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-RecipeListModel::RecipeListModel():m_db("../db/my-macro.sqlite3"), m_selectedId(0)
+RecipeListModel::RecipeListModel():m_db("../db/my-macro.sqlite3"), m_selectedId(1)
 {
     spdlog::debug("RecipeListModel::RecipeListModel");
 }

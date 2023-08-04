@@ -10,6 +10,23 @@ Db::~Db()
 {
 }
 
+Food Db::foodHelper(SQLite::Statement &query)
+{
+    Food f;
+    while (query.executeStep())
+    {
+        f.id = query.getColumn(0);
+        f.name = std::string(query.getColumn(1));
+        f.fat = query.getColumn(2);
+        f.protein = query.getColumn(3);
+        f.carb = query.getColumn(4);
+        f.calories = query.getColumn(5);
+        f.quantity = query.getColumn(6);
+        f.unit_id = query.getColumn(7);
+    }
+    return f;
+}
+
 std::vector<Food> Db::getFoods()
 {
     spdlog::debug("Db::getFoods");
@@ -184,4 +201,45 @@ void Db::addFood(const Food &f) {
         std::cerr << e.what() << std::endl;
         spdlog::error(e.what());
     }
+}
+
+std::vector<Ingredient> Db::getIngredients(const Recipe& r) {
+    spdlog::debug("Db::getIngredients");
+    std::vector<Ingredient> ingredients;
+    try
+    {
+        SQLite::Statement query(m_db, "SELECT * FROM xref_recipe_foods WHERE recipe_id = ?");
+        query.bind(1, r.id);
+        while (query.executeStep())
+        {
+            Food f = getFood(static_cast<int>(query.getColumn(1)));
+            Ingredient i{f, query.getColumn(2), getUnit(static_cast<int>(query.getColumn(3)))};
+            ingredients.push_back(i);
+        }
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    return ingredients;
+
+}
+
+Food Db::getFood(int id)
+{
+    spdlog::debug("Db::getFood");
+    Food f;
+    try
+    {
+        SQLite::Statement query(m_db, "SELECT * FROM Foods where food_id = ?");
+        query.bind(1, id);
+        f = foodHelper(query);
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    return f;
 }

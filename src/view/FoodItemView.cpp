@@ -7,16 +7,11 @@ FoodItemView::FoodItemView(IFoodCallback *callback)
 {
 }
 
-void FoodItemView::setFoodId(const std::string &id)
-{
-    m_foodIdTextCtrl->SetValue(id);
-}
-
 wxSizer *FoodItemView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &label, wxTextCtrl *text)
 {
     wxSizer *sizerRow = new wxBoxSizer(wxHORIZONTAL);
-    sizerRow->Add(new wxStaticText(panel, wxID_ANY, label), 0,
-                  wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    sizerRow->Add(new wxStaticText(panel, wxID_ANY, label, wxDefaultPosition, wxSize(100, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
+    sizerRow->Add(text, 0, wxALIGN_LEFT);
     sizerRow->Add(text, 0, wxALIGN_CENTRE_VERTICAL);
 
     return sizerRow;
@@ -31,7 +26,7 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
     m_foodIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food ID:", m_foodIdTextCtrl), 0, wxALL, 10);
 
-    m_foodNameTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(400, 20));
+    m_foodNameTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food Name:", m_foodNameTextCtrl), 0, wxALL, 10);
 
     m_foodFatTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
@@ -92,3 +87,45 @@ void FoodItemView::onNewFood(wxCommandEvent &event)
 void FoodItemView::onFoodUnitComboBox(wxCommandEvent &event)
 {
 }
+
+
+void FoodItemView::setFoodId(const std::string &id)
+{
+    m_foodIdTextCtrl->SetValue(id);
+}
+
+void FoodItemView::setFoodName(const std::string &name)
+{
+    m_foodNameTextCtrl->SetValue(name);
+}
+
+void FoodItemView::setFoodFat(const std::string &fat)
+{
+    m_foodFatTextCtrl->SetValue(fat);
+}
+
+void FoodItemView::setFoodProtein(const std::string &protein)
+{
+    m_foodProteinTextCtrl->SetValue(protein);
+}
+
+void FoodItemView::setFoodCarb(const std::string &carb)
+{
+    m_foodCarbTextCtrl->SetValue(carb);
+}
+
+void FoodItemView::setFoodCalories(const std::string &calories)
+{
+    m_foodCaloriesTextCtrl->SetValue(calories);
+}
+
+void FoodItemView::setFoodQuantity(const std::string &quantity)
+{
+    m_foodQuantityTextCtrl->SetValue(quantity);
+}
+
+void FoodItemView::setFoodUnit(const std::string &unit)
+{
+    m_foodUnitComboBox->SetValue(unit);
+}
+

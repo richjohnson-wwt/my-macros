@@ -16,7 +16,13 @@ void FoodPresenter::postInit() {
 void FoodPresenter::update()
 {
     spdlog::debug("FoodPresenter::update");
-    int id = m_foodModel->getSelectedId();
-    Food food = m_foodModel->getFoodById(id);
+    Food food = m_foodModel->getFood();
     m_foodItemView->setFoodId(std::to_string(food.id));
+    m_foodItemView->setFoodName(food.name);
+    m_foodItemView->setFoodFat(std::to_string(food.fat));
+    m_foodItemView->setFoodProtein(std::to_string(food.protein));
+    m_foodItemView->setFoodCarb(std::to_string(food.carb));
+    m_foodItemView->setFoodCalories(std::to_string(food.calories));
+    m_foodItemView->setFoodQuantity(std::to_string(food.quantity));
+    m_foodItemView->setFoodUnit(std::to_string(food.unit_id));
 }

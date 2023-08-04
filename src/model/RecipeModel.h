@@ -19,22 +19,21 @@ public:
 
 class IRecipeModel {
 public:
-    virtual int getSelectedId() = 0;
-    virtual Recipe getRecipeById(int id) = 0;
+    virtual Recipe getRecipe() = 0;
+    virtual std::vector<Ingredient> getIngredients() = 0;
 };
 
 class RecipeModel : public IRecipeModel, public IRecipeSubject {
 private:
     Db m_db;
-    int m_selectedId;
     std::vector<IRecipeObserver*> m_observers;
     RecipeListModel *m_recipeListModel;
 
 public:
     RecipeModel(RecipeListModel *recipeListModel);
 
-    int getSelectedId() override;
-    Recipe getRecipeById(int id) override;
+    Recipe getRecipe() override;
+    std::vector<Ingredient> getIngredients() override;
 
     void attach(IRecipeObserver* observer) override;
     void notify() override;

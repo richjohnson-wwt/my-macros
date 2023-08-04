@@ -32,4 +32,37 @@ struct Recipe
     int servings;
 };
 
+struct Ingredient
+{
+    Food food;
+    double unitMultiplier;
+    Unit unit;
+};
+
+struct XrefRecipeFood
+{
+    int recipeId;
+    int foodId;
+    int amount;
+    int unitId;
+};
+
+struct DailyFood
+{
+    int id;
+    std::string date;
+    int dailyActivityBonusCalories;
+};
+
+struct XrefDailyFood
+{
+    int id;
+    int dailyFoodId;
+    std::string name;
+    int fat;
+    int protein;
+    int carb;
+    int calories;
+};
+
 #endif // MY_MACRO_TYPES_H

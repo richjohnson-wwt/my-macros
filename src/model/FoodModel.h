@@ -16,14 +16,12 @@ class IFoodSubject {
 public:
     virtual void attach(IFoodObserver* observer) = 0;
     virtual void notify() = 0;
-
 };
 
 class IFoodModel {
 public:
     
-    virtual Food getFoodById(int id) = 0;
-    virtual int getSelectedId() = 0;
+    virtual Food getFood() = 0;
 };
 
 class FoodModel : public IFoodModel, public IFoodSubject {
@@ -35,10 +33,8 @@ private:
 
 public:
     FoodModel(FoodListModel *foodListModel);
-
     
-    Food getFoodById(int id) override;
-    int getSelectedId() override;
+    Food getFood() override;
 
     void attach(IFoodObserver* observer) override;
     void notify() override;

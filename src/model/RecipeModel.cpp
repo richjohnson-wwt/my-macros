@@ -23,13 +23,14 @@ void RecipeModel::notify()
     }
 }
 
-int RecipeModel::getSelectedId()
+Recipe RecipeModel::getRecipe()
 {
-    spdlog::debug("RecipeModel::getSelectedId({})", m_selectedId);
-    return m_recipeListModel->getSelectedId();
+    spdlog::debug("RecipeModel::getRecipe and selected is: {}", m_recipeListModel->getSelectedId());
+    return m_db.getRecipeById(m_recipeListModel->getSelectedId());
 }
 
-Recipe RecipeModel::getRecipeById(int id)
+std::vector<Ingredient> RecipeModel::getIngredients()
 {
-    return m_db.getRecipeById(id);
+    Recipe r = getRecipe();
+    return m_db.getIngredients(r);
 }

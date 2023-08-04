@@ -18,11 +18,6 @@ wxPanel *TopRecipeView::createRecipePanel(wxNotebook *parent) {
     return topPanel;
 }
 
-void TopRecipeView::setRecipeId(const std::string &id)
-{
-    m_recipeIdTextCtrl->SetValue(id);
-}
-
 wxSizer *TopRecipeView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &label, wxTextCtrl *text) {
     wxSizer *sizerRow = new wxBoxSizer(wxHORIZONTAL);
     sizerRow->Add(new wxStaticText(panel, wxID_ANY, label, wxDefaultPosition, wxSize(200, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
@@ -124,4 +119,58 @@ void TopRecipeView::onDeleteIngredient(wxCommandEvent &event) {
 void TopRecipeView::onIngredientSelChange(wxListEvent &event) {
     
 }
+
+
+void TopRecipeView::setRecipeId(const std::string &id)
+{
+    m_recipeIdTextCtrl->SetValue(id);
+}
+
+void TopRecipeView::setRecipeName(const std::string &name)
+{
+    m_recipeNameTextCtrl->SetValue(name);
+}
+
+void TopRecipeView::setRecipeDescription(const std::string &description)
+{
+    m_recipeDescriptionTextCtrl->SetValue(description);
+}
+
+void TopRecipeView::setRecipeUrl(const std::string &url)
+{
+    m_recipeUrlTextCtrl->SetValue(url);
+}
+
+void TopRecipeView::setRecipeServings(const std::string &servings)
+{
+    m_recipeServingsTextCtrl->SetValue(servings);
+}
+
+void TopRecipeView::setRecipeInstructions(const std::string &instructions)
+{
+    m_recipeInstructionsTextCtrl->SetValue(instructions);
+}
+
+void TopRecipeView::setRecipeIngredients(const std::vector<Ingredient> &ingredients)
+{
+    m_recipeIngredientsListView->DeleteAllItems();
+    int row = 0;
+    for (auto i : ingredients) {
+        wxLogMessage("RecipePanel::update Add ingredient: %s", i.food.name);
+
+        m_recipeIngredientsListView->InsertItem(row, std::to_string(i.food.id));
+        m_recipeIngredientsListView->SetItem(row, 1, i.food.name);
+        m_recipeIngredientsListView->SetItem(row, 2, wxString(std::to_string(i.food.quantity)));
+        // Unit foodUnit = m_dbConnection->getUnit(i.food.unit_id);
+        m_recipeIngredientsListView->SetItem(row, 3, "todo");//foodUnit.name);
+        m_recipeIngredientsListView->SetItem(row, 4, std::to_string(i.unitMultiplier));
+        row++;
+    }
+}
+
+void TopRecipeView::setRecipeIngredientMultiplier(const std::string &multiplier)
+{
+    m_recipeIngredientMultiplierTextCtrl->SetValue(multiplier);
+}
+
 

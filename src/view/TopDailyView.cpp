@@ -78,6 +78,13 @@ void DailyView::postInit() {
 
 void DailyView::onDateChanged(wxDateEvent& event) {
     spdlog::debug("DailyView::onDateChanged");
+    // get the date from the event argument
+    wxDateTime date = event.GetDate();
+    // get the date as string in format &Y-&m-&d
+    std::string dateStr = date.FormatISODate().ToStdString();
+    spdlog::info("DailyView::onDateChanged {}", dateStr);
+    
+    m_dailyCallback->onDateChanged(dateStr);
 }
 
 void DailyView::onAddDailyFood(wxCommandEvent& event) {
@@ -90,4 +97,37 @@ void DailyView::onDeleteDailyFood(wxCommandEvent& event) {
 
 void DailyView::onAddActivityBonus(wxCommandEvent& event) {
     spdlog::debug("DailyView::onAddActivityBonus");
+}
+
+void DailyView::setDailyActivityBonus(const std::string& bonus) {
+    spdlog::debug("DailyView::setDailyActivityBonus");
+    m_dailyActivityBonusTextCtrl->SetValue(bonus);
+}
+
+void DailyView::setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFoods) {
+    spdlog::debug("DailyView::setDailyFoodList");
+
+    m_dailyFoodListView->DeleteAllItems();
+
+    for (int i = 0; i < xrefDailyFoods.size(); i++) {
+        m_dailyFoodListView->InsertItem(i, xrefDailyFoods[i].name);
+        m_dailyFoodListView->SetItem(i, 1, std::to_string(xrefDailyFoods[i].calories));
+        m_dailyFoodListView->SetItem(i, 2, std::to_string(xrefDailyFoods[i].fat));
+        m_dailyFoodListView->SetItem(i, 3, std::to_string(xrefDailyFoods[i].protein));
+        m_dailyFoodListView->SetItem(i, 4, std::to_string(xrefDailyFoods[i].carb));
+    }
+}
+
+void DailyView::setTotalsList(const std::vector<XrefDailyFood> &totals) {
+    spdlog::info("DailyView::setTotalsList size: {}", totals.size());
+
+    m_totalsListView->DeleteAllItems();
+
+    for (int i = 0; i < totals.size(); i++) {
+        m_totalsListView->InsertItem(i, totals[i].name);
+        m_totalsListView->SetItem(i, 1, std::to_string(totals[i].calories));
+        m_totalsListView->SetItem(i, 2, std::to_string(totals[i].fat));
+        m_totalsListView->SetItem(i, 3, std::to_string(totals[i].protein));
+        m_totalsListView->SetItem(i, 4, std::to_string(totals[i].carb));
+    }
 }

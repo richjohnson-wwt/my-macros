@@ -13,7 +13,10 @@ class IDailyCallback;
 
 class IDailyView {
 public:
+    virtual void setDailyActivityBonus(const std::string& bonus) = 0;
+    virtual void setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFoods) = 0;
 
+    virtual void setTotalsList(const std::vector<XrefDailyFood> &totals) = 0;
 };
 
 class DailyView : public wxEvtHandler, public IDailyView {
@@ -43,6 +46,11 @@ public:
     wxPanel *createDailyPanel(wxNotebook *parent);
 
     void postInit();
+
+    void setDailyActivityBonus(const std::string& bonus) override;
+    void setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFoods) override;
+
+    void setTotalsList(const std::vector<XrefDailyFood> &totals) override;
 
 };
 

@@ -5,16 +5,18 @@
 MyMacroApp::MyMacroApp(wxFrame *parent)
 : m_dbFood("../db/my-macro.sqlite3"),
     m_dbRecipe("../db/my-macro.sqlite3", &m_dbFood),
+    m_dbDaily("../db/my-macro.sqlite3"),
     m_foodModel(&m_dbFood, &m_foodListModel), 
     m_recipeModel(&m_dbRecipe, &m_recipeListModel),
     m_foodListModel(&m_dbFood),
     m_recipeListModel(&m_dbRecipe),
+    m_dailyModel(&m_dbDaily, &m_foodListModel, &m_recipeListModel),
     m_fatSecretWrapper(&m_dbFood),
     m_foodPresenter(&m_foodItemView, &m_foodModel, &m_foodListModel), 
     m_topFoodView(&m_foodItemView, &m_fatSecretView), 
     m_foodListPresenter(&m_foodListView, &m_foodListModel, &m_foodModel), 
     m_foodListView(&m_foodListPresenter),
-    m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_recipeModel), 
+    m_dailyPresenter(&m_dailyView, &m_dailyModel), 
     m_dailyView(&m_dailyPresenter),
     m_recipePresenter(&m_topRecipeView, &m_recipeModel, &m_recipeListModel),
     m_topRecipeView(&m_recipePresenter),
@@ -63,6 +65,7 @@ void MyMacroApp::postInit()
     m_foodListPresenter.postInit();
     m_recipePresenter.postInit();
     m_recipeListPresenter.postInit();
+    m_dailyPresenter.postInit();
 
 
 }

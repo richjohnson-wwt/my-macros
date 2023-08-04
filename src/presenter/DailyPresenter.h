@@ -2,7 +2,6 @@
 #define DAILY_PRESENTER_H
 
 #include "../model/DailyModel.h"
-#include "../model/RecipeModel.h"
 #include "../view/TopDailyView.h"
 
 enum class DailyPage {
@@ -12,20 +11,22 @@ enum class DailyPage {
 
 class IDailyCallback {
 public:
-
+    virtual void onDateChanged(const std::string& date) = 0;
 };
 
 class DailyPresenter : public IDailyCallback {
 private:
     IDailyModel *m_dailyModel;
     IDailyView *m_dailyView;
-    IRecipeModel *m_recipeModel;
+
+    void populateView();
 
 public:
-    DailyPresenter(IDailyView *view, IDailyModel *model, IRecipeModel *recipeModel);
+    DailyPresenter(IDailyView *view, IDailyModel *model);
 
-    void setActive();
+    void postInit();
 
+    void onDateChanged(const std::string& date) override;
 };
 
 

@@ -20,6 +20,11 @@ public:
     std::vector<Recipe> getRecipes();
     Food getFoodById(int id);
     Recipe getRecipeById(int id);
+
+    Unit getUnit(int id);
+    Unit getUnit(const std::string& name);
+
+    void addFood(const Food& f);
 };
 
 #endif // DB_H

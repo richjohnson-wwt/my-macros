@@ -1,6 +1,7 @@
 #ifndef FAT_SECRET_VIEW_H
 #define FAT_SECRET_VIEW_H
 
+#include "../model/FatSecretModel.h"
 #include <wx/wx.h>
 #include <wx/listctrl.h>
 #include <wx/event.h>
@@ -11,17 +12,20 @@ class IFatSecretCallback;
 
 class IFatSecretView {
 public:
-
+    virtual void setSearchResults(const FatSecret::SearchFoods& searchFoods) = 0;
+    // virtual void setGetResult(const FatSecret::GetFood& getFood) = 0;
 };
 
 class FatSecretView : public wxEvtHandler, public IFatSecretView {
 private:
     IFatSecretCallback *m_fatSecretCallback;
 
-    // wxButton *m_refreshTokenButton;
+    wxButton *m_refreshTokenButton;
 
-    // wxSearchCtrl *m_searchText;
-    // wxListCtrl *m_searchListCtrl;
+    wxSearchCtrl *m_searchText;
+    wxListCtrl *m_searchListCtrl;
+
+    wxButton *m_getResultButton;
 
 protected:
     void onRefreshToken(wxCommandEvent &event);
@@ -29,13 +33,16 @@ protected:
 
     void onSearch(wxCommandEvent& event);
     void onSearchCancel(wxCommandEvent& event);
+    void onGetResult(wxCommandEvent& event);
 
 public:
     FatSecretView(IFatSecretCallback *callback);
     
     wxPanel *createPanel(wxBookCtrlBase *parent);
 
-    void setActive();
+    void setSearchResults(const FatSecret::SearchFoods& searchFoods);
+    // void setGetResult(const FatSecret::GetFood& getFood);
+
 };
 
 

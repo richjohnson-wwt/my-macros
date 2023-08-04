@@ -119,3 +119,69 @@ Recipe Db::getRecipeById(int id)
     }
     return recipe;
 }
+
+Unit Db::getUnit(int id)
+{
+    spdlog::debug("DbConnection::getUnit");
+    Unit u;
+    try
+    {
+        SQLite::Statement query(m_db, "SELECT * FROM Units where unit_id = ?");
+        query.bind(1, id);
+        while (query.executeStep())
+        {
+            u.id = query.getColumn(0);
+            u.name = std::string(query.getColumn(1));
+        }
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    return u;
+}
+
+Unit Db::getUnit(const std::string &name)
+{
+    spdlog::debug("DbConnection::getUnit");
+    Unit u{0, "NONE"};
+    try
+    {
+        // auto formattedName = "%" + name + "%";
+        SQLite::Statement query(m_db, "SELECT * FROM Units where name LIKE ?");
+        query.bind(1, name);
+        while (query.executeStep())
+        {
+            u.id = query.getColumn(0);
+            u.name = std::string(query.getColumn(1));
+        }
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    return u;
+}
+
+void Db::addFood(const Food &f) {
+    spdlog::debug("DbConnection::addFood");
+    try
+    {
+        SQLite::Statement query(m_db, "INSERT INTO Foods (name, fat, protein, carb, calories, quantity, unit_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        query.bind(1, f.name);
+        query.bind(2, f.fat);
+        query.bind(3, f.protein);
+        query.bind(4, f.carb);
+        query.bind(5, f.calories);
+        query.bind(6, f.quantity);
+        query.bind(7, f.unit_id);
+        query.exec();
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+}

@@ -21,7 +21,7 @@ wxPanel *TopFoodView::createFoodPanel(wxNotebook *parent)
 
     wxBoxSizer *notebookSizer = new wxBoxSizer(wxVERTICAL);
     m_foodFatSecretBookCtrl = new wxNotebook(topPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, _("Notebook"));
-    m_foodFatSecretBookCtrl->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TopFoodView::onFoodFatSecretBookPageChanged, this);
+    // m_foodFatSecretBookCtrl->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TopFoodView::onFoodFatSecretBookPageChanged, this);
 
     wxWindow *page1 = createRightFoodItemPanel(m_foodFatSecretBookCtrl);
     wxWindow *page2 = m_fatSecretView->createPanel(m_foodFatSecretBookCtrl);
@@ -121,13 +121,13 @@ void TopFoodView::onFoodUnitComboBox(wxCommandEvent &event)
 {
 }
 
-void TopFoodView::onFoodFatSecretBookPageChanged(wxNotebookEvent &event)
-{
-    if (event.GetSelection() == 0) {
-        spdlog::debug("TopFoodView::onFoodFatSecretBookPageChanged - Food Item");
-        // m_foodCallback->onFoodFatSecretBookPageChanged();
-    } else {
-        spdlog::debug("TopFoodView::onFoodFatSecretBookPageChanged - Fat Secret");
-        m_fatSecretView->setActive();
-    }
-}
+// void TopFoodView::onFoodFatSecretBookPageChanged(wxNotebookEvent &event)
+// {
+//     if (event.GetSelection() == 0) {
+//         spdlog::debug("TopFoodView::onFoodFatSecretBookPageChanged - Food Item");
+//         // m_foodCallback->onFoodFatSecretBookPageChanged();
+//     } else {
+//         spdlog::debug("TopFoodView::onFoodFatSecretBookPageChanged - Fat Secret");
+//         // m_fatSecretView->setActive();
+//     }
+// }

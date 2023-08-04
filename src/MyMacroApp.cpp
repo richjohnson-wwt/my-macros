@@ -14,6 +14,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_recipeListPresenter(&m_recipeListView, &m_recipeModel),
     m_recipeListView(&m_recipeListPresenter),
     m_fatSecretView(&m_fatSecretPresenter),
+    m_fatSecretPresenter(&m_fatSecretView, &m_fatSecretWrapper),
     m_explorerNotebook(parent, &m_foodListView, &m_recipeListView),
     m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView),
     m_wxFrame(parent)
@@ -23,7 +24,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
 MyMacroApp::~MyMacroApp() {
 }
 
-void MyMacroApp::run() {
+void MyMacroApp::create() {
     
     spdlog::set_level(spdlog::level::info);
 
@@ -37,9 +38,9 @@ void MyMacroApp::run() {
     m_mgr.SetManagedWindow(m_wxFrame);
 
     // add the panes to the manager
-    m_mgr.AddPane(m_explorerNotebook.getExplorerBookCtrl(), wxLEFT, wxT("Foods/Recipes"));
+    m_mgr.AddPane(m_explorerNotebook.createExplorerBookCtrl(), wxLEFT, wxT("Foods/Recipes"));
     m_mgr.AddPane(m_logWindow, wxBOTTOM, wxT("Log Console"));
-    m_mgr.AddPane(m_mainNotebook.getMainBookCtrl(), wxCENTER);
+    m_mgr.AddPane(m_mainNotebook.createMainBookCtrl(), wxCENTER);
 
     // tell the manager to "commit" all the changes just made
     m_mgr.Update();
@@ -49,7 +50,7 @@ void MyMacroApp::run() {
 
 void MyMacroApp::postInit()
 {
-    spdlog::debug("MyMacroApp::postInit");
+    spdlog::info("MyMacroApp::postInit");
     m_foodPresenter.postInit();
     m_recipePresenter.postInit();
 

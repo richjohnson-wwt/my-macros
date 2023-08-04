@@ -2,15 +2,20 @@
 
 #include <spdlog/spdlog.h>
 
-ExplorerNotebook::ExplorerNotebook(wxFrame *parent, FoodListView *foodListView, RecipeListView *recipeListView):m_foodListView(foodListView), m_recipeListView(recipeListView)
+ExplorerNotebook::ExplorerNotebook(wxFrame *parent, FoodListView *foodListView, RecipeListView *recipeListView):m_foodListView(foodListView), m_recipeListView(recipeListView), m_wxFrame(parent)
 {
-    m_explorerBookCtrl = new wxNotebook(parent, wxID_ANY, wxDefaultPosition, wxSize(300, 200)); 
+}
+
+wxNotebook *ExplorerNotebook::createExplorerBookCtrl()
+{
+    m_explorerBookCtrl = new wxNotebook(m_wxFrame, wxID_ANY, wxDefaultPosition, wxSize(300, 200)); 
     m_explorerBookCtrl->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &ExplorerNotebook::onNotebookPageChanged, this);
 
     wxWindow *pageFood = CreateExplorerFoodPage(m_explorerBookCtrl);
     wxWindow *pageRecipe = CreateExplorerRecipePage(m_explorerBookCtrl);
     m_explorerBookCtrl->AddPage(pageFood, "Foods", false, 0);
     m_explorerBookCtrl->AddPage(pageRecipe, "Recipes", false, 0);
+    return m_explorerBookCtrl;
 }
 
 void ExplorerNotebook::onNotebookPageChanged( wxNotebookEvent &event ) {

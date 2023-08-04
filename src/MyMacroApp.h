@@ -28,6 +28,7 @@
 #include "model/FoodModel.h"
 #include "model/DailyModel.h"
 #include "model/RecipeModel.h"
+#include "model/FatSecretWrapper.h"
 
 class MyMacroApp
 {
@@ -58,12 +59,13 @@ private:
 
     FatSecretView m_fatSecretView;
     FatSecretPresenter m_fatSecretPresenter;
+    FatSecretWrapper m_fatSecretWrapper;
 
 public:
     MyMacroApp(wxFrame *parent);
     ~MyMacroApp();
 
-    void run();
+    void create();
 
     void postInit();
 };

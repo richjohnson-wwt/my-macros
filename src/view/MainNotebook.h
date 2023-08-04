@@ -15,12 +15,13 @@ class MainNotebook {
 public:
     MainNotebook(wxFrame* parent, DailyView *topDailyView, TopFoodView *topFoodView, TopRecipeView *topRecipeView);
 
-    wxNotebook *getMainBookCtrl() { return m_mainBookCtrl; }
+    wxNotebook *createMainBookCtrl();
     void onNotebookPageChanged( wxNotebookEvent &event );
 
     void postInit();
 
 private:
+    wxFrame *m_wxFrame;
     wxNotebook *m_mainBookCtrl;
     DailyView *m_dailyView;
     TopFoodView *m_topFoodView;

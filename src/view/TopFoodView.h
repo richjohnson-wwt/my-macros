@@ -53,7 +53,7 @@ protected:
     void onSaveFood(wxCommandEvent &event);
     void onNewFood(wxCommandEvent &event);
     void onFoodUnitComboBox(wxCommandEvent &event);
-    void onFoodFatSecretBookPageChanged(wxNotebookEvent &event);
+    // void onFoodFatSecretBookPageChanged(wxNotebookEvent &event);
 
 public:
     TopFoodView(IFoodCallback *callback, FatSecretView *fatSecretView);

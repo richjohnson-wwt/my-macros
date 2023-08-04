@@ -13,12 +13,13 @@
 class ExplorerNotebook : public wxEvtHandler {
 public:
     ExplorerNotebook(wxFrame* parent, FoodListView *foodListView, RecipeListView *recipeListView);
-    wxNotebook *getExplorerBookCtrl() { return m_explorerBookCtrl; }
+    wxNotebook *createExplorerBookCtrl();
 
 protected:
     void onNotebookPageChanged( wxNotebookEvent &event );
     
 private:
+    wxFrame *m_wxFrame;
     wxNotebook *m_explorerBookCtrl;
     FoodListView *m_foodListView;
     RecipeListView *m_recipeListView;

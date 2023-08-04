@@ -2,7 +2,7 @@
 #define FOOD_H
 
 #include "FoodListModel.h"
-#include "Db.h"
+#include "DbFood.h"
 #include "MyMacroTypes.h"
 #include <vector>
 
@@ -10,7 +10,6 @@ class IFoodObserver {
 public:
     virtual void update() = 0;
 };
-
 
 class IFoodSubject {
 public:
@@ -26,13 +25,13 @@ public:
 
 class FoodModel : public IFoodModel, public IFoodSubject {
 private:
-    Db m_db;
+    DbFood *m_dbFood;
     FoodListModel *m_foodListModel;
     
     std::vector<IFoodObserver*> m_observers;
 
 public:
-    FoodModel(FoodListModel *foodListModel);
+    FoodModel(DbFood *db, FoodListModel *foodListModel);
     
     Food getFood() override;
 

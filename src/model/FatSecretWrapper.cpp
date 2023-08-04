@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iostream>
 
-FatSecretWrapper::FatSecretWrapper():m_dbConnection("../db/my-macro.sqlite3") {
+FatSecretWrapper::FatSecretWrapper(DbFood *db): m_dbFood(db) {
 
 }
 
@@ -63,12 +63,12 @@ void FatSecretWrapper::addGetFoodToDb()
     spdlog::info("FatSecretWrapper::addGetFoodToDb");
     FatSecret::GetFood getFoodWithServingIndex = m_fatSecretModel.retrieveGetFood(0);
 
-    Unit u = m_dbConnection.getUnit(getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
+    Unit u = m_dbFood->getUnit(getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
     if (u.name == "NONE")
     {
         spdlog::error("Unit not found {}", getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
     }
     Food f = m_transformer.convert(getFoodWithServingIndex, u);
 
-    m_dbConnection.addFood(f);
+    m_dbFood->addFood(f);
 }

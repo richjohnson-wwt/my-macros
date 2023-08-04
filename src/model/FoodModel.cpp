@@ -1,7 +1,7 @@
 #include "FoodModel.h"
 #include <spdlog/spdlog.h>
 
-FoodModel::FoodModel(FoodListModel *foodListModel):m_db("../db/my-macro.sqlite3"), m_foodListModel(foodListModel)
+FoodModel::FoodModel(DbFood *db, FoodListModel *foodListModel):m_dbFood(db), m_foodListModel(foodListModel)
 {
     
 }
@@ -23,5 +23,5 @@ void FoodModel::notify()
 
 Food FoodModel::getFood()
 {
-    return m_db.getFoodById(m_foodListModel->getSelectedId());
+    return m_dbFood->getFood(m_foodListModel->getSelectedId());
 }

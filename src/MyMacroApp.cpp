@@ -3,8 +3,13 @@
 #include <spdlog/spdlog.h>
 
 MyMacroApp::MyMacroApp(wxFrame *parent)
-: m_foodModel(&m_foodListModel), 
-    m_recipeModel(&m_recipeListModel),
+: m_dbFood("../db/my-macro.sqlite3"),
+    m_dbRecipe("../db/my-macro.sqlite3", &m_dbFood),
+    m_foodModel(&m_dbFood, &m_foodListModel), 
+    m_recipeModel(&m_dbRecipe, &m_recipeListModel),
+    m_foodListModel(&m_dbFood),
+    m_recipeListModel(&m_dbRecipe),
+    m_fatSecretWrapper(&m_dbFood),
     m_foodPresenter(&m_foodItemView, &m_foodModel, &m_foodListModel), 
     m_topFoodView(&m_foodItemView, &m_fatSecretView), 
     m_foodListPresenter(&m_foodListView, &m_foodListModel, &m_foodModel), 

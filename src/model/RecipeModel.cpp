@@ -3,8 +3,8 @@
 
 #include <spdlog/spdlog.h>
 
-RecipeModel::RecipeModel(RecipeListModel *recipeListModel)
-:m_db("../db/my-macro.sqlite3"), m_recipeListModel(recipeListModel)
+RecipeModel::RecipeModel(DbRecipe *db, RecipeListModel *recipeListModel)
+:m_dbRecipe(db), m_recipeListModel(recipeListModel)
 {
     
 }
@@ -26,11 +26,11 @@ void RecipeModel::notify()
 Recipe RecipeModel::getRecipe()
 {
     spdlog::debug("RecipeModel::getRecipe and selected is: {}", m_recipeListModel->getSelectedId());
-    return m_db.getRecipeById(m_recipeListModel->getSelectedId());
+    return m_dbRecipe->getRecipeById(m_recipeListModel->getSelectedId());
 }
 
 std::vector<Ingredient> RecipeModel::getIngredients()
 {
     Recipe r = getRecipe();
-    return m_db.getIngredients(r);
+    return m_dbRecipe->getIngredients(r);
 }

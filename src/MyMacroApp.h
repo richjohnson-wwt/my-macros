@@ -33,6 +33,10 @@
 #include "model/RecipeListModel.h"
 #include "model/FatSecretWrapper.h"
 
+// DB
+#include "model/DbFood.h"
+#include "model/DbRecipe.h"
+
 class MyMacroApp
 {
 private:
@@ -68,6 +72,9 @@ private:
     FatSecretView m_fatSecretView;
     FatSecretPresenter m_fatSecretPresenter;
     FatSecretWrapper m_fatSecretWrapper;
+
+    DbFood m_dbFood;
+    DbRecipe m_dbRecipe;
 
 public:
     MyMacroApp(wxFrame *parent);

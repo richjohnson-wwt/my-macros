@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-RecipeListModel::RecipeListModel():m_db("../db/my-macro.sqlite3"), m_selectedId(1)
+RecipeListModel::RecipeListModel(DbRecipe *db):m_dbRecipe(db), m_selectedId(1)
 {
     spdlog::debug("RecipeListModel::RecipeListModel");
 }
@@ -24,7 +24,7 @@ void RecipeListModel::notify()
 
 std::vector<Recipe> RecipeListModel::getRecipes()
 {
-    return m_db.getRecipes();
+    return m_dbRecipe->getRecipes();
 }
 
 void RecipeListModel::setSelectedId(int id)

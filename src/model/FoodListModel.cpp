@@ -2,7 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
-FoodListModel::FoodListModel():m_db("../db/my-macro.sqlite3"), m_selectedId(1)
+FoodListModel::FoodListModel(DbFood *db):m_dbFood(db), m_selectedId(1)
 {
     spdlog::debug("FoodListModel::FoodListModel");
 }
@@ -24,7 +24,7 @@ void FoodListModel::notify()
 
 std::vector<Food> FoodListModel::getFoods()
 {
-    return m_db.getFoods();
+    return m_dbFood->getFoods();
 }
 
 void FoodListModel::setSelectedId(int id)

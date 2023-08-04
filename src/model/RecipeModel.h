@@ -2,7 +2,7 @@
 #define RECIPE_MODEL_H
 
 #include "RecipeListModel.h"
-#include "Db.h"
+#include "DbRecipe.h"
 #include "MyMacroTypes.h"
 #include <vector>
 
@@ -25,12 +25,12 @@ public:
 
 class RecipeModel : public IRecipeModel, public IRecipeSubject {
 private:
-    Db m_db;
+    DbRecipe *m_dbRecipe;
     std::vector<IRecipeObserver*> m_observers;
     RecipeListModel *m_recipeListModel;
 
 public:
-    RecipeModel(RecipeListModel *recipeListModel);
+    RecipeModel(DbRecipe *db, RecipeListModel *recipeListModel);
 
     Recipe getRecipe() override;
     std::vector<Ingredient> getIngredients() override;

@@ -3,7 +3,7 @@
 
 #include <spdlog/spdlog.h>
 
-DailyModel::DailyModel():m_db("../db/my-macro.sqlite3")
+DailyModel::DailyModel()//:m_db("../db/my-macro.sqlite3")
 {
     
 }

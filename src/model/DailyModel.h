@@ -1,7 +1,7 @@
 #ifndef DAILY_MODEL_H
 #define DAILY_MODEL_H
 
-#include "Db.h"
+#include "DbBase.h"
 #include "MyMacroTypes.h"
 #include <vector>
 
@@ -14,7 +14,7 @@ public:
 
 class DailyModel : public IDailyModel {
 private:
-    Db m_db;
+    // Db m_db;
 
 
 public:

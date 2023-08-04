@@ -5,8 +5,8 @@
 MyMacroApp::MyMacroApp(wxFrame *parent)
 : m_foodModel(&m_foodListModel), 
     m_recipeModel(&m_recipeListModel),
-    m_foodPresenter(&m_topFoodView, &m_foodModel, &m_foodListModel), 
-    m_topFoodView(&m_foodPresenter, &m_fatSecretView), 
+    m_foodPresenter(&m_foodItemView, &m_foodModel, &m_foodListModel), 
+    m_topFoodView(&m_foodItemView, &m_fatSecretView), 
     m_foodListPresenter(&m_foodListView, &m_foodListModel, &m_foodModel), 
     m_foodListView(&m_foodListPresenter),
     m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_recipeModel), 
@@ -16,6 +16,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_recipeListPresenter(&m_recipeListView, &m_recipeListModel, &m_recipeModel),
     m_recipeListView(&m_recipeListPresenter),
     m_fatSecretView(&m_fatSecretPresenter),
+    m_foodItemView(&m_foodPresenter),
     m_fatSecretPresenter(&m_fatSecretView, &m_fatSecretWrapper),
     m_explorerNotebook(parent, &m_foodListView, &m_recipeListView),
     m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView),

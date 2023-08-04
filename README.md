@@ -1,4 +1,4 @@
-# My Macros MVVM (Model View View-Model)
+# My Macros MVP (Model View Presenter)
 
 This is an app that builds recipes and calculates the macros per serving.
 

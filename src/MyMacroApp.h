@@ -9,12 +9,13 @@
 // VIEW
 #include "view/ExplorerNotebook.h"
 #include "view/MainNotebook.h"
-#include "view/TopFoodView.h"
 #include "view/FoodListView.h"
+#include "view/RecipeListView.h"
+#include "view/TopFoodView.h"
 #include "view/TopDailyView.h"
 #include "view/TopRecipeView.h"
-#include "view/RecipeListView.h"
 #include "view/FatSecretView.h"
+#include "view/FoodItemView.h"
 
 // PRESENTER
 #include "presenter/FoodPresenter.h"
@@ -42,9 +43,11 @@ private:
     ExplorerNotebook m_explorerNotebook;
     MainNotebook m_mainNotebook;
 
+    TopFoodView m_topFoodView;
+    
     FoodPresenter m_foodPresenter;
     FoodModel m_foodModel;
-    TopFoodView m_topFoodView;
+    FoodItemView m_foodItemView;
 
     FoodListPresenter m_foodListPresenter;
     FoodListView m_foodListView;

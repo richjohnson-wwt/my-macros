@@ -72,3 +72,20 @@ Unit DbBase::getUnit(const std::string &name)
     return u;
 }
 
+std::vector<Unit> DbBase::getUnits() {
+    spdlog::debug("DbBase::getUnits");
+    std::vector<Unit> units;
+    try {
+        SQLite::Statement query(m_db, "SELECT * FROM Units");
+        while (query.executeStep()) {
+            Unit u;
+            u.id = query.getColumn(0);
+            u.name = std::string(query.getColumn(1));
+            units.push_back(u);
+        }
+    } catch (SQLite::Exception &e) {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    return units;
+}

@@ -12,8 +12,6 @@ wxSizer *FoodItemView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &
     wxSizer *sizerRow = new wxBoxSizer(wxHORIZONTAL);
     sizerRow->Add(new wxStaticText(panel, wxID_ANY, label, wxDefaultPosition, wxSize(100, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
     sizerRow->Add(text, 0, wxALIGN_LEFT);
-    sizerRow->Add(text, 0, wxALIGN_CENTRE_VERTICAL);
-
     return sizerRow;
 }
 
@@ -47,8 +45,8 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
     wxSizer *comboSizerRow = new wxBoxSizer(wxHORIZONTAL);
     m_foodUnitComboBox = new wxComboBox(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
     m_foodUnitComboBox->Bind(wxEVT_COMBOBOX, &FoodItemView::onFoodUnitComboBox, this);
-    comboSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Food Unit: "), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    comboSizerRow->Add(m_foodUnitComboBox, 0, wxALIGN_CENTRE_VERTICAL);
+    comboSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Food Unit: ", wxDefaultPosition, wxSize(100, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
+    comboSizerRow->Add(m_foodUnitComboBox, 0, wxALIGN_LEFT);
     topsizer->Add(comboSizerRow, 0, wxALL, 10);
 
     m_foodDeleteButton = new wxButton(panel, -1, _T("Delete Food"), wxDefaultPosition, wxDefaultSize, 0);
@@ -124,8 +122,13 @@ void FoodItemView::setFoodQuantity(const std::string &quantity)
     m_foodQuantityTextCtrl->SetValue(quantity);
 }
 
-void FoodItemView::setFoodUnit(const std::string &unit)
+void FoodItemView::setFoodUnit(int unitId, const std::vector<Unit>& units)
 {
-    m_foodUnitComboBox->SetValue(unit);
+    m_foodUnitComboBox->Clear();
+    for (auto unit : units) {
+        spdlog::debug("FoodItemView::setFoodUnit: {}", unit.name);
+        m_foodUnitComboBox->Append(unit.name);
+    }
+    m_foodUnitComboBox->SetSelection(unitId - 1);
 }
 

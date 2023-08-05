@@ -10,6 +10,7 @@ public:
     std::vector<Food> getFoods();
 
     void addFood(const Food& f);
+    std::vector<Unit> getUnits();
 };
 
 

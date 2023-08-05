@@ -75,3 +75,8 @@ void DbFood::addFood(const Food &f) {
         spdlog::error(e.what());
     }
 }
+
+std::vector<Unit> DbFood::getUnits()
+{
+    return DbBase::getUnits();
+}

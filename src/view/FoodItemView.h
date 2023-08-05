@@ -19,7 +19,7 @@ public:
     virtual void setFoodCarb(const std::string& carb) = 0;
     virtual void setFoodCalories(const std::string& calories) = 0;
     virtual void setFoodQuantity(const std::string& quantity) = 0;
-    virtual void setFoodUnit(const std::string& unit) = 0;
+    virtual void setFoodUnit(int unitId, const std::vector<Unit>& units) = 0;
 };
 
 class FoodItemView : public wxEvtHandler, public IFoodItemView {
@@ -62,7 +62,7 @@ public:
     void setFoodCarb(const std::string& carb);
     void setFoodCalories(const std::string& calories);
     void setFoodQuantity(const std::string& quantity);
-    void setFoodUnit(const std::string& unit);
+    void setFoodUnit(int unitId, const std::vector<Unit>& units);
 
 };
 

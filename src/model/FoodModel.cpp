@@ -25,3 +25,8 @@ Food FoodModel::getFood()
 {
     return m_dbFood->getFood(m_foodListModel->getSelectedId());
 }
+
+std::vector<Unit> FoodModel::getUnits()
+{
+    return m_dbFood->getUnits();
+}

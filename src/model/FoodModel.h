@@ -21,6 +21,7 @@ class IFoodModel {
 public:
     
     virtual Food getFood() = 0;
+    virtual std::vector<Unit> getUnits() = 0;
 };
 
 class FoodModel : public IFoodModel, public IFoodSubject {
@@ -34,6 +35,7 @@ public:
     FoodModel(DbFood *db, FoodListModel *foodListModel);
     
     Food getFood() override;
+    std::vector<Unit> getUnits() override;
 
     void attach(IFoodObserver* observer) override;
     void notify() override;

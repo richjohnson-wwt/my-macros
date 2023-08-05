@@ -17,6 +17,7 @@ void FoodPresenter::update()
 {
     spdlog::debug("FoodPresenter::update");
     Food food = m_foodModel->getFood();
+    std::vector<Unit> units = m_foodModel->getUnits();
     m_foodItemView->setFoodId(std::to_string(food.id));
     m_foodItemView->setFoodName(food.name);
     m_foodItemView->setFoodFat(std::to_string(food.fat));
@@ -24,5 +25,5 @@ void FoodPresenter::update()
     m_foodItemView->setFoodCarb(std::to_string(food.carb));
     m_foodItemView->setFoodCalories(std::to_string(food.calories));
     m_foodItemView->setFoodQuantity(std::to_string(food.quantity));
-    m_foodItemView->setFoodUnit(std::to_string(food.unit_id));
+    m_foodItemView->setFoodUnit(food.unit_id, units);
 }

@@ -11,13 +11,14 @@ protected:
     SQLite::Database  m_db;
 
     Food foodHelper(SQLite::Statement &query);
-    
+
 public:
     DbBase(const std::string& dbfile);
     ~DbBase();
 
     Unit getUnit(int id);
     Unit getUnit(const std::string& name);
+    std::vector<Unit> getUnits();
 
 };
 

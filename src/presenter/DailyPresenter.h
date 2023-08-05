@@ -12,6 +12,7 @@ enum class DailyPage {
 class IDailyCallback {
 public:
     virtual void onDateChanged(const std::string& date) = 0;
+    virtual void onAddExercise() = 0;
 };
 
 class DailyPresenter : public IDailyCallback {
@@ -19,7 +20,8 @@ private:
     IDailyModel *m_dailyModel;
     IDailyView *m_dailyView;
 
-    void populateView();
+    void populateDailyFood(const DailyFood &df, const std::vector<XrefDailyFood>& xdfVector);
+    void populateTotals(const std::vector<XrefDailyFood>& xdfVector);
 
 public:
     DailyPresenter(IDailyView *view, IDailyModel *model);
@@ -27,6 +29,7 @@ public:
     void postInit();
 
     void onDateChanged(const std::string& date) override;
+    void onAddExercise() override;
 };
 
 

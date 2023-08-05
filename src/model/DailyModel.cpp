@@ -34,3 +34,11 @@ std::vector<XrefDailyFood> DailyModel::getXrefDailyFoods(const DailyFood& df)
     spdlog::info("DailyModel::getXrefDailyFoods() {}", df.id);
     return m_dbDaily->getXrefDailyFoods(df);
 }
+
+void DailyModel::addExercise(int exerciseCalories)
+{
+    spdlog::info("DailyModel::addExercise() {}", exerciseCalories);
+    DailyFood df = m_dbDaily->getDailyFood(m_dateString);
+    df.dailyActivityBonusCalories += exerciseCalories;
+    m_dbDaily->updateDailyFood(df);
+}

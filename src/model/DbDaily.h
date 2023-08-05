@@ -12,6 +12,7 @@ public:
     bool doesTodayExist(const std::string& today);
 
     void saveDailyFood(const DailyFood& df);
+    void updateDailyFood(const DailyFood& df);
 
 };
 

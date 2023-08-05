@@ -73,9 +73,6 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     return panel;
 }
 
-void DailyView::postInit() {
-}
-
 void DailyView::onDateChanged(wxDateEvent& event) {
     spdlog::debug("DailyView::onDateChanged");
     // get the date from the event argument
@@ -97,6 +94,7 @@ void DailyView::onDeleteDailyFood(wxCommandEvent& event) {
 
 void DailyView::onAddActivityBonus(wxCommandEvent& event) {
     spdlog::debug("DailyView::onAddActivityBonus");
+    m_dailyCallback->onAddExercise();
 }
 
 void DailyView::setDailyActivityBonus(const std::string& bonus) {
@@ -130,4 +128,9 @@ void DailyView::setTotalsList(const std::vector<XrefDailyFood> &totals) {
         m_totalsListView->SetItem(i, 3, std::to_string(totals[i].protein));
         m_totalsListView->SetItem(i, 4, std::to_string(totals[i].carb));
     }
+}
+
+int DailyView::getActivityBonus() {
+    spdlog::debug("DailyView::getActivityBonus");
+    return std::stoi(m_dailyActivityBonusTextCtrl->GetValue().ToStdString());
 }

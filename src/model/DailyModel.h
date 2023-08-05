@@ -12,6 +12,7 @@ public:
     virtual void setSelectedDate(const std::string& date) = 0;
     virtual DailyFood getDailyFood() = 0;
     virtual std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df) = 0;
+    virtual void addExercise(int exerciseCalories) = 0;
 
 };
 
@@ -29,6 +30,7 @@ public:
 
     DailyFood getDailyFood() override;
     std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df) override;
+    void addExercise(int exerciseCalories) override;
 
 
 };

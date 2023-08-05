@@ -22,29 +22,33 @@ void DailyPresenter::postInit()
     std::string today = ss.str();
     spdlog::info("DailyPresenter::postInit() today {}", today);
     m_dailyModel->setSelectedDate(today);
-    populateView();
-    
-    
+    onDateChanged(today);
 }
 
 void DailyPresenter::onDateChanged(const std::string& date)
 {
     spdlog::info("DailyPresenter::onDateChanged() {}", date);
     m_dailyModel->setSelectedDate(date);
-    populateView();
+    DailyFood df = m_dailyModel->getDailyFood();
+    std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
+    populateDailyFood(df, xdfVector);
+    populateTotals(xdfVector);
 }
 
-void DailyPresenter::populateView()
+void DailyPresenter::populateDailyFood(const DailyFood &df, const std::vector<XrefDailyFood>& xdfVector)
 {
     spdlog::info("DailyPresenter::populateView");
-    DailyFood df = m_dailyModel->getDailyFood();
-    spdlog::info("DailyPresenter::populateView() df.id {} {}", df.id, df.date);
+    
     m_dailyView->setDailyActivityBonus(std::to_string(df.dailyActivityBonusCalories));
-    std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
+    
     m_dailyView->setDailyFoodList(xdfVector);
+}
 
-    if (xdfVector.size() > 0) {
-        spdlog::info("DailyPresenter::populateView() xdfVector[0].name {}", xdfVector[0].name);
+void DailyPresenter::populateTotals(const std::vector<XrefDailyFood>& xdfVector)
+{
+    spdlog::info("DailyPresenter::populateTotals");
+    // if (xdfVector.size() > 0) {
+        // spdlog::info("DailyPresenter::populateView() xdfVector[0].name {}", xdfVector[0].name);
     
         // TODO calc totals
         std::vector<XrefDailyFood> totalsXdf;
@@ -74,5 +78,11 @@ void DailyPresenter::populateView()
         totalsXdf.push_back(remaining);
 
         m_dailyView->setTotalsList(totalsXdf);
-    }
+    // }
+}
+
+void DailyPresenter::onAddExercise()
+{
+    spdlog::debug("DailyPresenter::onAddExercise");
+    m_dailyModel->addExercise(m_dailyView->getActivityBonus());
 }

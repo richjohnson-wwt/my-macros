@@ -42,6 +42,6 @@ Stories
     * Recipe - Update Recipe
     * X Food - Delete
     * X Recipe - Delete
-    * Daily - Auto-create Today Date DailyFood in Db
+    * X Daily - Auto-create Today Date DailyFood in Db
     * Daily - Add Daily Food
     * Macro - 3rd panel macro breakdown

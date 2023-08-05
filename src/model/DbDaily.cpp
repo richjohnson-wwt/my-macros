@@ -73,3 +73,15 @@ void DbDaily::saveDailyFood(const DailyFood& df)
         std::cerr << e.what() << std::endl;
     }
 }
+
+void DbDaily::updateDailyFood(const DailyFood& df)
+{
+    try {
+        SQLite::Statement query(m_db, "UPDATE daily_food SET exercise_calorie_bonus = ? WHERE id = ?");
+        query.bind(1, df.dailyActivityBonusCalories);
+        query.bind(2, df.id);
+        query.exec();
+    } catch (SQLite::Exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}

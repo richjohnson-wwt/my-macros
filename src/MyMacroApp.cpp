@@ -7,7 +7,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_dbRecipe("../db/my-macro.sqlite3", &m_dbFood),
     m_dbDaily("../db/my-macro.sqlite3"),
     m_foodModel(&m_dbFood, &m_foodListModel), 
-    m_recipeModel(&m_dbRecipe, &m_recipeListModel),
+    m_recipeModel(&m_dbRecipe, &m_recipeListModel, &m_foodListModel),
     m_foodListModel(&m_dbFood),
     m_recipeListModel(&m_dbRecipe),
     m_dailyModel(&m_dbDaily, &m_foodListModel, &m_recipeListModel),

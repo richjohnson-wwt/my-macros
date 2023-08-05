@@ -45,7 +45,7 @@ void TopRecipeView::createRightFoodItemPanel(wxPanel *panel) {
     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe URL:", m_recipeUrlTextCtrl), 0, wxALL, 10);
 
     // Recipe Servings wxTextCtrl
-    m_recipeServingsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_recipeServingsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20));
     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Servings:", m_recipeServingsTextCtrl), 0, wxALL, 10);
 
     // Recipe Instructions wxTextCtrl
@@ -56,7 +56,7 @@ void TopRecipeView::createRightFoodItemPanel(wxPanel *panel) {
     m_addRecipeIngredientButton = new wxButton(panel, -1, _T("Add Food With Multiplier"), wxDefaultPosition, wxDefaultSize, 0);
     m_addRecipeIngredientButton->Bind(wxEVT_BUTTON, &TopRecipeView::onAddIngredient, this);
     
-    m_recipeIngredientMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_recipeIngredientMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20));
     ingredientButtonsSizer->Add(m_addRecipeIngredientButton, 0, wxALL, 10);
     ingredientButtonsSizer->Add(m_recipeIngredientMultiplierTextCtrl, 0, wxALL, 10);
     topsizer->Add(ingredientButtonsSizer, 0, wxALL, 10);
@@ -87,9 +87,12 @@ void TopRecipeView::createRightFoodItemPanel(wxPanel *panel) {
     m_recipeSaveButton->Bind(wxEVT_BUTTON, &TopRecipeView::onSaveRecipe, this);
     m_recipeNewButton = new wxButton(panel, -1, _T("New"), wxDefaultPosition, wxDefaultSize, 0);
     m_recipeNewButton->Bind(wxEVT_BUTTON, &TopRecipeView::onNewRecipe, this);
+    m_recipeCancelNewButton = new wxButton(panel, -1, _T("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
+    m_recipeCancelNewButton->Bind(wxEVT_BUTTON, &TopRecipeView::onCancelNewRecipe, this);
     recipeButtonsSizer->Add(m_recipeDeleteButton, 0, wxALL, 10);
     recipeButtonsSizer->Add(m_recipeSaveButton, 0, wxALL, 10);
     recipeButtonsSizer->Add(m_recipeNewButton, 0, wxALL, 10);
+    recipeButtonsSizer->Add(m_recipeCancelNewButton, 0, wxALL, 10);
     topsizer->Add(recipeButtonsSizer, 0, wxALL, 10);
 
     panel->SetSizer(topsizer);
@@ -102,14 +105,28 @@ void TopRecipeView::onDeleteRecipe(wxCommandEvent &event)
 
 void TopRecipeView::onSaveRecipe(wxCommandEvent &event)
 {
+    if (m_recipeNameTextCtrl->GetValue().ToStdString() == "") {
+        wxMessageBox("Recipe name is required");
+    } else if (m_recipeIngredientsListView->GetItemCount() == 0) {
+        wxMessageBox("Recipe must have at least one ingredient");
+    } else {
+        m_recipeCallback->onSaveRecipe();
+    }
 }
 
 void TopRecipeView::onNewRecipe(wxCommandEvent &event)
 {
+    m_recipeCallback->onNewRecipe();
+}
+
+void TopRecipeView::onCancelNewRecipe(wxCommandEvent &event)
+{
+    m_recipeCallback->onCancelNewRecipe();
 }
 
 void TopRecipeView::onAddIngredient(wxCommandEvent &event) {
-
+    double unitMultiplier = std::stod(m_recipeIngredientMultiplierTextCtrl->GetValue().ToStdString());
+    m_recipeCallback->onAddIngredient(unitMultiplier);
 }
 
 void TopRecipeView::onDeleteIngredient(wxCommandEvent &event) {
@@ -119,7 +136,6 @@ void TopRecipeView::onDeleteIngredient(wxCommandEvent &event) {
 void TopRecipeView::onIngredientSelChange(wxListEvent &event) {
     
 }
-
 
 void TopRecipeView::setRecipeId(const std::string &id)
 {
@@ -172,5 +188,31 @@ void TopRecipeView::setRecipeIngredientMultiplier(const std::string &multiplier)
 {
     m_recipeIngredientMultiplierTextCtrl->SetValue(multiplier);
 }
+
+std::string TopRecipeView::getRecipeName()
+{
+    return m_recipeNameTextCtrl->GetValue().ToStdString();
+}
+
+std::string TopRecipeView::getRecipeDescription()
+{
+    return m_recipeDescriptionTextCtrl->GetValue().ToStdString();
+}
+
+std::string TopRecipeView::getRecipeUrl()
+{
+    return m_recipeUrlTextCtrl->GetValue().ToStdString();
+}
+
+std::string TopRecipeView::getRecipeServings()
+{
+    return m_recipeServingsTextCtrl->GetValue().ToStdString();
+}
+
+std::string TopRecipeView::getRecipeInstructions()
+{
+    return m_recipeInstructionsTextCtrl->GetValue().ToStdString();
+}
+
 
 

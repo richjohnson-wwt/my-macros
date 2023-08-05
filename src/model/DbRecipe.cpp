@@ -6,9 +6,24 @@ DbRecipe::DbRecipe(const std::string &dbfile, DbFood *dbFood): DbBase(dbfile), m
 {
 }
 
+Recipe DbRecipe::recipeHelper(SQLite::Statement &query)
+{
+    Recipe r;
+    while (query.executeStep())
+    {
+        r.id = query.getColumn(0);
+        r.name = std::string(query.getColumn(1));
+        r.description = std::string(query.getColumn(2));
+        r.instructions = std::string(query.getColumn(3));
+        r.url = std::string(query.getColumn(4));
+        r.servings = query.getColumn(5);
+    }
+    return r;
+}
+
 std::vector<Recipe> DbRecipe::getRecipes()
 {
-    spdlog::debug("Db::getRecipes");
+    spdlog::debug("DbRecipe::getRecipes");
     std::vector<Recipe> recipes;
     try
     {
@@ -35,7 +50,7 @@ std::vector<Recipe> DbRecipe::getRecipes()
 
 Recipe DbRecipe::getRecipeById(int id)
 {
-    spdlog::debug("Db::getRecipeById({})", id);
+    spdlog::debug("DbRecipe::getRecipeById({})", id);
     Recipe recipe;
     try
     {
@@ -59,8 +74,26 @@ Recipe DbRecipe::getRecipeById(int id)
     return recipe;
 }
 
+Recipe DbRecipe::getRecipe(const std::string& name) {
+    spdlog::debug("DbRecipe::getRecipe by name");
+    Recipe r;
+    try
+    {
+        auto formattedName = "%" + name + "%";
+        SQLite::Statement query(m_db, "SELECT * FROM Recipes where name LIKE ?");
+        query.bind(1, formattedName);
+        r = recipeHelper(query);
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    return r;
+}
+
 std::vector<Ingredient> DbRecipe::getIngredients(const Recipe& r) {
-    spdlog::debug("Db::getIngredients");
+    spdlog::debug("DbRecipe::getIngredients");
     std::vector<Ingredient> ingredients;
     try
     {
@@ -80,4 +113,45 @@ std::vector<Ingredient> DbRecipe::getIngredients(const Recipe& r) {
     }
     return ingredients;
 
+}
+
+Food DbRecipe::getFoodById(int id)
+{
+    return m_dbFood->getFood(id);
+}
+
+void DbRecipe::saveRecipe(const Recipe &r, std::vector<Ingredient> foods)
+{
+    spdlog::debug("DbRecipe::addRecipe");
+    try
+    {
+        SQLite::Transaction transaction(m_db);
+
+        SQLite::Statement query(m_db, "INSERT INTO Recipes (name, description, instructions, url, servings) VALUES (?, ?, ?, ?, ?)");
+        query.bind(1, r.name);
+        query.bind(2, r.description);
+        query.bind(3, r.instructions);
+        query.bind(4, r.url);
+        query.bind(5, r.servings);
+        query.exec();
+
+        Recipe newRecipe = getRecipe(r.name);
+        int newRecipeId = newRecipe.id;
+        
+        for (const auto &f : foods)
+        {
+            SQLite::Statement query2(m_db, "INSERT INTO xref_recipe_foods (recipe_id, food_id, amount, unit_id) VALUES (?, ?, ?, ?)");
+            query2.bind(1, newRecipeId);
+            query2.bind(2, f.food.id);
+            query2.bind(3, f.unitMultiplier);
+            query2.bind(4, f.unit.id);
+            query2.exec();
+        }
+        transaction.commit();
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
 }

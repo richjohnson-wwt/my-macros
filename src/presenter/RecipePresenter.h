@@ -7,6 +7,10 @@
 
 class IRecipeCallback {
 public:
+    virtual void onNewRecipe() = 0;
+    virtual void onCancelNewRecipe() = 0;
+    virtual void onAddIngredient(double unitMultiplier) = 0;
+    virtual void onSaveRecipe() = 0;
 };
 
 
@@ -22,6 +26,11 @@ public:
     void postInit();
 
     void update() override;
+
+    void onNewRecipe() override;
+    void onCancelNewRecipe() override;
+    void onAddIngredient(double unitMultiplier) override;
+    void onSaveRecipe() override;
 };
 
 #endif // RECIPE_PRESENTER_H

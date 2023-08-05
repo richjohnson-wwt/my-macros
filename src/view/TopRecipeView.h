@@ -21,6 +21,12 @@ public:
     virtual void setRecipeIngredients(const std::vector<Ingredient>& ingredients) = 0;
     virtual void setRecipeIngredientMultiplier(const std::string& multiplier) = 0;
 
+    virtual std::string getRecipeName() = 0;
+    virtual std::string getRecipeDescription() = 0;
+    virtual std::string getRecipeUrl() = 0;
+    virtual std::string getRecipeServings() = 0;
+    virtual std::string getRecipeInstructions() = 0;
+
 };
 
 class TopRecipeView : public wxEvtHandler, public ITopRecipeView {
@@ -45,6 +51,7 @@ private:
     wxButton *m_recipeDeleteButton;
     wxButton *m_recipeSaveButton;
     wxButton *m_recipeNewButton;
+    wxButton *m_recipeCancelNewButton;
 
     wxSizer *CreateTextWithLabelSizer(wxPanel *panel, 
         const wxString& label,
@@ -58,6 +65,7 @@ protected:
     void onDeleteRecipe(wxCommandEvent &event);
     void onSaveRecipe(wxCommandEvent &event);
     void onNewRecipe(wxCommandEvent &event);
+    void onCancelNewRecipe(wxCommandEvent &event);
     
 public:
     TopRecipeView(IRecipeCallback *callback);
@@ -72,6 +80,12 @@ public:
     void setRecipeInstructions(const std::string& instructions) override;
     void setRecipeIngredients(const std::vector<Ingredient>& ingredients) override;
     void setRecipeIngredientMultiplier(const std::string& multiplier) override;
+
+    std::string getRecipeName() override;
+    std::string getRecipeDescription() override;
+    std::string getRecipeUrl() override;
+    std::string getRecipeServings() override;
+    std::string getRecipeInstructions() override;
 };
 
 #endif // TOP_RECIPE_VIEW_H

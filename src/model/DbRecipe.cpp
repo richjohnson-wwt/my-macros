@@ -155,3 +155,19 @@ void DbRecipe::saveRecipe(const Recipe &r, std::vector<Ingredient> foods)
         spdlog::error(e.what());
     }
 }
+
+void DbRecipe::deleteRecipe(int id)
+{
+    spdlog::debug("DbRecipe::deleteRecipe");
+    try
+    {
+        SQLite::Statement query(m_db, "DELETE FROM Recipes WHERE recipe_id = ?");
+        query.bind(1, id);
+        query.exec();
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+}

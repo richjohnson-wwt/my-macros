@@ -26,6 +26,7 @@ public:
     virtual void cancelNewRecipe() = 0;
     virtual void addIngredient(double unitMultiplier) = 0;
     virtual void saveRecipe() = 0;
+    virtual void deleteRecipe() = 0;
 
     virtual void setRecipeName(const std::string& name) = 0;
     virtual void setRecipeDescription(const std::string& description) = 0;
@@ -60,6 +61,7 @@ public:
     void cancelNewRecipe() override;
     void addIngredient(double unitMultiplier) override;
     void saveRecipe() override;
+    void deleteRecipe() override;
 
     void setRecipeName(const std::string& name) override;
     void setRecipeDescription(const std::string& description) override;

@@ -37,10 +37,10 @@ Stories
     * X Explorer - Food/Recipe Search (filter)
     * X Recipe - Add Build Recipe
     * X Food - Add Unit ComboBox
-    * Food - FoodItem Add Food manually
+    * X Food - FoodItem Add Food manually
     * Food - Update Food manually
     * Recipe - Update Recipe
-    * Food - Delete
+    * X Food - Delete
     * Recipe - Delete
     * Daily - Add Daily Food
     * Daily - Auto-create Today Date DailyFood in Db

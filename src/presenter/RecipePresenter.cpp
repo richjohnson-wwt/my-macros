@@ -60,3 +60,10 @@ void RecipePresenter::onSaveRecipe()
 
     m_recipeModel->saveRecipe();
 }
+
+void RecipePresenter::onDeleteRecipe()
+{
+    spdlog::info("RecipePresenter::onDeleteRecipe");
+
+    m_recipeModel->deleteRecipe();
+}

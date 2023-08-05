@@ -83,6 +83,13 @@ void RecipeModel::saveRecipe()
     notify();
 }
 
+void RecipeModel::deleteRecipe()
+{
+    spdlog::debug("RecipeModel::deleteRecipe");
+    m_dbRecipe->deleteRecipe(m_recipeListModel->getSelectedId());
+    notify();
+}
+
 void RecipeModel::setRecipeName(const std::string &name)
 {
     m_recipeUnderConstruction.name = name;

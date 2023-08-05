@@ -22,6 +22,10 @@ public:
 
     // Inserts
     void saveRecipe(const Recipe& r, std::vector<Ingredient> foods);
+
+
+    // Deletes
+    void deleteRecipe(int id);
 };
 
 #endif // DB_RECIPE_H

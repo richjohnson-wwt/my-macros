@@ -101,6 +101,7 @@ void TopRecipeView::createRightFoodItemPanel(wxPanel *panel) {
 
 void TopRecipeView::onDeleteRecipe(wxCommandEvent &event)
 {
+    m_recipeCallback->onDeleteRecipe();
 }
 
 void TopRecipeView::onSaveRecipe(wxCommandEvent &event)

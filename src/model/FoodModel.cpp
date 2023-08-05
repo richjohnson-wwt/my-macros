@@ -1,7 +1,8 @@
 #include "FoodModel.h"
 #include <spdlog/spdlog.h>
 
-FoodModel::FoodModel(DbFood *db, FoodListModel *foodListModel):m_dbFood(db), m_foodListModel(foodListModel)
+FoodModel::FoodModel(DbFood *db, FoodListModel *foodListModel)
+:m_dbFood(db), m_foodListModel(foodListModel), m_buildingFood(false)
 {
     
 }

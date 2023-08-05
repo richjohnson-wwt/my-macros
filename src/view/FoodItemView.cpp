@@ -58,10 +58,14 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
     m_foodNewButton = new wxButton(panel, -1, _T("New Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_foodNewButton->Bind(wxEVT_BUTTON, &FoodItemView::onNewFood, this);
 
+    m_foodNewCancelButton = new wxButton(panel, -1, _T("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
+    m_foodNewCancelButton->Bind(wxEVT_BUTTON, &FoodItemView::onNewFoodCancel, this);
+
     wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonSizer->Add(m_foodDeleteButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
     buttonSizer->Add(m_foodSaveButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
     buttonSizer->Add(m_foodNewButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    buttonSizer->Add(m_foodNewCancelButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
 
     topsizer->Add(buttonSizer, 0, wxALIGN_CENTRE_VERTICAL | wxLEFT, 5);
 
@@ -72,14 +76,22 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
 
 void FoodItemView::onDeleteFood(wxCommandEvent &event)
 {
+    m_foodCallback->onDeleteFood();
 }
 
 void FoodItemView::onSaveFood(wxCommandEvent &event)
 {
+    m_foodCallback->onSaveFood();
 }
 
 void FoodItemView::onNewFood(wxCommandEvent &event)
 {
+    m_foodCallback->onNewFood();
+}
+
+void FoodItemView::onNewFoodCancel(wxCommandEvent &event)
+{
+    m_foodCallback->onNewFoodCancel();
 }
 
 void FoodItemView::onFoodUnitComboBox(wxCommandEvent &event)
@@ -131,4 +143,45 @@ void FoodItemView::setFoodUnit(int unitId, const std::vector<Unit>& units)
     }
     m_foodUnitComboBox->SetSelection(unitId - 1);
 }
+
+std::string FoodItemView::getFoodId()
+{
+    return m_foodIdTextCtrl->GetValue().ToStdString();
+}
+
+std::string FoodItemView::getFoodName()
+{
+    return m_foodNameTextCtrl->GetValue().ToStdString();
+}
+
+std::string FoodItemView::getFoodFat()
+{
+    return m_foodFatTextCtrl->GetValue().ToStdString();
+}
+
+std::string FoodItemView::getFoodProtein()
+{
+    return m_foodProteinTextCtrl->GetValue().ToStdString();
+}
+
+std::string FoodItemView::getFoodCarb()
+{
+    return m_foodCarbTextCtrl->GetValue().ToStdString();
+}
+
+std::string FoodItemView::getFoodCalories()
+{
+    return m_foodCaloriesTextCtrl->GetValue().ToStdString();
+}
+
+std::string FoodItemView::getFoodQuantity()
+{
+    return m_foodQuantityTextCtrl->GetValue().ToStdString();
+}
+
+int FoodItemView::getFoodUnitId()
+{
+    return m_foodUnitComboBox->GetSelection() + 1;
+}
+
 

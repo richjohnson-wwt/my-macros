@@ -11,6 +11,9 @@ public:
 
     void addFood(const Food& f);
     std::vector<Unit> getUnits();
+
+    void saveFood(const Food& f);
+    void deleteFood(int id);
 };
 
 

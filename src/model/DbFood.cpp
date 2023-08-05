@@ -80,3 +80,40 @@ std::vector<Unit> DbFood::getUnits()
 {
     return DbBase::getUnits();
 }
+
+void DbFood::deleteFood(int foodId) {
+    spdlog::debug("DbFood::deleteFood");
+    try
+    {
+        SQLite::Statement query(m_db, "DELETE FROM Foods WHERE food_id = ?");
+        query.bind(1, foodId);
+        query.exec();
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+}
+
+void DbFood::saveFood(const Food &f) {
+    spdlog::debug("DbFood::saveFood");
+    try
+    {
+        SQLite::Statement query(m_db, "INSERT INTO Foods (name, fat, protein, carb, calories, quantity, unit_id, popularity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        query.bind(1, f.name);
+        query.bind(2, f.fat);
+        query.bind(3, f.protein);
+        query.bind(4, f.carb);
+        query.bind(5, f.calories);
+        query.bind(6, f.quantity);
+        query.bind(7, f.unit_id);
+        query.bind(8, f.popularity);
+        query.exec();
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+}

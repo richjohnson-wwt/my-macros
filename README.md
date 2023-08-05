@@ -36,11 +36,12 @@ Stories
     * X Explorer - Add popularity to Food list
     * X Explorer - Food/Recipe Search (filter)
     * X Recipe - Add Build Recipe
-    * Recipe - Update Recipe
-    * Food - Add Unit ComboBox
-    * Recipe - Add Unit ComboBox
+    * X Food - Add Unit ComboBox
     * Food - FoodItem Add Food manually
     * Food - Update Food manually
+    * Recipe - Update Recipe
+    * Food - Delete
+    * Recipe - Delete
     * Daily - Add Daily Food
     * Daily - Auto-create Today Date DailyFood in Db
     * Macro - 3rd panel macro breakdown

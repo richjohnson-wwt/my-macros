@@ -20,6 +20,15 @@ public:
     virtual void setFoodCalories(const std::string& calories) = 0;
     virtual void setFoodQuantity(const std::string& quantity) = 0;
     virtual void setFoodUnit(int unitId, const std::vector<Unit>& units) = 0;
+
+    virtual std::string getFoodId() = 0;
+    virtual std::string getFoodName() = 0;
+    virtual std::string getFoodFat() = 0;
+    virtual std::string getFoodProtein() = 0;
+    virtual std::string getFoodCarb() = 0;
+    virtual std::string getFoodCalories() = 0;
+    virtual std::string getFoodQuantity() = 0;
+    virtual int getFoodUnitId() = 0;
 };
 
 class FoodItemView : public wxEvtHandler, public IFoodItemView {
@@ -38,6 +47,7 @@ private:
     wxButton *m_foodDeleteButton;
     wxButton *m_foodSaveButton;
     wxButton *m_foodNewButton;
+    wxButton *m_foodNewCancelButton;
 
     wxSizer *CreateTextWithLabelSizer(wxPanel *panel,
                                       const wxString &label,
@@ -48,6 +58,7 @@ protected:
     void onDeleteFood(wxCommandEvent &event);
     void onSaveFood(wxCommandEvent &event);
     void onNewFood(wxCommandEvent &event);
+    void onNewFoodCancel(wxCommandEvent &event);
     void onFoodUnitComboBox(wxCommandEvent &event);
 
 public:
@@ -63,6 +74,15 @@ public:
     void setFoodCalories(const std::string& calories);
     void setFoodQuantity(const std::string& quantity);
     void setFoodUnit(int unitId, const std::vector<Unit>& units);
+
+    std::string getFoodId();
+    std::string getFoodName();
+    std::string getFoodFat();
+    std::string getFoodProtein();
+    std::string getFoodCarb();
+    std::string getFoodCalories();
+    std::string getFoodQuantity();
+    int getFoodUnitId();
 
 };
 

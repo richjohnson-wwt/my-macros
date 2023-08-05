@@ -20,6 +20,7 @@ struct Food
     int calories;
     double quantity;
     int unit_id;
+    int popularity;
 };
 
 struct Recipe

@@ -12,7 +12,7 @@ std::vector<Food> DbFood::getFoods()
     std::vector<Food> foods;
     try
     {
-        SQLite::Statement query(m_db, "SELECT * FROM Foods");
+        SQLite::Statement query(m_db, "SELECT * FROM Foods ORDER BY popularity DESC");
         while (query.executeStep())
         {
             Food f;
@@ -24,6 +24,7 @@ std::vector<Food> DbFood::getFoods()
             f.calories = query.getColumn(5);
             f.quantity = query.getColumn(6);
             f.unit_id = query.getColumn(7);
+            f.popularity = query.getColumn(8);
             foods.push_back(f);
         }
     }
@@ -57,7 +58,7 @@ void DbFood::addFood(const Food &f) {
     spdlog::debug("DbConnection::addFood");
     try
     {
-        SQLite::Statement query(m_db, "INSERT INTO Foods (name, fat, protein, carb, calories, quantity, unit_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        SQLite::Statement query(m_db, "INSERT INTO Foods (name, fat, protein, carb, calories, quantity, unit_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         query.bind(1, f.name);
         query.bind(2, f.fat);
         query.bind(3, f.protein);
@@ -65,6 +66,7 @@ void DbFood::addFood(const Food &f) {
         query.bind(5, f.calories);
         query.bind(6, f.quantity);
         query.bind(7, f.unit_id);
+        query.bind(8, f.popularity);
         query.exec();
     }
     catch (SQLite::Exception &e)

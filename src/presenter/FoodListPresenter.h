@@ -8,6 +8,8 @@
 class IFoodListCallback {
 public:
     virtual void onFoodSelected(int id) = 0;
+    virtual void onSearch(const std::string &searchText) = 0;
+    virtual void onSearchCancel() = 0;
 };
 
 class FoodListPresenter : public IFoodListCallback, IFoodObserver {
@@ -22,6 +24,9 @@ public:
     void postInit();
 
     void onFoodSelected(int id) override;
+
+    void onSearch(const std::string &searchText) override;
+    void onSearchCancel() override;
 
     void update() override;
 

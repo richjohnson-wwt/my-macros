@@ -2,6 +2,14 @@
 
 This is an app that builds recipes and calculates the macros per serving.
 
+Dependencies
+------------
+
+* [Conan](https://conan.io/)
+* [wxWidgets]([www.](https://docs.wxwidgets.org/3.0/index.html)) (installed locally)
+* [SQLite](https://www.sqlite.org/index.html) (Mac comes with it)
+* [CMake](https://cmake.org/)
+  
 
 Build Notes
 -------------
@@ -21,3 +29,14 @@ DB
 
     sqlite3 recipe.sqlite3 < recipe.sql
     sqlite3 macro.sqlite3 < macro.sql
+
+Stories
+-----
+
+    * X Explorer - Add popularity to Food list
+    * X Explorer - Food/Recipe Search (filter)
+    * Recipe - Add Build Recipe
+    * Food - FoodItem Add Food manually
+    * Daily - Add Daily Food
+    * Daily - Auto-create Today Date DailyFood in Db
+    * Macro - 3rd panel macro breakdown

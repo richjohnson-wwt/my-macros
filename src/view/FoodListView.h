@@ -6,6 +6,7 @@
 #include <wx/wx.h>
 
 #include "wx/listctrl.h"
+#include "wx/srchctrl.h"
 #include "wx/event.h"
 
 class IFoodListCallback;
@@ -20,6 +21,7 @@ public:
 class FoodListView : public wxEvtHandler, public IFoodListView
 {
 private:
+    wxSearchCtrl *m_foodSearchTextCtrl;
     wxListView *m_foodsListView;
     IFoodListCallback *m_foodListCallback;
 
@@ -27,6 +29,8 @@ private:
 
 protected:
     void onFoodSelChange(wxListEvent &event);
+    void OnSearch(wxCommandEvent& event);
+    void OnSearchCancel(wxCommandEvent& event);
 
 public:
     FoodListView(IFoodListCallback *callback);

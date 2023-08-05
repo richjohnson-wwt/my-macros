@@ -34,35 +34,36 @@ CREATE TABLE Foods (
     carb INTEGER,
     calories INTEGER,
     quantity REAL,
-    unit_id INTEGER
+    unit_id INTEGER,
+    popularity INTEGER DEFAULT 0
 );
 
 -- insert data  id, name, fat, protein, carb, calories, quantity, unit_id
-INSERT INTO Foods VALUES (1,'Hormel - Pepperoni Pizza 14 slices', 13, 5, 0, 140, 14, 8);
-INSERT INTO Foods VALUES (2,'Smuckers - Natural Crunchy Peanut Butter 16 g', 8, 4, 4, 95, 16, 1);
-INSERT INTO Foods VALUES (3,'Kirkland Mexican Shredded Cheese 1/3 cup', 9, 6, 1, 110, 0.33, 16);
-INSERT INTO Foods VALUES (4,'Kirkland - Thick sliced bacon 2 slices', 10, 10, 0, 140, 2, 8);
-INSERT INTO Foods VALUES (5,'Mozzarella 2 oz', 10, 10, 2, 140, 2, 12);
-INSERT INTO Foods VALUES (6,'Kerry gold butter - Butter 2 tbsp', 22, 0, 0, 200, 2, 5);
-INSERT INTO Foods VALUES (7,'EVOO 1 tbsp', 14, 0, 0, 120, 1, 5);
-INSERT INTO Foods VALUES (8,'Sour Cream 2 tbsp', 5, 1, 2, 60, 2, 5);
-INSERT INTO Foods VALUES (9,'Primal Kitchen - Pizza Sauce 1/4 cup', 5, 1, 2, 60, 0.25, 16);
-INSERT INTO Foods VALUES (10,'Cauliflower 100 g', 0, 2, 2, 24, 100, 1);
-INSERT INTO Foods VALUES (11,'Egg lg', 5, 6, 0, 70, 1, 9);
-INSERT INTO Foods VALUES (12,'Parmesean Reggiano 28 g', 8, 9, 1, 120, 28, 1);
-INSERT INTO Foods VALUES (13,'Goat Cheese 28 g', 6, 4, 2, 80, 28, 1);
-INSERT INTO Foods VALUES (14,'Chef John Pizza Crust 1 each', 28, 32, 36, 484, 1, 15);
-INSERT INTO Foods VALUES (15,'Cauliflower Head 1 each', 2, 16, 23, 15, 1, 15);
-INSERT INTO Foods VALUES (16,'Cream Cheese 1 oz', 10, 2, 2, 99, 1, 12);
-INSERT INTO Foods VALUES (17,'Almonds 1 cup', 69, 29, 13, 795, 1, 16);
-INSERT INTO Foods VALUES (18,'Monk Fruit Sweetener  cup', 0, 0, 0, 0, 1, 16);
-INSERT INTO Foods VALUES (19,'Regina Red Wine Vinegar 1 tbsp', 0, 0, 0, 0, 1, 5);
-INSERT INTO Foods VALUES (20,'Rebel Cookie Dough 1 cup', 30, 5, 1, 315, 1, 16);
-INSERT INTO Foods VALUES (21,'Kirkland Peanuts 1 tbsp', 5, 3, 2, 57, 1, 5);
-INSERT INTO Foods VALUES (22,'Lilys Chocolate Chips 30 chips (14g)', 4, 0, 0, 50, 14, 1);
-INSERT INTO Foods VALUES (23,'Readi Whip 5 g', 1, 0, 1, 15, 5, 1);
-INSERT INTO Foods VALUES (24,'Prairie Farm Heavy Cream 1 tbsp', 5, 0, 0, 45, 1, 5);
-INSERT INTO Foods VALUES (25,'Nutiva Mct 1 tbsp', 14, 0, 0, 130, 1, 5);
+INSERT INTO Foods VALUES (1,'Hormel - Pepperoni Pizza 14 slices', 13, 5, 0, 140, 14, 8, 0);
+INSERT INTO Foods VALUES (2,'Smuckers - Natural Crunchy Peanut Butter 16 g', 8, 4, 4, 95, 16, 1, 0);
+INSERT INTO Foods VALUES (3,'Kirkland Mexican Shredded Cheese 1/3 cup', 9, 6, 1, 110, 0.33, 16, 0);
+INSERT INTO Foods VALUES (4,'Kirkland - Thick sliced bacon 2 slices', 10, 10, 0, 140, 2, 8, 0);
+INSERT INTO Foods VALUES (5,'Mozzarella 2 oz', 10, 10, 2, 140, 2, 12, 0);
+INSERT INTO Foods VALUES (6,'Kerry gold butter - Butter 2 tbsp', 22, 0, 0, 200, 2, 5, 0);
+INSERT INTO Foods VALUES (7,'EVOO 1 tbsp', 14, 0, 0, 120, 1, 5, 0);
+INSERT INTO Foods VALUES (8,'Sour Cream 2 tbsp', 5, 1, 2, 60, 2, 5, 0);
+INSERT INTO Foods VALUES (9,'Primal Kitchen - Pizza Sauce 1/4 cup', 5, 1, 2, 60, 0.25, 16, 0);
+INSERT INTO Foods VALUES (10,'Cauliflower 100 g', 0, 2, 2, 24, 100, 1, 0);
+INSERT INTO Foods VALUES (11,'Egg lg', 5, 6, 0, 70, 1, 9, 0);
+INSERT INTO Foods VALUES (12,'Parmesean Reggiano 28 g', 8, 9, 1, 120, 28, 1, 0);
+INSERT INTO Foods VALUES (13,'Goat Cheese 28 g', 6, 4, 2, 80, 28, 1, 0);
+INSERT INTO Foods VALUES (14,'Chef John Pizza Crust 1 each', 28, 32, 36, 484, 1, 15, 0);
+INSERT INTO Foods VALUES (15,'Cauliflower Head 1 each', 2, 16, 23, 15, 1, 15, 0);
+INSERT INTO Foods VALUES (16,'Cream Cheese 1 oz', 10, 2, 2, 99, 1, 12, 0);
+INSERT INTO Foods VALUES (17,'Almonds 1 cup', 69, 29, 13, 795, 1, 16, 0);
+INSERT INTO Foods VALUES (18,'Monk Fruit Sweetener  cup', 0, 0, 0, 0, 1, 16, 0);
+INSERT INTO Foods VALUES (19,'Regina Red Wine Vinegar 1 tbsp', 0, 0, 0, 0, 1, 5, 0);
+INSERT INTO Foods VALUES (20,'Rebel Cookie Dough 1 cup', 30, 5, 1, 315, 1, 16, 0);
+INSERT INTO Foods VALUES (21,'Kirkland Peanuts 1 tbsp', 5, 3, 2, 57, 1, 5, 0);
+INSERT INTO Foods VALUES (22,'Lilys Chocolate Chips 30 chips (14g)', 4, 0, 0, 50, 14, 1, 0);
+INSERT INTO Foods VALUES (23,'Readi Whip 5 g', 1, 0, 1, 15, 5, 1, 0);
+INSERT INTO Foods VALUES (24,'Prairie Farm Heavy Cream 1 tbsp', 5, 0, 0, 45, 1, 5, 0);
+INSERT INTO Foods VALUES (25,'Nutiva Mct 1 tbsp', 14, 0, 0, 130, 1, 5, 0);
 
 -- drop table if exists and create table Recipes with primary key recipe_id, name, description, instructions, image
 DROP TABLE IF EXISTS Recipes;

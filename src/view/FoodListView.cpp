@@ -13,6 +13,14 @@ void FoodListView::createFoodListPanel(wxPanel *parent)
     spdlog::debug("FoodListView::createFoodListPanel");
     wxBoxSizer *topSizer = new wxBoxSizer(wxVERTICAL);
 
+    wxBoxSizer *searchBoxSizer = new wxBoxSizer(wxHORIZONTAL);
+    m_foodSearchTextCtrl = new wxSearchCtrl(parent, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodSearchTextCtrl->ShowCancelButton(1);
+    m_foodSearchTextCtrl->Bind(wxEVT_SEARCHCTRL_SEARCH_BTN, &FoodListView::OnSearch, this);
+    m_foodSearchTextCtrl->Bind(wxEVT_SEARCHCTRL_CANCEL_BTN, &FoodListView::OnSearchCancel, this);
+    searchBoxSizer->Add(m_foodSearchTextCtrl, wxSizerFlags(2).DoubleBorder());
+    topSizer->Add(searchBoxSizer, wxSizerFlags(0).Expand().DoubleBorder());
+
     m_foodsListView = new wxListView(parent);
     m_foodsListView->AppendColumn("ID");
     m_foodsListView->AppendColumn("Name");
@@ -54,6 +62,19 @@ void FoodListView::onFoodSelChange(wxListEvent &event)
     wxInt16 id = wxAtoi(item.GetText());
     spdlog::info("FoodListView::onFoodSelChange GetText({})", id);
     m_foodListCallback->onFoodSelected(id);
+}
+
+void FoodListView::OnSearch(wxCommandEvent& event)
+{
+    const wxString searchText = m_foodSearchTextCtrl->GetValue();
+    wxLogMessage("FoodListView::OnSearch: %s", searchText);
+    m_foodListCallback->onSearch(searchText.ToStdString());
+}
+
+void FoodListView::OnSearchCancel(wxCommandEvent& event)
+{
+    wxLogMessage("FoodListView::OnSearchCancel");
+    m_foodListCallback->onSearchCancel();
 }
 
 int FoodListView::getZeroBasedIndexOfItem(wxString id) {

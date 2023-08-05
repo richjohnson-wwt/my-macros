@@ -11,7 +11,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_foodListModel(&m_dbFood),
     m_recipeListModel(&m_dbRecipe),
     m_dailyModel(&m_dbDaily, &m_foodListModel, &m_recipeListModel),
-    m_fatSecretWrapper(&m_dbFood),
+    m_fatSecretWrapper(&m_foodModel),
     m_foodPresenter(&m_foodItemView, &m_foodModel, &m_foodListModel), 
     m_topFoodView(&m_foodItemView, &m_fatSecretView), 
     m_foodListPresenter(&m_foodListView, &m_foodListModel, &m_foodModel), 

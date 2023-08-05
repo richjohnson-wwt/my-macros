@@ -14,8 +14,7 @@ Food Transformer::convert(const FatSecret::GetFood &getFood, Unit unit)
     f.protein = std::rint(std::stod(serving.protein));
     f.calories = std::stoi(serving.calories);
     f.quantity = static_cast<double>(std::stod(serving.metric_serving_amount));
-
-
+    f.popularity = 0;
     f.unit_id = unit.id;
     return f;
 }

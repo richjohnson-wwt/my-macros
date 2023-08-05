@@ -35,7 +35,11 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     addFoodSizer->Add(m_foodMultiplierTextCtrl, 0, wxALL, 10);
     m_addDailyFoodButton = new wxButton(panel, -1, _T("Add Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_addDailyFoodButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyFood, this);
+    m_addDailyRecipeButton = new wxButton(panel, -1, _T("Add Recipe"), wxDefaultPosition, wxDefaultSize, 0);
+    m_addDailyRecipeButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyRecipe, this);
+
     addFoodSizer->Add(m_addDailyFoodButton, 0, wxALL, 10);
+    addFoodSizer->Add(m_addDailyRecipeButton, 0, wxALL, 10);
     topsizer->Add(addFoodSizer, 0, wxALL, 10);
 
     m_dailyFoodListView = new wxListView(panel);
@@ -68,6 +72,18 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     m_totalsListView->SetColumnWidth(4, 100);
     topsizer->Add(m_totalsListView, 1, wxEXPAND | wxALL, 10);
 
+    wxBoxSizer *percentsSizer = new wxBoxSizer(wxHORIZONTAL);
+    percentsSizer->Add(new wxStaticText(panel, wxID_ANY, "Percent Fat"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    m_fatPercent = new wxStaticText(panel, wxID_ANY, "0%", wxDefaultPosition, wxSize(200, 20));
+    percentsSizer->Add(m_fatPercent, 0, wxALL, 10);
+    percentsSizer->Add(new wxStaticText(panel, wxID_ANY, "Percent Protein"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    m_proteinPercent = new wxStaticText(panel, wxID_ANY, "0%", wxDefaultPosition, wxSize(200, 20));
+    percentsSizer->Add(m_proteinPercent, 0, wxALL, 10);
+    percentsSizer->Add(new wxStaticText(panel, wxID_ANY, "Percent Carb"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    m_carbPercent = new wxStaticText(panel, wxID_ANY, "0%", wxDefaultPosition, wxSize(200, 20));
+    percentsSizer->Add(m_carbPercent, 0, wxALL, 10);
+    topsizer->Add(percentsSizer, 0, wxALL, 10);
+
     panel->SetSizer(topsizer);
 
     return panel;
@@ -86,6 +102,10 @@ void DailyView::onDateChanged(wxDateEvent& event) {
 
 void DailyView::onAddDailyFood(wxCommandEvent& event) {
     spdlog::debug("DailyView::onAddDailyFood");
+}
+
+void DailyView::onAddDailyRecipe(wxCommandEvent& event) {
+    spdlog::debug("DailyView::onAddDailyRecipe");
 }
 
 void DailyView::onDeleteDailyFood(wxCommandEvent& event) {

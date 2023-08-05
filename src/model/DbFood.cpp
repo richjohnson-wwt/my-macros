@@ -58,7 +58,7 @@ void DbFood::addFood(const Food &f) {
     spdlog::debug("DbConnection::addFood");
     try
     {
-        SQLite::Statement query(m_db, "INSERT INTO Foods (name, fat, protein, carb, calories, quantity, unit_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        SQLite::Statement query(m_db, "INSERT INTO Foods (name, fat, protein, carb, calories, quantity, unit_id, popularity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         query.bind(1, f.name);
         query.bind(2, f.fat);
         query.bind(3, f.protein);
@@ -79,6 +79,11 @@ void DbFood::addFood(const Food &f) {
 std::vector<Unit> DbFood::getUnits()
 {
     return DbBase::getUnits();
+}
+
+Unit DbFood::getUnit(const std::string &name)
+{
+    return DbBase::getUnit(name);
 }
 
 void DbFood::deleteFood(int foodId) {

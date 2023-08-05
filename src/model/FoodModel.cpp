@@ -33,6 +33,11 @@ Food FoodModel::getFood()
     }
 }
 
+Unit FoodModel::getUnit(const std::string &name)
+{
+    return m_dbFood->getUnit(name);
+}
+
 std::vector<Unit> FoodModel::getUnits()
 {
     return m_dbFood->getUnits();

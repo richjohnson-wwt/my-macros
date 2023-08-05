@@ -32,13 +32,19 @@ private:
     wxListView *m_dailyFoodListView;
     wxTextCtrl *m_foodMultiplierTextCtrl;
     wxButton *m_addDailyFoodButton;
+    wxButton *m_addDailyRecipeButton;
     wxButton *m_deleteDailyFoodButton;
 
     wxListView *m_totalsListView;
 
+    wxStaticText * m_fatPercent;
+    wxStaticText * m_proteinPercent;
+    wxStaticText * m_carbPercent;
+
 protected:
     void onDateChanged(wxDateEvent& event);
     void onAddDailyFood(wxCommandEvent& event);
+    void onAddDailyRecipe(wxCommandEvent& event);
     void onDeleteDailyFood(wxCommandEvent& event);
     void onAddActivityBonus(wxCommandEvent& event);
 

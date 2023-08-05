@@ -42,3 +42,11 @@ void DailyModel::addExercise(int exerciseCalories)
     df.dailyActivityBonusCalories += exerciseCalories;
     m_dbDaily->updateDailyFood(df);
 }
+
+void DailyModel::addXrefDailyFood(const XrefDailyFood &xdf)
+{
+    spdlog::info("DailyModel::addDailyFood()");
+    // DailyFood df = m_dbDaily->getDailyFood(m_dateString);
+    m_dbDaily->addXrefDailyFood(xdf);
+    
+}

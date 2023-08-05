@@ -6,7 +6,7 @@
 #include <fstream>
 #include <iostream>
 
-FatSecretWrapper::FatSecretWrapper(DbFood *db): m_dbFood(db) {
+FatSecretWrapper::FatSecretWrapper(IFoodModel *foodModel): m_foodModel(foodModel) {
 
 }
 
@@ -63,12 +63,12 @@ void FatSecretWrapper::addGetFoodToDb()
     spdlog::info("FatSecretWrapper::addGetFoodToDb");
     FatSecret::GetFood getFoodWithServingIndex = m_fatSecretModel.retrieveGetFood(0);
 
-    Unit u = m_dbFood->getUnit(getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
+    Unit u = m_foodModel->getUnit(getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
     if (u.name == "NONE")
     {
         spdlog::error("Unit not found {}", getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
     }
     Food f = m_transformer.convert(getFoodWithServingIndex, u);
 
-    m_dbFood->addFood(f);
+    m_foodModel->saveFood(f);
 }

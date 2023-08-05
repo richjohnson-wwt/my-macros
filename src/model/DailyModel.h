@@ -13,6 +13,7 @@ public:
     virtual DailyFood getDailyFood() = 0;
     virtual std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df) = 0;
     virtual void addExercise(int exerciseCalories) = 0;
+    virtual void addXrefDailyFood(const XrefDailyFood &XrefDailyFood) = 0;
 
 };
 
@@ -31,6 +32,8 @@ public:
     DailyFood getDailyFood() override;
     std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df) override;
     void addExercise(int exerciseCalories) override;
+
+    void addXrefDailyFood(const XrefDailyFood &XrefDailyFood) override;
 
 
 };

@@ -50,7 +50,7 @@ void DailyPresenter::populateTotals(const std::vector<XrefDailyFood>& xdfVector)
     // if (xdfVector.size() > 0) {
         // spdlog::info("DailyPresenter::populateView() xdfVector[0].name {}", xdfVector[0].name);
     
-        // TODO calc totals
+        // TODO calc totals TEMP CODE
         std::vector<XrefDailyFood> totalsXdf;
         XrefDailyFood remaining;
         remaining.name = "Remaining";
@@ -85,4 +85,30 @@ void DailyPresenter::onAddExercise()
 {
     spdlog::debug("DailyPresenter::onAddExercise");
     m_dailyModel->addExercise(m_dailyView->getActivityBonus());
+}
+
+void DailyPresenter::onAddDailyFood()
+{
+    spdlog::debug("DailyPresenter::onAddDailyFood");
+    DailyFood df = m_dailyModel->getDailyFood();
+    XrefDailyFood xdf;
+    xdf.dailyFoodId = df.id;
+    
+    m_dailyModel->addXrefDailyFood(xdf);
+
+    // TODO refresh view
+}
+
+void DailyPresenter::onAddDailyRecipe()
+{
+    spdlog::debug("DailyPresenter::onAddDailyRecipe");
+    DailyFood df = m_dailyModel->getDailyFood();
+    XrefDailyFood xdf;
+    xdf.dailyFoodId = df.id;
+
+    // fill out from recipe
+
+    m_dailyModel->addXrefDailyFood(xdf);
+
+    // TODO refresh view
 }

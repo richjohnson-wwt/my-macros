@@ -1,7 +1,7 @@
 #ifndef FAT_SECRET_WRAPPER_H
 #define FAT_SECRET_WRAPPER_H
 
-#include "DbFood.h"
+#include "FoodModel.h"
 #include "CurlWrapper.h"
 
 #include "FatSecretModel.h"
@@ -10,14 +10,14 @@
 
 class FatSecretWrapper {
 public:
-    FatSecretWrapper(DbFood *dbFood);
+    FatSecretWrapper(IFoodModel *foodModel);
     void refreshToken();
     FatSecret::SearchFoods searchFoods(std::string& name);
     FatSecret::GetFood getFood(const std::string& id);
     void addGetFoodToDb();
 
 private:
-    DbFood *m_dbFood;
+    IFoodModel *m_foodModel;
     CurlWrapper m_curlWrapper;
     FatSecret::FatSecretModel m_fatSecretModel;
     Transformer m_transformer;

@@ -85,3 +85,19 @@ void DbDaily::updateDailyFood(const DailyFood& df)
         std::cerr << e.what() << std::endl;
     }
 }
+
+void DbDaily::addXrefDailyFood(const XrefDailyFood& xdf)
+{
+    try {
+        SQLite::Statement query(m_db, "INSERT INTO xref_daily_foods (daily_food_id, name, fat, protein, carb, calories) VALUES (?, ?, ?, ?, ?, ?)");
+        query.bind(1, xdf.dailyFoodId);
+        query.bind(2, xdf.name);
+        query.bind(3, xdf.fat);
+        query.bind(4, xdf.protein);
+        query.bind(5, xdf.carb);
+        query.bind(6, xdf.calories);
+        query.exec();
+    } catch (SQLite::Exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}

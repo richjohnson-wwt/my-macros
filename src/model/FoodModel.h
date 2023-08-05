@@ -21,6 +21,7 @@ class IFoodModel {
 public:
     
     virtual Food getFood() = 0;
+    virtual Unit getUnit(const std::string& name) = 0;
     virtual std::vector<Unit> getUnits() = 0;
     virtual void saveFood(const Food& f) = 0;
     virtual void deleteFood() = 0;
@@ -43,6 +44,7 @@ public:
     FoodModel(DbFood *db, FoodListModel *foodListModel);
     
     Food getFood() override;
+    Unit getUnit(const std::string& name) override;
     std::vector<Unit> getUnits() override;
 
     void attach(IFoodObserver* observer) override;

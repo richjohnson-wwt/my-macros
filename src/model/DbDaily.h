@@ -9,6 +9,9 @@ public:
 
     DailyFood getDailyFood(const std::string& date);
     std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df);
+    bool doesTodayExist(const std::string& today);
+
+    void saveDailyFood(const DailyFood& df);
 
 };
 

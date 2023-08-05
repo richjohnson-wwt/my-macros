@@ -13,6 +13,13 @@ void DailyModel::setSelectedDate(const std::string& date)
 {
     spdlog::debug("DailyModel::setSelectedDate() {}", date);
     m_dateString = date;
+    if (m_dbDaily->doesTodayExist(date)){
+        spdlog::info("DailyModel::setSelectedDate() {} does exist", date);
+    } else {
+        spdlog::info("DailyModel::setSelectedDate() {} does not exist", date);
+        DailyFood df = DailyFood{0, date, 0};
+        m_dbDaily->saveDailyFood(df);
+    }
 }
 
 DailyFood DailyModel::getDailyFood()

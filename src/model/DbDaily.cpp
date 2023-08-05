@@ -46,3 +46,30 @@ std::vector<XrefDailyFood> DbDaily::getXrefDailyFoods(const DailyFood &df)
     }
     return xrefDailyFoods;
 }
+
+bool DbDaily::doesTodayExist(const std::string& today)
+{
+    bool exists = false;
+    try {
+        SQLite::Statement query(m_db, "SELECT * FROM daily_food where date = ?");
+        query.bind(1, today);
+        while (query.executeStep()) {
+            exists = true;
+        }
+    } catch (SQLite::Exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+    return exists;
+}
+
+void DbDaily::saveDailyFood(const DailyFood& df)
+{
+    try {
+        SQLite::Statement query(m_db, "INSERT INTO daily_food (date, exercise_calorie_bonus) VALUES (?, ?)");
+        query.bind(1, df.date);
+        query.bind(2, df.dailyActivityBonusCalories);
+        query.exec();
+    } catch (SQLite::Exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}

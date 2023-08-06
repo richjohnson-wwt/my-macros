@@ -26,6 +26,7 @@ public:
 
     // Deletes
     void deleteRecipe(int id);
+    void deleteIngredient(int recipeId, int foodId);
 };
 
 #endif // DB_RECIPE_H

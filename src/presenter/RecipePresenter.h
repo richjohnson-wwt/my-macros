@@ -10,8 +10,10 @@ public:
     virtual void onNewRecipe() = 0;
     virtual void onCancelNewRecipe() = 0;
     virtual void onAddIngredient(double unitMultiplier) = 0;
+    virtual void onDeleteIngredient() = 0;
     virtual void onSaveRecipe() = 0;
     virtual void onDeleteRecipe() = 0;
+    virtual void onSelectIngredient(int id) = 0;
 };
 
 
@@ -31,8 +33,10 @@ public:
     void onNewRecipe() override;
     void onCancelNewRecipe() override;
     void onAddIngredient(double unitMultiplier) override;
+    void onDeleteIngredient() override;
     void onSaveRecipe() override;
     void onDeleteRecipe() override;
+    void onSelectIngredient(int id) override;
 };
 
 #endif // RECIPE_PRESENTER_H

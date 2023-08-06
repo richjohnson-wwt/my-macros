@@ -25,6 +25,7 @@ public:
     virtual void newRecipe() = 0;
     virtual void cancelNewRecipe() = 0;
     virtual void addIngredient(double unitMultiplier) = 0;
+    virtual void deleteIngredient() = 0;
     virtual void saveRecipe() = 0;
     virtual void deleteRecipe() = 0;
 
@@ -33,6 +34,7 @@ public:
     virtual void setRecipeUrl(const std::string& url) = 0;
     virtual void setRecipeServings(const std::string& servings) = 0;
     virtual void setRecipeInstructions(const std::string& instructions) = 0;
+    virtual void selectIngredient(int id) = 0;
 };
 
 class RecipeModel : public IRecipeModel, public IRecipeSubject {
@@ -47,6 +49,7 @@ private:
     Recipe m_recipeUnderConstruction;
     std::vector<Ingredient> m_ingredientsUnderConstruction;
     const int NEW_RECIPE_ID = -1;
+    int m_selectedIngredient;
 
 public:
     RecipeModel(DbRecipe *db, RecipeListModel *recipeListModel, FoodListModel *foodListModel);
@@ -60,6 +63,7 @@ public:
     void newRecipe() override;
     void cancelNewRecipe() override;
     void addIngredient(double unitMultiplier) override;
+    void deleteIngredient() override;
     void saveRecipe() override;
     void deleteRecipe() override;
 
@@ -68,6 +72,8 @@ public:
     void setRecipeUrl(const std::string& url) override;
     void setRecipeServings(const std::string& servings) override;
     void setRecipeInstructions(const std::string& instructions) override;
+
+    void selectIngredient(int id) override;
 };
 
 #endif // RECIPE_MODEL_H

@@ -67,3 +67,15 @@ void RecipePresenter::onDeleteRecipe()
 
     m_recipeModel->deleteRecipe();
 }
+
+void RecipePresenter::onDeleteIngredient()
+{
+    spdlog::info("RecipePresenter::onDeleteIngredient");
+    m_recipeModel->deleteIngredient();
+}
+
+void RecipePresenter::onSelectIngredient(int id)
+{
+    spdlog::info("RecipePresenter::onSelectIngredient");
+    m_recipeModel->selectIngredient(id);
+}

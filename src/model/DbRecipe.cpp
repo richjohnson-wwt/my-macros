@@ -171,3 +171,20 @@ void DbRecipe::deleteRecipe(int id)
         spdlog::error(e.what());
     }
 }
+
+void DbRecipe::deleteIngredient(int recipeId, int foodId)
+{
+    spdlog::debug("DbRecipe::deleteIngredient");
+    try
+    {
+        SQLite::Statement query(m_db, "DELETE FROM xref_recipe_foods WHERE recipe_id = ? AND food_id = ?");
+        query.bind(1, recipeId);
+        query.bind(2, foodId);
+        query.exec();
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+}

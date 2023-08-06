@@ -114,3 +114,21 @@ void RecipeModel::setRecipeInstructions(const std::string &instructions)
 {
     m_recipeUnderConstruction.instructions = instructions;
 }
+
+void RecipeModel::selectIngredient(int id)
+{
+    m_selectedIngredient = id;
+}
+
+void RecipeModel::deleteIngredient()
+{
+    spdlog::debug("RecipeModel::deleteIngredient");
+    if (m_buildingRecipe){
+        m_ingredientsUnderConstruction.erase(m_ingredientsUnderConstruction.begin() + m_selectedIngredient);
+    } else {
+        // TODO updating still needs to be done correctly
+        m_dbRecipe->deleteIngredient(m_recipeListModel->getSelectedId(), m_selectedIngredient);
+    }
+    
+    notify();
+}

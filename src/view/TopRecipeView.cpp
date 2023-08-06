@@ -131,10 +131,12 @@ void TopRecipeView::onAddIngredient(wxCommandEvent &event) {
 }
 
 void TopRecipeView::onDeleteIngredient(wxCommandEvent &event) {
-    
+    m_recipeCallback->onDeleteIngredient();
 }
 
 void TopRecipeView::onIngredientSelChange(wxListEvent &event) {
+    int id = wxAtoi(event.GetText());
+    m_recipeCallback->onSelectIngredient(id);
     
 }
 
@@ -178,8 +180,7 @@ void TopRecipeView::setRecipeIngredients(const std::vector<Ingredient> &ingredie
         m_recipeIngredientsListView->InsertItem(row, std::to_string(i.food.id));
         m_recipeIngredientsListView->SetItem(row, 1, i.food.name);
         m_recipeIngredientsListView->SetItem(row, 2, wxString(std::to_string(i.food.quantity)));
-        // Unit foodUnit = m_dbConnection->getUnit(i.food.unit_id);
-        m_recipeIngredientsListView->SetItem(row, 3, "todo");//foodUnit.name);
+        m_recipeIngredientsListView->SetItem(row, 3, i.unit.name);
         m_recipeIngredientsListView->SetItem(row, 4, std::to_string(i.unitMultiplier));
         row++;
     }

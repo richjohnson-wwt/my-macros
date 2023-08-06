@@ -142,7 +142,7 @@ void DailyPresenter::onAddDailyFood()
     
     m_dailyModel->addXrefDailyFood(xdf);
 
-    m_dailyView->setDailyFoodList(m_dailyModel->getXrefDailyFoods(df));
+    refresh();
 }
 
 void DailyPresenter::onAddDailyRecipe()
@@ -158,6 +158,7 @@ void DailyPresenter::onAddDailyRecipe()
     std::stringstream ss;
     ss << recipe.name << " x " << multiplier;
     XrefDailyFood xdf;
+    xdf.id = 0;
     xdf.dailyFoodId = df.id;
     xdf.name = ss.str();
     xdf.fat = cm.fatGrams;
@@ -168,7 +169,7 @@ void DailyPresenter::onAddDailyRecipe()
 
     m_dailyModel->addXrefDailyFood(xdf);
 
-    m_dailyView->setDailyFoodList(xdfVector);
+    refresh();
 }
 
 CalculatedMacros DailyPresenter::calculateFoodMacros(const Food &food, double multiplier)

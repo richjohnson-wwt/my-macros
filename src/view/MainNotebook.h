@@ -16,9 +16,6 @@ public:
     MainNotebook(wxFrame* parent, DailyView *topDailyView, TopFoodView *topFoodView, TopRecipeView *topRecipeView);
 
     wxNotebook *createMainBookCtrl();
-    // void onNotebookPageChanged( wxNotebookEvent &event );
-
-    void postInit();
 
 private:
     wxFrame *m_wxFrame;

@@ -39,3 +39,9 @@ int RecipeListModel::getSelectedId()
     spdlog::debug("RecipeListModel::getSelectedId({})", m_selectedId);
     return m_selectedId;
 }
+
+Recipe RecipeListModel::getSelectedRecipe()
+{
+    spdlog::debug("RecipeListModel::getSelectedRecipe({})", m_selectedId);
+    return m_dbRecipe->getRecipeById(m_selectedId);
+}

@@ -36,8 +36,6 @@ private:
     wxSearchCtrl *m_searchText;
     wxListView *m_searchListView;
 
-    wxButton *m_getResultButton;
-
     wxSizer *CreateTextWithLabelSizer(wxPanel *panel, const wxString &label, wxTextCtrl *text);
 
 protected:

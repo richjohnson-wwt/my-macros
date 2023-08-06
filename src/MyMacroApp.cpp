@@ -10,7 +10,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_recipeModel(&m_dbRecipe, &m_recipeListModel, &m_foodListModel),
     m_foodListModel(&m_dbFood),
     m_recipeListModel(&m_dbRecipe),
-    m_dailyModel(&m_dbDaily, &m_foodListModel, &m_recipeListModel),
+    m_dailyModel(&m_dbDaily, &m_foodListModel, &m_recipeListModel, &m_recipeModel),
     m_fatSecretWrapper(&m_foodModel),
     m_foodPresenter(&m_foodItemView, &m_foodModel, &m_foodListModel), 
     m_topFoodView(&m_foodItemView, &m_fatSecretView), 

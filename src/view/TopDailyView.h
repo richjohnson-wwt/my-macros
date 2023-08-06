@@ -9,6 +9,21 @@
 #include <wx/datectrl.h>
 #include <wx/dateevt.h>
 
+struct Goals {
+    int fat;
+    int protein;
+    int carb;
+    int calories;
+};
+
+struct CalculatedMacros
+{
+    double fatGrams;
+    double proteinGrams;
+    double carbGrams;
+    int calories;
+};
+
 class IDailyCallback;
 
 class IDailyView {
@@ -16,9 +31,10 @@ public:
     virtual void setDailyActivityBonus(const std::string& bonus) = 0;
     virtual void setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFoods) = 0;
 
-    virtual void setTotalsList(const std::vector<XrefDailyFood> &totals) = 0;
+    virtual void setTotalsList(const std::vector<XrefDailyFood> &totals, int percentFat, int percentProtein, int percentCarb) = 0;
 
     virtual int getActivityBonus() = 0;
+    virtual double getDailyMultiplier() = 0;
 };
 
 class DailyView : public wxEvtHandler, public IDailyView {
@@ -47,6 +63,7 @@ protected:
     void onAddDailyRecipe(wxCommandEvent& event);
     void onDeleteDailyFood(wxCommandEvent& event);
     void onAddActivityBonus(wxCommandEvent& event);
+    void onSelectDailyFood(wxListEvent& event);
 
 public:
     DailyView(IDailyCallback *callback);
@@ -56,9 +73,10 @@ public:
     void setDailyActivityBonus(const std::string& bonus) override;
     void setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFoods) override;
 
-    void setTotalsList(const std::vector<XrefDailyFood> &totals) override;
+    void setTotalsList(const std::vector<XrefDailyFood> &totals, int percentFat, int percentProtein, int percentCarb) override;
 
     int getActivityBonus() override;
+    double getDailyMultiplier() override;
 
 };
 

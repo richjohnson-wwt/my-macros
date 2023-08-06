@@ -4,7 +4,6 @@
 
 #include "MyMacroApp.h"
 
-// #include "wx/aui/aui.h"
 #include "wx/notebook.h"
 #include <wx/wx.h>
 

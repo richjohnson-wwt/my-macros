@@ -39,3 +39,9 @@ int FoodListModel::getSelectedId()
     spdlog::debug("FoodListModel::getSelectedId({})", m_selectedId);
     return m_selectedId;
 }
+
+Food FoodListModel::getSelectedFood()
+{
+    spdlog::debug("FoodListModel::getSelectedFood({})", m_selectedId);
+    return m_dbFood->getFood(m_selectedId);
+}

@@ -14,6 +14,7 @@ public:
     void saveDailyFood(const DailyFood& df);
     void updateDailyFood(const DailyFood& df);
     void addXrefDailyFood(const XrefDailyFood &xrefDailyFood);
+    void deleteXrefDailyFood(int id);
 
 };
 

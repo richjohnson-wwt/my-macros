@@ -10,6 +10,7 @@ public:
     virtual void setSelectedId(int idx) = 0;
     virtual int getSelectedId() = 0;
     virtual std::vector<Recipe> getRecipes() = 0;
+    virtual Recipe getSelectedRecipe() = 0;
 };
 
 class IRecipeListObserver {
@@ -34,6 +35,7 @@ public:
     std::vector<Recipe> getRecipes() override;
     void setSelectedId(int idx) override;
     int getSelectedId() override;
+    Recipe getSelectedRecipe() override;
 
     void attach(IRecipeListObserver* observer) override;
     void notify() override;

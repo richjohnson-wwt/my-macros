@@ -10,6 +10,8 @@ public:
     virtual std::vector<Food> getFoods() = 0;
     virtual void setSelectedId(int id) = 0;
     virtual int getSelectedId() = 0;
+    virtual Food getSelectedFood() = 0;
+    
 };
 
 class IFoodListObserver {
@@ -34,6 +36,8 @@ public:
     std::vector<Food> getFoods() override;
     void setSelectedId(int idx) override;
     int getSelectedId() override;
+    Food getSelectedFood() override;
+    
 
     void attach(IFoodListObserver* observer) override;
     void notify() override;

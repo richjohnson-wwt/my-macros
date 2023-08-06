@@ -3,8 +3,9 @@
 
 #include <spdlog/spdlog.h>
 
-DailyModel::DailyModel(DbDaily *dbDaily, IFoodListModel *foodListModel, IRecipeListModel *recipeListModel)
-: m_dbDaily(dbDaily), m_foodListModel(foodListModel), m_recipeListModel(recipeListModel)
+DailyModel::DailyModel(DbDaily *dbDaily, 
+    IFoodListModel *foodListModel, IRecipeListModel *recipeListModel, IRecipeModel *recipeModel)
+: m_dbDaily(dbDaily), m_foodListModel(foodListModel), m_recipeListModel(recipeListModel), m_recipeModel(recipeModel)
 {
 
 }
@@ -46,7 +47,56 @@ void DailyModel::addExercise(int exerciseCalories)
 void DailyModel::addXrefDailyFood(const XrefDailyFood &xdf)
 {
     spdlog::info("DailyModel::addDailyFood()");
-    // DailyFood df = m_dbDaily->getDailyFood(m_dateString);
     m_dbDaily->addXrefDailyFood(xdf);
     
+}
+
+Food DailyModel::getFood()
+{
+    spdlog::info("DailyModel::getFood()");
+    return m_foodListModel->getSelectedFood();
+}
+
+Recipe DailyModel::getRecipe()
+{
+    spdlog::info("DailyModel::getRecipe()");
+    return m_recipeListModel->getSelectedRecipe();
+}
+
+std::vector<Ingredient> DailyModel::getIngredients()
+{
+    spdlog::info("DailyModel::getIngredients()");
+    return m_recipeModel->getIngredients();
+}
+
+void DailyModel::setSelectedDailyFoodId(int id)
+{
+    spdlog::info("DailyModel::setSelectedDailyFoodId({})", id);
+    m_selectedDailyFoodId = id;
+}
+
+void DailyModel::deleteXrefDailyFood()
+{
+    spdlog::info("DailyModel::deleteXrefDailyFood {}", m_selectedDailyFoodId);
+    m_dbDaily->deleteXrefDailyFood(m_selectedDailyFoodId);
+}
+
+int DailyModel::getGoalFatGrams()
+{
+    return FAT_GRAMS;
+}
+
+int DailyModel::getGoalProteinGrams()
+{
+    return PROTEIN_GRAMS;
+}
+
+int DailyModel::getGoalCarbGrams()
+{
+    return CARB_GRAMS;
+}
+
+int DailyModel::getGoalCalories()
+{
+    return TOTAL_CALORIES;
 }

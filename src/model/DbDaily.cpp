@@ -101,3 +101,14 @@ void DbDaily::addXrefDailyFood(const XrefDailyFood& xdf)
         std::cerr << e.what() << std::endl;
     }
 }
+
+void DbDaily::deleteXrefDailyFood(int id)
+{
+    try {
+        SQLite::Statement query(m_db, "DELETE FROM xref_daily_foods WHERE id = ?");
+        query.bind(1, id);
+        query.exec();
+    } catch (SQLite::Exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}

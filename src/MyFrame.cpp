@@ -6,7 +6,6 @@ MyFrame::MyFrame(wxWindow *parent) : wxFrame(parent, wxID_ANY, _("My Macro Calcu
                                              wxDefaultPosition, wxSize(1200, 800),
                                              wxDEFAULT_FRAME_STYLE), m_app(this)
 {
-    // create several text controls
     m_app.create();
 }
 

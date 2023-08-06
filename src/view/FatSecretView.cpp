@@ -33,11 +33,7 @@ wxPanel *FatSecretView::createPanel(wxNotebook *parent)
     m_searchListView->SetColumnWidth(1, 200);
     m_searchListView->SetColumnWidth(2, 500);
     topsizer->Add(m_searchListView, 5, wxEXPAND | wxALL, 10); // 5!!!! Greater proportion than the rest
-
-    m_getResultButton = new wxButton(panel, wxID_ANY, _T("Get Result"), wxDefaultPosition, wxDefaultSize, 0);
-    m_getResultButton->Bind(wxEVT_BUTTON, &FatSecretView::onGetResult, this);
-    topsizer->Add(m_getResultButton, 0, wxALIGN_CENTER, 10);
-
+    
     // Get section
     wxBoxSizer *boxSectionSizer = new wxBoxSizer(wxVERTICAL);
     wxBoxSizer *getRowSizer1 = new wxBoxSizer(wxHORIZONTAL);

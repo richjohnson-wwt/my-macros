@@ -31,7 +31,7 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
 
     wxBoxSizer *addFoodSizer = new wxBoxSizer(wxHORIZONTAL);
     addFoodSizer->Add(new wxStaticText(panel, wxID_ANY, "Multiplier"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    m_foodMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20));
     addFoodSizer->Add(m_foodMultiplierTextCtrl, 0, wxALL, 10);
     m_addDailyFoodButton = new wxButton(panel, -1, _T("Add Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_addDailyFoodButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyFood, this);
@@ -43,16 +43,19 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     topsizer->Add(addFoodSizer, 0, wxALL, 10);
 
     m_dailyFoodListView = new wxListView(panel);
+    m_dailyFoodListView->AppendColumn("Id");
     m_dailyFoodListView->AppendColumn("Food Name");
     m_dailyFoodListView->AppendColumn("Calories");
     m_dailyFoodListView->AppendColumn("Fat");
     m_dailyFoodListView->AppendColumn("Protein");
     m_dailyFoodListView->AppendColumn("Carb");
-    m_dailyFoodListView->SetColumnWidth(0, 320);
-    m_dailyFoodListView->SetColumnWidth(1, 100);
+    m_dailyFoodListView->SetColumnWidth(0, 100);
+    m_dailyFoodListView->SetColumnWidth(1, 320);
     m_dailyFoodListView->SetColumnWidth(2, 100);
     m_dailyFoodListView->SetColumnWidth(3, 100);
     m_dailyFoodListView->SetColumnWidth(4, 100);
+    m_dailyFoodListView->SetColumnWidth(5, 100);
+    m_dailyFoodListView->Bind(wxEVT_LIST_ITEM_SELECTED, &DailyView::onSelectDailyFood, this);
     topsizer->Add(m_dailyFoodListView, 1, wxEXPAND | wxALL, 10);
 
     m_deleteDailyFoodButton = new wxButton(panel, -1, _T("Delete Food"), wxDefaultPosition, wxDefaultSize, 0);
@@ -102,19 +105,29 @@ void DailyView::onDateChanged(wxDateEvent& event) {
 
 void DailyView::onAddDailyFood(wxCommandEvent& event) {
     spdlog::debug("DailyView::onAddDailyFood");
+    m_dailyCallback->onAddDailyFood();
 }
 
 void DailyView::onAddDailyRecipe(wxCommandEvent& event) {
     spdlog::debug("DailyView::onAddDailyRecipe");
+    m_dailyCallback->onAddDailyRecipe();
 }
 
 void DailyView::onDeleteDailyFood(wxCommandEvent& event) {
     spdlog::debug("DailyView::onDeleteDailyFood");
+    m_dailyCallback->onDeleteDailyFood();
 }
 
 void DailyView::onAddActivityBonus(wxCommandEvent& event) {
     spdlog::debug("DailyView::onAddActivityBonus");
     m_dailyCallback->onAddExercise();
+}
+
+void DailyView::onSelectDailyFood(wxListEvent& event) {
+    wxListItem item = event.GetItem();
+    int id = wxAtoi(item.GetText());
+    spdlog::info("DailyView::onSelectDailyFood {}", id);
+    m_dailyCallback->onSelectedDailyFoodChanged(id);
 }
 
 void DailyView::setDailyActivityBonus(const std::string& bonus) {
@@ -128,15 +141,16 @@ void DailyView::setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFood
     m_dailyFoodListView->DeleteAllItems();
 
     for (int i = 0; i < xrefDailyFoods.size(); i++) {
-        m_dailyFoodListView->InsertItem(i, xrefDailyFoods[i].name);
-        m_dailyFoodListView->SetItem(i, 1, std::to_string(xrefDailyFoods[i].calories));
-        m_dailyFoodListView->SetItem(i, 2, std::to_string(xrefDailyFoods[i].fat));
-        m_dailyFoodListView->SetItem(i, 3, std::to_string(xrefDailyFoods[i].protein));
-        m_dailyFoodListView->SetItem(i, 4, std::to_string(xrefDailyFoods[i].carb));
+        m_dailyFoodListView->InsertItem(i, std::to_string(xrefDailyFoods[i].id));
+        m_dailyFoodListView->SetItem(i, 1, xrefDailyFoods[i].name);
+        m_dailyFoodListView->SetItem(i, 2, std::to_string(xrefDailyFoods[i].calories));
+        m_dailyFoodListView->SetItem(i, 3, std::to_string(xrefDailyFoods[i].fat));
+        m_dailyFoodListView->SetItem(i, 4, std::to_string(xrefDailyFoods[i].protein));
+        m_dailyFoodListView->SetItem(i, 5, std::to_string(xrefDailyFoods[i].carb));
     }
 }
 
-void DailyView::setTotalsList(const std::vector<XrefDailyFood> &totals) {
+void DailyView::setTotalsList(const std::vector<XrefDailyFood> &totals, int percentFat, int percentProtein, int percentCarb) {
     spdlog::info("DailyView::setTotalsList size: {}", totals.size());
 
     m_totalsListView->DeleteAllItems();
@@ -148,9 +162,18 @@ void DailyView::setTotalsList(const std::vector<XrefDailyFood> &totals) {
         m_totalsListView->SetItem(i, 3, std::to_string(totals[i].protein));
         m_totalsListView->SetItem(i, 4, std::to_string(totals[i].carb));
     }
+
+    m_fatPercent->SetLabel(std::to_string(percentFat) + "%");
+    m_proteinPercent->SetLabel(std::to_string(percentProtein) + "%");
+    m_carbPercent->SetLabel(std::to_string(percentCarb) + "%");
 }
 
 int DailyView::getActivityBonus() {
     spdlog::debug("DailyView::getActivityBonus");
     return std::stoi(m_dailyActivityBonusTextCtrl->GetValue().ToStdString());
+}
+
+double DailyView::getDailyMultiplier() {
+    spdlog::debug("DailyView::getDailyMultiplier");
+    return std::stod(m_foodMultiplierTextCtrl->GetValue().ToStdString());
 }

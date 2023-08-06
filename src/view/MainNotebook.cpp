@@ -24,24 +24,6 @@ wxNotebook *MainNotebook::createMainBookCtrl()
     wxWindow *page3 = m_topRecipeView->createRecipePanel(m_mainBookCtrl);
     m_mainBookCtrl->AddPage(page1, "Daily", false, 0);
     m_mainBookCtrl->AddPage(page2, "Food", false, 0);
-    m_mainBookCtrl->AddPage(page3, "Build Recipe", false, 0);
+    m_mainBookCtrl->AddPage(page3, "Recipe", false, 0);
     return m_mainBookCtrl;
-}
-
-// void MainNotebook::onNotebookPageChanged(wxNotebookEvent &event)
-// {
-//     spdlog::debug("MainNotebook::onNotebookPageChanged");
-//     if (event.GetSelection() == 0) {
-//         m_dailyView->setActive();
-//     } else if (event.GetSelection() == 1) {
-//         // m_topFoodView->setActive();
-//     } else if (event.GetSelection() == 2) {
-//         m_topRecipeView->setActive();
-//     } else {
-//         spdlog::error("MainNotebook::onNotebookPageChanged UNKNOWN PAGE");
-//     }
-// }
-
-void MainNotebook::postInit() {
-    // m_dailyPanel.postInit();
 }

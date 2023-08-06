@@ -11,9 +11,10 @@ class IFoodModel;
 class IFoodCallback {
 public:
     virtual void onDeleteFood() = 0;
-    virtual void onSaveFood() = 0;
+    // virtual void onSaveFood() = 0;
     virtual void onNewFood() = 0;
-    virtual void onNewFoodCancel() = 0;
+    // virtual void onNewFoodCancel() = 0;
+    virtual void onEditFood() = 0;
 };
 
 class FoodPresenter : public IFoodCallback, public IFoodListObserver {
@@ -30,9 +31,11 @@ public:
     void postInit();
 
     void onDeleteFood() override;
-    void onSaveFood() override;
+    // void onSaveFood() override;
     void onNewFood() override;
-    void onNewFoodCancel() override;
+    // void onNewFoodCancel() override;
+    void onEditFood() override;
+    
 
 };
 

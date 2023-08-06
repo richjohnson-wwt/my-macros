@@ -4,7 +4,7 @@
 #include <spdlog/spdlog.h>
 
 FoodPresenter::FoodPresenter(IFoodItemView *view, IFoodModel *model, IFoodListSubject *foodListSubject)
-: m_foodModel(model), m_foodItemView(view), m_foodListSubject(foodListSubject)
+: m_foodModel(model), m_foodListSubject(foodListSubject), m_foodItemView(view)
 {
 
 }
@@ -35,30 +35,36 @@ void FoodPresenter::onDeleteFood()
     m_foodListSubject->notify();
 }
 
-void FoodPresenter::onSaveFood()
-{
-    spdlog::debug("FoodPresenter::onSaveFood");
-    Food food;
-    food.id = std::stoi(m_foodItemView->getFoodId());
-    food.name = m_foodItemView->getFoodName();
-    food.fat = std::stoi(m_foodItemView->getFoodFat());
-    food.protein = std::stoi(m_foodItemView->getFoodProtein());
-    food.carb = std::stoi(m_foodItemView->getFoodCarb());
-    food.calories = std::stoi(m_foodItemView->getFoodCalories());
-    food.quantity = std::stoi(m_foodItemView->getFoodQuantity());
-    food.unit_id = m_foodItemView->getFoodUnitId();
-    m_foodModel->saveFood(food);
-    m_foodListSubject->notify();
-}
+// void FoodPresenter::onSaveFood()
+// {
+//     spdlog::debug("FoodPresenter::onSaveFood");
+//     // Food food;
+//     // food.id = std::stoi(m_foodItemView->getFoodId());
+//     // food.name = m_foodItemView->getFoodName();
+//     // food.fat = std::stoi(m_foodItemView->getFoodFat());
+//     // food.protein = std::stoi(m_foodItemView->getFoodProtein());
+//     // food.carb = std::stoi(m_foodItemView->getFoodCarb());
+//     // food.calories = std::stoi(m_foodItemView->getFoodCalories());
+//     // food.quantity = std::stoi(m_foodItemView->getFoodQuantity());
+//     // food.unit_id = m_foodItemView->getFoodUnitId();
+//     // m_foodModel->saveFood(food);
+//     // m_foodListSubject->notify();
+// }
 
 void FoodPresenter::onNewFood()
 {
     spdlog::debug("FoodPresenter::onNewFood");
-    m_foodModel->newFood();
+    m_foodItemView->insertNewPage(true);
 }
 
-void FoodPresenter::onNewFoodCancel()
+// void FoodPresenter::onNewFoodCancel()
+// {
+//     spdlog::debug("FoodPresenter::onNewFoodCancel");
+//     m_foodModel->newFoodCancel();
+// }
+
+void FoodPresenter::onEditFood()
 {
-    spdlog::debug("FoodPresenter::onNewFoodCancel");
-    m_foodModel->newFoodCancel();
+    m_foodItemView->insertNewPage(false);
+    
 }

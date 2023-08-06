@@ -86,6 +86,11 @@ Unit DbFood::getUnit(const std::string &name)
     return DbBase::getUnit(name);
 }
 
+Unit DbFood::getUnit(int id)
+{
+    return DbBase::getUnit(id);
+}
+
 void DbFood::deleteFood(int foodId) {
     spdlog::debug("DbFood::deleteFood");
     try

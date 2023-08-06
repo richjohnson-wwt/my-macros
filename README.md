@@ -45,5 +45,5 @@ Stories
     * X Daily - Auto-create Today Date DailyFood in Db
     * Daily - Add Daily Food
     * Macro - 3rd panel macro breakdown
-    * Food - StaticText for FoodItem. Use FoodItemEdit and FoodItemView panels
+    * Food - StaticText for FoodItem. Use FoodItemEdit and FoodItemEditView panels
     * Recipe - StaticText for RecipeItem

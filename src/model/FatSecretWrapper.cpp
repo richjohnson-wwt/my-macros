@@ -1,4 +1,5 @@
 #include "FatSecretWrapper.h"
+#include "FoodEditModel.h"
 
 #include "TokenJson.h"
 
@@ -6,7 +7,7 @@
 #include <fstream>
 #include <iostream>
 
-FatSecretWrapper::FatSecretWrapper(IFoodModel *foodModel): m_foodModel(foodModel) {
+FatSecretWrapper::FatSecretWrapper(IFoodEditModel *foodModel): m_foodModel(foodModel) {
 
 }
 

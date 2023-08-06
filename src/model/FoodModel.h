@@ -21,12 +21,11 @@ class IFoodModel {
 public:
     
     virtual Food getFood() = 0;
+    virtual Unit getFoodUnit() = 0;
     virtual Unit getUnit(const std::string& name) = 0;
-    virtual std::vector<Unit> getUnits() = 0;
-    virtual void saveFood(const Food& f) = 0;
+    virtual std::vector<Unit> getUnits() = 0;;
     virtual void deleteFood() = 0;
-    virtual void newFood() = 0;
-    virtual void newFoodCancel() = 0;
+
 };
 
 class FoodModel : public IFoodModel, public IFoodSubject {
@@ -36,24 +35,18 @@ private:
     
     std::vector<IFoodObserver*> m_observers;
 
-    bool m_buildingFood;
-    Food m_foodUnderConstruction;
-    const int NEW_FOOD_ID = -1;
-
 public:
     FoodModel(DbFood *db, FoodListModel *foodListModel);
     
     Food getFood() override;
+    Unit getFoodUnit() override;
     Unit getUnit(const std::string& name) override;
     std::vector<Unit> getUnits() override;
 
     void attach(IFoodObserver* observer) override;
     void notify() override;
 
-    void saveFood(const Food& f) override;
     void deleteFood() override;
-    void newFood() override;
-    void newFoodCancel() override;
 
 };
 

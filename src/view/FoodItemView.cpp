@@ -2,8 +2,8 @@
 #include "../presenter/FoodPresenter.h"
 #include <spdlog/spdlog.h>
 
-FoodItemView::FoodItemView(IFoodCallback *callback)
-    : m_foodCallback(callback)
+FoodItemView::FoodItemView(IFoodCallback *callback, FoodItemEditView *foodItemEditView)
+    : m_foodCallback(callback), m_foodItemEditView(foodItemEditView)
 {
 }
 
@@ -17,6 +17,7 @@ wxSizer *FoodItemView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &
 
 wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
 {
+    m_parent = parent;
     wxPanel *panel = new wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(400, 150));
 
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
@@ -42,9 +43,9 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
     m_foodQuantityTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food Quantity:", m_foodQuantityTextCtrl), 0, wxALL, 10);
 
-    wxSizer *comboSizerRow = new wxBoxSizer(wxHORIZONTAL);
+    wxSizer *comboSizerRow = new wxBoxSizer(wxHORIZONTAL); 
     m_foodUnitComboBox = new wxComboBox(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
-    m_foodUnitComboBox->Bind(wxEVT_COMBOBOX, &FoodItemView::onFoodUnitComboBox, this);
+    // m_foodUnitComboBox->Bind(wxEVT_COMBOBOX, &FoodItemView::onFoodUnitComboBox, this);
     comboSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Food Unit: ", wxDefaultPosition, wxSize(100, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
     comboSizerRow->Add(m_foodUnitComboBox, 0, wxALIGN_LEFT);
     topsizer->Add(comboSizerRow, 0, wxALL, 10);
@@ -52,20 +53,16 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
     m_foodDeleteButton = new wxButton(panel, -1, _T("Delete Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_foodDeleteButton->Bind(wxEVT_BUTTON, &FoodItemView::onDeleteFood, this);
 
-    m_foodSaveButton = new wxButton(panel, -1, _T("Save Food"), wxDefaultPosition, wxDefaultSize, 0);
-    m_foodSaveButton->Bind(wxEVT_BUTTON, &FoodItemView::onSaveFood, this);
+    m_foodEditButton = new wxButton(panel, -1, _T("Edit Food"), wxDefaultPosition, wxDefaultSize, 0);
+    m_foodEditButton->Bind(wxEVT_BUTTON, &FoodItemView::onEditFood, this);
 
     m_foodNewButton = new wxButton(panel, -1, _T("New Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_foodNewButton->Bind(wxEVT_BUTTON, &FoodItemView::onNewFood, this);
 
-    m_foodNewCancelButton = new wxButton(panel, -1, _T("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
-    m_foodNewCancelButton->Bind(wxEVT_BUTTON, &FoodItemView::onNewFoodCancel, this);
-
     wxBoxSizer *buttonSizer = new wxBoxSizer(wxHORIZONTAL);
     buttonSizer->Add(m_foodDeleteButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    buttonSizer->Add(m_foodSaveButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    buttonSizer->Add(m_foodEditButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
     buttonSizer->Add(m_foodNewButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    buttonSizer->Add(m_foodNewCancelButton, 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
 
     topsizer->Add(buttonSizer, 0, wxALIGN_CENTRE_VERTICAL | wxLEFT, 5);
 
@@ -79,25 +76,31 @@ void FoodItemView::onDeleteFood(wxCommandEvent &event)
     m_foodCallback->onDeleteFood();
 }
 
-void FoodItemView::onSaveFood(wxCommandEvent &event)
+void FoodItemView::insertNewPage(bool isNew)
 {
-    m_foodCallback->onSaveFood();
+    static unsigned s_pageIns = 0;
+    wxPanel *page = m_foodItemEditView->createFoodItemEditPanel(m_parent);
+    if (m_parent) {
+        m_parent->InsertPage( 0, page,
+                wxString::Format("NEWBIE" "%u", ++s_pageIns), false, 0 );
+
+        m_parent->SetSelection(0);
+        m_foodItemEditView->initNewPage(isNew);
+    } else {
+        spdlog::error("FoodItemView::insertNewPage: m_parent is null");
+    }
+}
+
+void FoodItemView::onEditFood(wxCommandEvent &event)
+{
+    spdlog::info("FoodItemView::onEditFood");
+    m_foodCallback->onEditFood();
 }
 
 void FoodItemView::onNewFood(wxCommandEvent &event)
 {
     m_foodCallback->onNewFood();
 }
-
-void FoodItemView::onNewFoodCancel(wxCommandEvent &event)
-{
-    m_foodCallback->onNewFoodCancel();
-}
-
-void FoodItemView::onFoodUnitComboBox(wxCommandEvent &event)
-{
-}
-
 
 void FoodItemView::setFoodId(const std::string &id)
 {
@@ -143,45 +146,3 @@ void FoodItemView::setFoodUnit(int unitId, const std::vector<Unit>& units)
     }
     m_foodUnitComboBox->SetSelection(unitId - 1);
 }
-
-std::string FoodItemView::getFoodId()
-{
-    return m_foodIdTextCtrl->GetValue().ToStdString();
-}
-
-std::string FoodItemView::getFoodName()
-{
-    return m_foodNameTextCtrl->GetValue().ToStdString();
-}
-
-std::string FoodItemView::getFoodFat()
-{
-    return m_foodFatTextCtrl->GetValue().ToStdString();
-}
-
-std::string FoodItemView::getFoodProtein()
-{
-    return m_foodProteinTextCtrl->GetValue().ToStdString();
-}
-
-std::string FoodItemView::getFoodCarb()
-{
-    return m_foodCarbTextCtrl->GetValue().ToStdString();
-}
-
-std::string FoodItemView::getFoodCalories()
-{
-    return m_foodCaloriesTextCtrl->GetValue().ToStdString();
-}
-
-std::string FoodItemView::getFoodQuantity()
-{
-    return m_foodQuantityTextCtrl->GetValue().ToStdString();
-}
-
-int FoodItemView::getFoodUnitId()
-{
-    return m_foodUnitComboBox->GetSelection() + 1;
-}
-
-

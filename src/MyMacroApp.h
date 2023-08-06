@@ -15,10 +15,12 @@
 #include "view/TopDailyView.h"
 #include "view/TopRecipeView.h"
 #include "view/FatSecretView.h"
+#include "view/FoodItemEditView.h"
 #include "view/FoodItemView.h"
 
 // PRESENTER
 #include "presenter/FoodPresenter.h"
+#include "presenter/FoodEditPresenter.h"
 #include "presenter/FoodListPresenter.h"
 #include "presenter/DailyPresenter.h"
 #include "presenter/RecipeListPresenter.h"
@@ -27,6 +29,7 @@
 
 // MODEL
 #include "model/FoodModel.h"
+#include "model/FoodEditModel.h"
 #include "model/FoodListModel.h"
 #include "model/DailyModel.h"
 #include "model/RecipeModel.h"
@@ -50,6 +53,10 @@ private:
 
     TopFoodView m_topFoodView;
     
+    FoodEditPresenter m_foodEditPresenter;
+    FoodItemEditView m_foodItemEditView;
+    FoodEditModel m_foodEditModel;
+
     FoodPresenter m_foodPresenter;
     FoodModel m_foodModel;
     FoodItemView m_foodItemView;

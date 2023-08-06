@@ -5,7 +5,7 @@
 #include <spdlog/spdlog.h>
 
 TopFoodView::TopFoodView(FoodItemView *foodItemView, FatSecretView *fatSecretView)
-    : m_foodItemView(foodItemView), m_fatSecretView(fatSecretView)
+: m_foodItemView(foodItemView), m_fatSecretView(fatSecretView)
 {
 }
 

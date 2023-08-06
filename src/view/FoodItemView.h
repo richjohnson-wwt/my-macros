@@ -2,6 +2,7 @@
 #define FOOD_ITEM_VIEW_H
 
 #include "FatSecretView.h"
+#include "FoodItemEditView.h"
 
 #include "../model/MyMacroTypes.h"
 
@@ -21,19 +22,14 @@ public:
     virtual void setFoodQuantity(const std::string& quantity) = 0;
     virtual void setFoodUnit(int unitId, const std::vector<Unit>& units) = 0;
 
-    virtual std::string getFoodId() = 0;
-    virtual std::string getFoodName() = 0;
-    virtual std::string getFoodFat() = 0;
-    virtual std::string getFoodProtein() = 0;
-    virtual std::string getFoodCarb() = 0;
-    virtual std::string getFoodCalories() = 0;
-    virtual std::string getFoodQuantity() = 0;
-    virtual int getFoodUnitId() = 0;
+    virtual void insertNewPage(bool isNew) = 0;
 };
 
 class FoodItemView : public wxEvtHandler, public IFoodItemView {
 private:
     IFoodCallback *m_foodCallback;
+    wxNotebook *m_parent;
+    FoodItemEditView *m_foodItemEditView;
 
     wxTextCtrl *m_foodIdTextCtrl;
     wxTextCtrl *m_foodNameTextCtrl;
@@ -44,45 +40,35 @@ private:
     wxTextCtrl *m_foodQuantityTextCtrl;
     wxComboBox *m_foodUnitComboBox;
 
+    wxButton *m_foodEditButton;
     wxButton *m_foodDeleteButton;
-    wxButton *m_foodSaveButton;
     wxButton *m_foodNewButton;
-    wxButton *m_foodNewCancelButton;
 
     wxSizer *CreateTextWithLabelSizer(wxPanel *panel,
                                       const wxString &label,
                                       wxTextCtrl *text);
-
+    
 protected:
 
     void onDeleteFood(wxCommandEvent &event);
-    void onSaveFood(wxCommandEvent &event);
+    void onEditFood(wxCommandEvent &event);
     void onNewFood(wxCommandEvent &event);
-    void onNewFoodCancel(wxCommandEvent &event);
-    void onFoodUnitComboBox(wxCommandEvent &event);
 
 public:
-    FoodItemView(IFoodCallback *callback);
+    FoodItemView(IFoodCallback *callback, FoodItemEditView *foodItemEditView);
 
     wxPanel *createFoodItemPanel(wxNotebook *parent);
 
-    void setFoodId(const std::string& id);
-    void setFoodName(const std::string& name);
-    void setFoodFat(const std::string& fat);
-    void setFoodProtein(const std::string& protein);
-    void setFoodCarb(const std::string& carb);
-    void setFoodCalories(const std::string& calories);
-    void setFoodQuantity(const std::string& quantity);
-    void setFoodUnit(int unitId, const std::vector<Unit>& units);
+    void setFoodId(const std::string& id) override;
+    void setFoodName(const std::string& name) override;
+    void setFoodFat(const std::string& fat) override;
+    void setFoodProtein(const std::string& protein) override;
+    void setFoodCarb(const std::string& carb) override;
+    void setFoodCalories(const std::string& calories) override;
+    void setFoodQuantity(const std::string& quantity) override;
+    void setFoodUnit(int unitId, const std::vector<Unit>& units) override;
 
-    std::string getFoodId();
-    std::string getFoodName();
-    std::string getFoodFat();
-    std::string getFoodProtein();
-    std::string getFoodCarb();
-    std::string getFoodCalories();
-    std::string getFoodQuantity();
-    int getFoodUnitId();
+    void insertNewPage(bool isNew) override;
 
 };
 

@@ -1,5 +1,5 @@
 #include "FatSecretWrapper.h"
-#include "FoodEditModel.h"
+#include "../food/FoodEditModel.h"
 
 #include "TokenJson.h"
 

@@ -1,8 +1,8 @@
 #ifndef FOOD_LIST_MODEL_H
 #define FOOD_LIST_MODEL_H
 
-#include "DbFood.h"
-#include "MyMacroTypes.h"
+#include "../db/DbFood.h"
+#include "../MyMacroTypes.h"
 #include <vector>
 
 class IFoodListModel {

@@ -1,8 +1,8 @@
 #ifndef RECIPE_LIST_MODEL_H
 #define RECIPE_LIST_MODEL_H
 
-#include "DbRecipe.h"
-#include "MyMacroTypes.h"
+#include "../db/DbRecipe.h"
+#include "../MyMacroTypes.h"
 #include <vector>
 
 class IRecipeListModel {

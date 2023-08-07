@@ -1,6 +1,6 @@
 
 set (WxSRCS "WxApp.cpp" "MyFrame.cpp" "MyMacroApp.cpp")
-file (GLOB SOURCES "model/*.cpp" "view/*.cpp" "presenter/*.cpp")
+file (GLOB SOURCES "model/*.cpp" "model/db/*.cpp" "model/food/*.cpp" "model/fatsecret/*.cpp" "model/recipe/*.cpp" "view/*.cpp" "presenter/*.cpp")
 
 find_package(wxWidgets COMPONENTS aui adv core base REQUIRED)
 find_package(cli11 REQUIRED)

@@ -1,9 +1,10 @@
 #ifndef FOOD_LIST_PRESENTER_H
 #define FOOD_LIST_PRESENTER_H
 
-#include "../model/FoodModel.h"
-#include "../model/FoodListModel.h"
-#include "../view/FoodListView.h"
+#include "../model/food/FoodModel.h"
+
+class IFoodListModel;
+class IFoodListView;
 
 class IFoodListCallback {
 public:

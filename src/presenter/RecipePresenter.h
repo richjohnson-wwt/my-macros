@@ -1,8 +1,8 @@
 #ifndef RECIPE_PRESENTER_H
 #define RECIPE_PRESENTER_H
 
-#include "../model/RecipeModel.h"
-#include "../model/RecipeListModel.h"
+#include "../model/recipe/RecipeModel.h"
+#include "../model/recipe/RecipeListModel.h"
 #include "../view/TopRecipeView.h"
 
 class IRecipeCallback {

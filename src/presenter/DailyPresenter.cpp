@@ -101,11 +101,20 @@ void DailyPresenter::populateTotals(const std::vector<XrefDailyFood>& xdfVector)
     totalsXdf.push_back(totals);
     totalsXdf.push_back(goal);
     totalsXdf.push_back(remaining);
-    
-    double percentFat = ((static_cast<double>(totalFat) * 9) / totalCalories) * 100;
-    double percentProtein = ((static_cast<double>(totalProtein) * 4) / totalCalories) * 100;
-    double percentCarb = ((static_cast<double>(totalCarb) * 4) / totalCalories) * 100;
 
+    double percentFat = 0.0;
+    if (totalFat > 0) {
+        percentFat = ((static_cast<double>(totalFat) * 9) / totalCalories) * 100;
+    }
+    double percentProtein = 0.0;
+    if (totalProtein > 0) {
+        percentProtein = ((static_cast<double>(totalProtein) * 4) / totalCalories) * 100;
+    }
+    double percentCarb = 0.0;
+    if (totalCarb > 0) {
+        percentCarb = ((static_cast<double>(totalCarb) * 4) / totalCalories) * 100;
+    }
+    
     spdlog::debug("DailyPresenter::populateTotals percentFat:{} percentProtein: {}, percentCarb: {}", percentFat, percentProtein, percentCarb);
     m_dailyView->setTotalsList(totalsXdf, percentFat, percentProtein, percentCarb);
 }

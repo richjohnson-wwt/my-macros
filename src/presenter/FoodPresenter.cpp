@@ -1,5 +1,7 @@
 #include "FoodPresenter.h"
+#include "../model/food/FoodModel.h"
 
+#include "../view/FoodItemView.h"
 
 #include <spdlog/spdlog.h>
 
@@ -32,11 +34,6 @@ void FoodPresenter::onFocus()
 {
     spdlog::debug("FoodPresenter::onFocus");
     m_foodItemView->setButtonStatus(m_foodModel->isInEditMode());
-}
-
-bool FoodPresenter::isInEditMode()
-{
-    return m_foodModel->isInEditMode();
 }
 
 void FoodPresenter::onDeleteFood()

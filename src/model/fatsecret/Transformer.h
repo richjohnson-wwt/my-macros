@@ -1,7 +1,7 @@
 #ifndef FATSECRET_H
 #define FATSECRET_H
 
-#include "MyMacroTypes.h"
+#include "../MyMacroTypes.h"
 #include "FatSecretModel.h"
 
 

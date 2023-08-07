@@ -28,19 +28,19 @@
 #include "presenter/FatSecretPresenter.h"
 
 // MODEL
-#include "model/FoodCommonModel.h"
-#include "model/FoodModel.h"
-#include "model/FoodEditModel.h"
-#include "model/FoodListModel.h"
+#include "model/food/FoodCommonModel.h"
+#include "model/food/FoodModel.h"
+#include "model/food/FoodEditModel.h"
+#include "model/food/FoodListModel.h"
 #include "model/DailyModel.h"
-#include "model/RecipeModel.h"
-#include "model/RecipeListModel.h"
-#include "model/FatSecretWrapper.h"
+#include "model/recipe/RecipeModel.h"
+#include "model/recipe/RecipeListModel.h"
+#include "model/fatsecret/FatSecretWrapper.h"
 
 // DB
-#include "model/DbFood.h"
-#include "model/DbRecipe.h"
-#include "model/DbDaily.h"
+#include "model/db/DbFood.h"
+#include "model/db/DbRecipe.h"
+#include "model/db/DbDaily.h"
 
 class MyMacroApp
 {

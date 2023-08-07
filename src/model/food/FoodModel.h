@@ -3,8 +3,8 @@
 
 #include "FoodListModel.h"
 #include "FoodCommonModel.h"
-#include "DbFood.h"
-#include "MyMacroTypes.h"
+#include "../db/DbFood.h"
+#include "../MyMacroTypes.h"
 #include <vector>
 
 class IFoodObserver {

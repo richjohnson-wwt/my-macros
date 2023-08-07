@@ -1,11 +1,11 @@
 #ifndef FOOD_EDIT_PRESENTER_H
 #define FOOD_EDIT_PRESENTER_H
 
-
-#include "../model/FoodListModel.h"
 #include "../view/FoodItemEditView.h"
 
 class IFoodEditModel;
+class IFoodListSubject;
+class IFoodItemEditView;
 
 class IFoodEditCallback {
 public:

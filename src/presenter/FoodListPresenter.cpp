@@ -1,5 +1,7 @@
 #include "FoodListPresenter.h"
 
+#include "../model/food/FoodListModel.h"
+#include "../view/FoodListView.h"
 #include <spdlog/spdlog.h>
 
 FoodListPresenter::FoodListPresenter(IFoodListView *view, IFoodListModel *model, IFoodSubject *foodSubject)

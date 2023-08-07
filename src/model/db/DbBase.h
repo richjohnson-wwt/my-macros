@@ -1,7 +1,7 @@
 #ifndef DB_H
 #define DB_H
 
-#include "MyMacroTypes.h"
+#include "../MyMacroTypes.h"
 
 #include <SQLiteCpp/SQLiteCpp.h>
 #include <vector>

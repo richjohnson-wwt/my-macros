@@ -1,7 +1,7 @@
 #ifndef FAT_SECRET_VIEW_H
 #define FAT_SECRET_VIEW_H
 
-#include "../model/FatSecretModel.h"
+#include "../model/fatsecret/FatSecretModel.h"
 #include <wx/wx.h>
 #include <wx/listctrl.h>
 #include <wx/event.h>

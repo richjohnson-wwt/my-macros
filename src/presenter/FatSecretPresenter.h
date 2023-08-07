@@ -1,7 +1,7 @@
 #ifndef FAT_SECRET_PRESENTER_H
 #define FAT_SECRET_PRESENTER_H
 
-#include "../model/FatSecretWrapper.h"
+#include "../model/fatsecret/FatSecretWrapper.h"
 #include "../view/FatSecretView.h"
 
 class IFatSecretCallback {

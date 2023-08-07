@@ -2,9 +2,8 @@
 #define RECIPE_MODEL_H
 
 #include "RecipeListModel.h"
-#include "FoodListModel.h"
-#include "DbRecipe.h"
-#include "MyMacroTypes.h"
+#include "../food/FoodListModel.h"
+#include "../db/DbRecipe.h"
 #include <vector>
 
 class IRecipeObserver {

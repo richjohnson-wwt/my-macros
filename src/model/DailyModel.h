@@ -1,10 +1,10 @@
 #ifndef DAILY_MODEL_H
 #define DAILY_MODEL_H
 
-#include "DbDaily.h"
-#include "RecipeModel.h"
-#include "FoodListModel.h"
-#include "RecipeListModel.h"
+#include "db/DbDaily.h"
+#include "recipe/RecipeModel.h"
+#include "recipe/RecipeListModel.h"
+#include "food/FoodListModel.h"
 #include "MyMacroTypes.h"
 #include <vector>
 

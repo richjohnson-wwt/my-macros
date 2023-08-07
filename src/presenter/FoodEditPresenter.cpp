@@ -1,5 +1,6 @@
 #include "FoodEditPresenter.h"
-#include "../model/FoodEditModel.h"
+#include "../model/food/FoodEditModel.h"
+#include "../model/food/FoodListModel.h"
 
 #include <spdlog/spdlog.h>
 

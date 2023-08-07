@@ -1,7 +1,7 @@
 #ifndef FAT_SECRET_MODEL_H
 #define FAT_SECRET_MODEL_H
 
-#include "MyMacroTypes.h"
+#include "../MyMacroTypes.h"
 #include <nlohmann/json.hpp>
 #include <vector>
 

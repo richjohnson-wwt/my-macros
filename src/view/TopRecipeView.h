@@ -7,31 +7,32 @@
 #include "wx/notebook.h"
 #include "wx/listctrl.h"
 #include "wx/event.h"
+#include <wx/hyperlink.h>
 
 class IRecipeCallback;
 
-class ITopRecipeView {
+class ITopRecipeView
+{
 public:
-    virtual void setRecipeId(const std::string& id) = 0;
-    virtual void setRecipeName(const std::string& name) = 0;
-    virtual void setRecipeDescription(const std::string& description) = 0;
-    virtual void setRecipeUrl(const std::string& url) = 0;
-    virtual void setRecipeServings(const std::string& servings) = 0;
-    virtual void setRecipeInstructions(const std::string& instructions) = 0;
-    virtual void setRecipeIngredients(const std::vector<Ingredient>& ingredients) = 0;
-    virtual void setRecipeIngredientMultiplier(const std::string& multiplier) = 0;
+    virtual void setRecipeId(const std::string &id) = 0;
+    virtual void setRecipeName(const std::string &name) = 0;
+    virtual void setRecipeDescription(const std::string &description) = 0;
+    virtual void setRecipeUrl(const std::string &url) = 0;
+    virtual void setRecipeServings(const std::string &servings) = 0;
+    virtual void setRecipeInstructions(const std::string &instructions) = 0;
+    virtual void setRecipeIngredients(const std::vector<Ingredient> &ingredients) = 0;
+    virtual void setRecipeIngredientMultiplier(const std::string &multiplier) = 0;
 
     virtual std::string getRecipeName() = 0;
     virtual std::string getRecipeDescription() = 0;
     virtual std::string getRecipeUrl() = 0;
     virtual std::string getRecipeServings() = 0;
     virtual std::string getRecipeInstructions() = 0;
-
 };
 
-class TopRecipeView : public wxEvtHandler, public ITopRecipeView {
+class TopRecipeView : public wxEvtHandler, public ITopRecipeView
+{
 private:
-
     IRecipeCallback *m_recipeCallback;
 
     void createRightFoodItemPanel(wxPanel *panel);
@@ -39,7 +40,7 @@ private:
     wxTextCtrl *m_recipeIdTextCtrl;
     wxTextCtrl *m_recipeNameTextCtrl;
     wxTextCtrl *m_recipeDescriptionTextCtrl;
-    wxTextCtrl *m_recipeUrlTextCtrl;
+    wxHyperlinkCtrl *m_recipeUrlHyperlinkCtrl;
     wxTextCtrl *m_recipeServingsTextCtrl;
     wxTextCtrl *m_recipeInstructionsTextCtrl;
     wxListView *m_recipeIngredientsListView;
@@ -53,33 +54,32 @@ private:
     wxButton *m_recipeNewButton;
     wxButton *m_recipeCancelNewButton;
 
-    wxSizer *CreateTextWithLabelSizer(wxPanel *panel, 
-        const wxString& label,
-         wxTextCtrl *text);
+    wxSizer *CreateTextWithLabelSizer(wxPanel *panel,
+                                      const wxString &label,
+                                      wxTextCtrl *text);
 
 protected:
-
     void onAddIngredient(wxCommandEvent &event);
-    void onDeleteIngredient(wxCommandEvent& event);
-    void onIngredientSelChange(wxListEvent& event);
+    void onDeleteIngredient(wxCommandEvent &event);
+    void onIngredientSelChange(wxListEvent &event);
     void onDeleteRecipe(wxCommandEvent &event);
     void onSaveRecipe(wxCommandEvent &event);
     void onNewRecipe(wxCommandEvent &event);
     void onCancelNewRecipe(wxCommandEvent &event);
-    
+
 public:
     TopRecipeView(IRecipeCallback *callback);
 
     wxPanel *createRecipePanel(wxNotebook *parent);
 
-    void setRecipeId(const std::string& id) override;
-    void setRecipeName(const std::string& name) override;
-    void setRecipeDescription(const std::string& description) override;
-    void setRecipeUrl(const std::string& url) override;
-    void setRecipeServings(const std::string& servings) override;
-    void setRecipeInstructions(const std::string& instructions) override;
-    void setRecipeIngredients(const std::vector<Ingredient>& ingredients) override;
-    void setRecipeIngredientMultiplier(const std::string& multiplier) override;
+    void setRecipeId(const std::string &id) override;
+    void setRecipeName(const std::string &name) override;
+    void setRecipeDescription(const std::string &description) override;
+    void setRecipeUrl(const std::string &url) override;
+    void setRecipeServings(const std::string &servings) override;
+    void setRecipeInstructions(const std::string &instructions) override;
+    void setRecipeIngredients(const std::vector<Ingredient> &ingredients) override;
+    void setRecipeIngredientMultiplier(const std::string &multiplier) override;
 
     std::string getRecipeName() override;
     std::string getRecipeDescription() override;

@@ -16,7 +16,7 @@ public:
     virtual void notify() = 0;
 };
 
-class DbFood : public DbBase {
+class DbFood : public DbBase, public IDbFoodSubject {
 private:
     std::vector<IDbFoodObserver*> m_observers;
 

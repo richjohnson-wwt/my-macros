@@ -217,6 +217,11 @@ void RecipeEditView::setRecipeIngredientMultiplier(const std::string &multiplier
     m_recipeIngredientMultiplierTextCtrl->SetValue(multiplier);
 }
 
+int RecipeEditView::getRecipeId()
+{
+    return std::stoi(m_recipeIdTextCtrl->GetValue().ToStdString());
+}
+
 std::string RecipeEditView::getRecipeName()
 {
     return m_recipeNameTextCtrl->GetValue().ToStdString();

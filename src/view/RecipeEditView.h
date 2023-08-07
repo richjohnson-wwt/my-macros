@@ -23,6 +23,7 @@ public:
     virtual void setRecipeIngredients(const std::vector<Ingredient> &ingredients) = 0;
     virtual void setRecipeIngredientMultiplier(const std::string &multiplier) = 0;
 
+    virtual int getRecipeId() = 0;
     virtual std::string getRecipeName() = 0;
     virtual std::string getRecipeDescription() = 0;
     virtual std::string getRecipeUrl() = 0;
@@ -80,6 +81,7 @@ public:
     void setRecipeIngredients(const std::vector<Ingredient> &ingredients) override;
     void setRecipeIngredientMultiplier(const std::string &multiplier) override;
 
+    int getRecipeId() override;
     std::string getRecipeName() override;
     std::string getRecipeDescription() override;
     std::string getRecipeUrl() override;

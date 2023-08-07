@@ -30,13 +30,6 @@ public:
     virtual void deleteRecipe() = 0;
     virtual bool isInEditMode() = 0;
     virtual void setInEditMode(bool inEditMode) = 0;
-
-    // virtual void setRecipeName(const std::string& name) = 0;
-    // virtual void setRecipeDescription(const std::string& description) = 0;
-    // virtual void setRecipeUrl(const std::string& url) = 0;
-    // virtual void setRecipeServings(const std::string& servings) = 0;
-    // virtual void setRecipeInstructions(const std::string& instructions) = 0;
-    // virtual void selectIngredient(int id) = 0;
 };
 
 class RecipeModel : public IRecipeModel, public IRecipeSubject {
@@ -47,11 +40,6 @@ private:
 
     RecipeListModel *m_recipeListModel;
     FoodListModel *m_foodListModel;
-
-    // Recipe m_recipeUnderConstruction;
-    // std::vector<Ingredient> m_ingredientsUnderConstruction;
-    // const int NEW_RECIPE_ID = -1;
-    // int m_selectedIngredient;
 
 public:
     RecipeModel(DbRecipe *db, RecipeListModel *recipeListModel, RecipeCommonModel *commonModel);
@@ -70,14 +58,6 @@ public:
     void deleteRecipe() override;
     bool isInEditMode() override;
     void setInEditMode(bool inEditMode) override;
-
-    // void setRecipeName(const std::string& name) override;
-    // void setRecipeDescription(const std::string& description) override;
-    // void setRecipeUrl(const std::string& url) override;
-    // void setRecipeServings(const std::string& servings) override;
-    // void setRecipeInstructions(const std::string& instructions) override;
-
-    // void selectIngredient(int id) override;
 };
 
 #endif // RECIPE_MODEL_H

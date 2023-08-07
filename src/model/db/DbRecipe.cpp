@@ -6,6 +6,21 @@ DbRecipe::DbRecipe(const std::string &dbfile, DbFood *dbFood): DbBase(dbfile), m
 {
 }
 
+void DbRecipe::attach(IDbRecipeObserver *observer)
+{
+    spdlog::debug("DbRecipe::attach");
+    m_observers.push_back(observer);
+}
+
+void DbRecipe::notify()
+{
+    spdlog::debug("DbRecipe::notify");
+    for (auto observer : m_observers)
+    {
+        observer->update();
+    }
+}
+
 Recipe DbRecipe::recipeHelper(SQLite::Statement &query)
 {
     Recipe r;
@@ -154,6 +169,7 @@ void DbRecipe::saveRecipe(const Recipe &r, std::vector<Ingredient> foods)
         std::cerr << e.what() << std::endl;
         spdlog::error(e.what());
     }
+    notify();
 }
 
 void DbRecipe::deleteRecipe(int id)
@@ -170,6 +186,7 @@ void DbRecipe::deleteRecipe(int id)
         std::cerr << e.what() << std::endl;
         spdlog::error(e.what());
     }
+    notify();
 }
 
 void DbRecipe::deleteIngredient(int recipeId, int foodId)
@@ -187,4 +204,32 @@ void DbRecipe::deleteIngredient(int recipeId, int foodId)
         std::cerr << e.what() << std::endl;
         spdlog::error(e.what());
     }
+    notify();
+}
+
+void DbRecipe::updateRecipe(const Recipe &r)
+{
+    spdlog::debug("DbRecipe::updateRecipe");
+    try
+    {
+        SQLite::Statement query(m_db, "UPDATE Recipes SET name = ?, description = ?, instructions = ?, url = ?, servings = ? WHERE recipe_id = ?");
+        query.bind(1, r.name);
+        query.bind(2, r.description);
+        query.bind(3, r.instructions);
+        query.bind(4, r.url);
+        query.bind(5, r.servings);
+        query.bind(6, r.id);
+        query.exec();
+
+        Recipe newRecipe = getRecipe(r.name);
+        int newRecipeId = newRecipe.id;
+
+        // BIG TODO HERE
+    }
+    catch (SQLite::Exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+        spdlog::error(e.what());
+    }
+    notify();
 }

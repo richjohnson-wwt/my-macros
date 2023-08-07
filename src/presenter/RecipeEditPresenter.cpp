@@ -20,7 +20,7 @@ void RecipeEditPresenter::initNewPage() {
     m_recipeEditView->setRecipeInstructions(recipe.instructions);
     m_recipeEditView->setRecipeUrl(recipe.url);
     m_recipeEditView->setRecipeServings(std::to_string(recipe.servings));
-    m_recipeEditView->setRecipeIngredients(m_recipeEditModel->getNewIngredients());
+    m_recipeEditView->setRecipeIngredients(m_recipeEditModel->getIngredients());
 }
 
 void RecipeEditPresenter::initEditPage() {
@@ -32,7 +32,7 @@ void RecipeEditPresenter::initEditPage() {
     m_recipeEditView->setRecipeInstructions(recipe.instructions);
     m_recipeEditView->setRecipeUrl(recipe.url);
     m_recipeEditView->setRecipeServings(std::to_string(recipe.servings));
-    m_recipeEditView->setRecipeIngredients(m_recipeEditModel->getEditIngredients());
+    m_recipeEditView->setRecipeIngredients(m_recipeEditModel->getIngredients());
 }
 
 void RecipeEditPresenter::onCancelNewRecipe()
@@ -47,23 +47,21 @@ void RecipeEditPresenter::onAddIngredient(double unitMultiplier)
     spdlog::debug("RecipeEditPresenter::onAddIngredient");
     
     m_recipeEditModel->addIngredient(unitMultiplier);
+    m_recipeEditView->setRecipeIngredients(m_recipeEditModel->getIngredients());
 }
 
 void RecipeEditPresenter::onSaveRecipe()
 {
     spdlog::debug("RecipeEditPresenter::onSaveRecipe");
     Recipe recipe;
-    // recipe.id = std::stoi(m_recipeEditView->getRecipeId());
+    recipe.id = m_recipeEditView->getRecipeId();
     recipe.name = m_recipeEditView->getRecipeName();
     recipe.description = m_recipeEditView->getRecipeDescription();
     recipe.instructions = m_recipeEditView->getRecipeInstructions();
     recipe.url = m_recipeEditView->getRecipeUrl();
+    recipe.servings = std::stoi(m_recipeEditView->getRecipeServings());
 
-    // TODO save ingredients in model
-
-
-
-    m_recipeEditModel->saveRecipe();
+    m_recipeEditModel->saveRecipe(recipe);
     m_recipePresenter->onFocus();
 }
 
@@ -76,5 +74,5 @@ void RecipeEditPresenter::onDeleteIngredient()
 void RecipeEditPresenter::onSelectIngredient(int id)
 {
     spdlog::debug("RecipeEditPresenter::onSelectIngredient");
-    // m_recipeEditModel->selectIngredient(id);
+    m_recipeEditModel->setSelectIngredient(id);
 }

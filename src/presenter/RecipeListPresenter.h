@@ -5,19 +5,21 @@
 #include "../model/recipe/RecipeModel.h"
 #include "../view/RecipeListView.h"
 
+class IDbRecipeSubject;
+
 class IRecipeListCallback {
 public:
     virtual void onRecipeSelected(int id) = 0;
 };
 
-class RecipeListPresenter : public IRecipeListCallback , IRecipeObserver {
+class RecipeListPresenter : public IRecipeListCallback , IDbRecipeObserver {
 private:
     IRecipeListModel *m_recipeListModel;
-    IRecipeSubject *m_recipeSubject;
+    IDbRecipeSubject *m_dbRecipeSubject;
     IRecipeListView *m_recipeListView;
 
 public:
-    RecipeListPresenter(RecipeListView *view, IRecipeListModel *model, IRecipeSubject *recipeSubject);
+    RecipeListPresenter(RecipeListView *view, IRecipeListModel *model, IDbRecipeSubject *recipeSubject);
 
     void postInit();
 

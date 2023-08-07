@@ -12,34 +12,28 @@ RecipeEditModel::RecipeEditModel(DbRecipe *db, RecipeListModel *recipeListModel,
 Recipe RecipeEditModel::getEditRecipe()
 {
     spdlog::debug("RecipeEditModel::getEditRecipe");
-    return m_dbRecipe->getRecipeById(m_recipeListModel->getSelectedId());
+    Recipe r = m_dbRecipe->getRecipeById(m_recipeListModel->getSelectedId());
+    m_ingredientsUnderConstruction = m_dbRecipe->getIngredients(r);
+    return r;
 }
 
 Recipe RecipeEditModel::getNewRecipe()
 {
     spdlog::debug("RecipeEditModel::getNewRecipe");
+    m_ingredientsUnderConstruction.clear();
     return Recipe{NEW_RECIPE_ID, "", "", "", "", 0};
 }
 
-std::vector<Ingredient> RecipeEditModel::getEditIngredients()
+std::vector<Ingredient> RecipeEditModel::getIngredients()
 {
-    spdlog::debug("RecipeEditModel::getEditIngredients");
-    Recipe r = m_dbRecipe->getRecipeById(m_recipeListModel->getSelectedId());
-    return m_dbRecipe->getIngredients(r);
-}
-
-std::vector<Ingredient> RecipeEditModel::getNewIngredients()
-{
-    spdlog::debug("RecipeEditModel::getNewIngredients");
-    return std::vector<Ingredient>{};
+    spdlog::debug("RecipeEditModel::getIngredients");
+    return m_ingredientsUnderConstruction;
 }
 
 void RecipeEditModel::cancelNewRecipe()
 {
     spdlog::debug("RecipeEditModel::cancelNewRecipe");
-    // m_recipeUnderConstruction = Recipe{NEW_RECIPE_ID, "", "", "", "", 0};
-    // m_ingredientsUnderConstruction.clear();
-    // notify();
+    m_ingredientsUnderConstruction.clear();
     m_recipeCommonModel->setInEditMode(false);
 }
 
@@ -50,27 +44,35 @@ void RecipeEditModel::addIngredient(double unitMultiplier)
     Food f = m_dbRecipe->getFoodById(foodId);
     Unit u = m_dbRecipe->getUnit(f.unit_id);
     Ingredient i = Ingredient{f, unitMultiplier, u};
-    // m_ingredientsUnderConstruction.push_back(i);
-    // notify();
+    m_ingredientsUnderConstruction.push_back(i);
 }
 
-void RecipeEditModel::saveRecipe()
+void RecipeEditModel::saveRecipe(const Recipe& r)
 {
     spdlog::debug("RecipeEditModel::saveRecipe");
     m_recipeCommonModel->setInEditMode(false);
-    // m_buildingRecipe = false;
-    // m_dbRecipe->saveRecipe(m_recipeUnderConstruction, m_ingredientsUnderConstruction);
-    // m_recipeUnderConstruction = Recipe{NEW_RECIPE_ID, "", "", "", "", 0};
-    // m_ingredientsUnderConstruction.clear();
-    // notify();
+    if (r.id == NEW_RECIPE_ID)
+    {
+        m_dbRecipe->addNewRecipe(r);
+    }
+    else
+    {
+        m_dbRecipe->updateRecipe(r);
+    }
+    m_dbRecipe->saveRecipe(r, m_ingredientsUnderConstruction);
+    m_ingredientsUnderConstruction.clear();
 }
 
 void RecipeEditModel::deleteIngredient()
 {
     spdlog::debug("RecipeEditModel::deleteIngredient");
+
+    m_ingredientsUnderConstruction.erase(m_ingredientsUnderConstruction.begin() + m_selectedIngredient);
         
-    // m_dbRecipe->deleteIngredient(m_recipeListModel->getSelectedId(), m_selectedIngredient);
-    
-    
-    // notify();
+}
+
+void RecipeEditModel::setSelectIngredient(int id)
+{
+    spdlog::debug("RecipeEditModel::setSelectIngredient");
+    m_selectedIngredient = id;
 }

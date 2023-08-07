@@ -1,18 +1,18 @@
 #include "FoodListPresenter.h"
 
-#include "../model/food/FoodListModel.h"
+#include "../model/db/DbFood.h"
 #include "../view/FoodListView.h"
 #include <spdlog/spdlog.h>
 
-FoodListPresenter::FoodListPresenter(IFoodListView *view, IFoodListModel *model, IFoodSubject *foodSubject)
-: m_foodListModel(model), m_foodListView(view), m_foodSubject(foodSubject)
+FoodListPresenter::FoodListPresenter(IFoodListView *view, IFoodListModel *model, IDbFoodSubject *foodSubject)
+: m_foodListModel(model), m_foodListView(view), m_dbFoodSubject(foodSubject)
 {
 }
 
 void FoodListPresenter::postInit()
 {
     spdlog::debug("FoodListPresenter::postInit");
-    m_foodSubject->attach(this);
+    m_dbFoodSubject->attach(this);
     update();
 }
 

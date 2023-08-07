@@ -1,15 +1,15 @@
 #include "RecipeListPresenter.h"
-
+#include "../model/db/DbRecipe.h"
 #include <spdlog/spdlog.h>
 
-RecipeListPresenter::RecipeListPresenter(RecipeListView *view, IRecipeListModel *model, IRecipeSubject *recipeSubject)
-: m_recipeListModel(model), m_recipeListView(view), m_recipeSubject(recipeSubject) {
+RecipeListPresenter::RecipeListPresenter(RecipeListView *view, IRecipeListModel *model, IDbRecipeSubject *recipeSubject)
+: m_recipeListModel(model), m_recipeListView(view), m_dbRecipeSubject(recipeSubject) {
 
 }
 
 void RecipeListPresenter::postInit() {
     spdlog::debug("RecipeListPresenter::postInit");
-    m_recipeSubject->attach(this);
+    m_dbRecipeSubject->attach(this);
     update();
 }
 

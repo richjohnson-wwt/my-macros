@@ -1,9 +1,9 @@
 #ifndef FOOD_LIST_PRESENTER_H
 #define FOOD_LIST_PRESENTER_H
 
-#include "../model/food/FoodModel.h"
+#include "../model/food/FoodListModel.h"
 
-class IFoodListModel;
+class IDbFoodSubject;
 class IFoodListView;
 
 class IFoodListCallback {
@@ -13,14 +13,14 @@ public:
     virtual void onSearchCancel() = 0;
 };
 
-class FoodListPresenter : public IFoodListCallback, IFoodObserver {
+class FoodListPresenter : public IFoodListCallback, IDbFoodObserver {
 private:
     IFoodListModel *m_foodListModel;
-    IFoodSubject *m_foodSubject;
+    IDbFoodSubject *m_dbFoodSubject;
     IFoodListView *m_foodListView;
 
 public:
-    FoodListPresenter(IFoodListView *view, IFoodListModel *model, IFoodSubject *foodSubject);
+    FoodListPresenter(IFoodListView *view, IFoodListModel *model, IDbFoodSubject *foodSubject);
 
     void postInit();
 

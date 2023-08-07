@@ -73,13 +73,13 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
 
 void FoodItemView::onNotebookPageChanged()
 {
-    spdlog::info("FoodItemView::onNotebookPageChanged");
+    spdlog::debug("FoodItemView::onNotebookPageChanged");
     m_foodCallback->onFocus();
 }
 
 void FoodItemView::setButtonStatus(bool isEdit)
 {
-    spdlog::info("FoodItemView::setButtonStatus {}", isEdit);
+    spdlog::debug("FoodItemView::setButtonStatus {}", isEdit);
     m_foodEditButton->Enable(!isEdit);
     m_foodNewButton->Enable(!isEdit);
     m_foodDeleteButton->Enable(!isEdit);
@@ -107,7 +107,7 @@ void FoodItemView::insertNewPage(bool isNew)
 
 void FoodItemView::onEditFood(wxCommandEvent &event)
 {
-    spdlog::info("FoodItemView::onEditFood");
+    spdlog::debug("FoodItemView::onEditFood");
     m_foodCallback->onEditFood();
 }
 

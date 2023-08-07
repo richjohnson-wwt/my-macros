@@ -1,5 +1,4 @@
 #include "FatSecretWrapper.h"
-#include "../food/FoodEditModel.h"
 
 #include "TokenJson.h"
 
@@ -7,7 +6,8 @@
 #include <fstream>
 #include <iostream>
 
-FatSecretWrapper::FatSecretWrapper(IFoodEditModel *foodModel): m_foodModel(foodModel) {
+FatSecretWrapper::FatSecretWrapper(IFatSecretModel *fatSecretModel)
+    : m_fatSecretModel(fatSecretModel) {
 
 }
 
@@ -35,7 +35,7 @@ FatSecret::SearchFoods FatSecretWrapper::searchFoods(std::string &name)
     auto command = m_curlWrapper.assembleFoodSearchCommand(token, name);
     const std::string response = m_curlWrapper.executeCurl(command);
 
-    auto searchFoods = m_fatSecretModel.handleSearchResponse(response);
+    auto searchFoods = m_fatSecretJson.handleSearchResponse(response);
     return searchFoods;
     
 }
@@ -46,7 +46,7 @@ FatSecret::GetFood FatSecretWrapper::getFood(const std::string& id)
     FatSecret::TokenJson tokenJson;
     auto token = tokenJson.parseToken();
 
-    FatSecret::SearchFood searchFood = m_fatSecretModel.retrieveFoodById(id);
+    FatSecret::SearchFood searchFood = m_fatSecretJson.retrieveFoodById(id);
     spdlog::debug("getFood from searchFood {}", searchFood.food_name);
 
     auto command = m_curlWrapper.assembleGetFoodCommand(token, searchFood.food_id);
@@ -54,7 +54,7 @@ FatSecret::GetFood FatSecretWrapper::getFood(const std::string& id)
 
     const std::string response = m_curlWrapper.executeCurl(command);
     
-    FatSecret::GetFood getFood = m_fatSecretModel.handleGetResponse(response);
+    FatSecret::GetFood getFood = m_fatSecretJson.handleGetResponse(response);
 
     return getFood;
 }
@@ -62,14 +62,14 @@ FatSecret::GetFood FatSecretWrapper::getFood(const std::string& id)
 void FatSecretWrapper::addGetFoodToDb()
 {
     spdlog::info("FatSecretWrapper::addGetFoodToDb");
-    FatSecret::GetFood getFoodWithServingIndex = m_fatSecretModel.retrieveGetFood(0);
+    FatSecret::GetFood getFoodWithServingIndex = m_fatSecretJson.retrieveGetFood(0);
 
-    Unit u = m_foodModel->getUnit(getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
+    Unit u = m_fatSecretModel->getUnit(getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
     if (u.name == "NONE")
     {
         spdlog::error("Unit not found {}", getFoodWithServingIndex.servings.serving[0].metric_serving_unit);
     }
     Food f = m_transformer.convert(getFoodWithServingIndex, u);
 
-    m_foodModel->saveFood(f);
+    m_fatSecretModel->saveFood(f);
 }

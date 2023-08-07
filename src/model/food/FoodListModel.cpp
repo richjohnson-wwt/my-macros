@@ -15,7 +15,7 @@ void FoodListModel::attach(IFoodListObserver *observer)
 
 void FoodListModel::notify()
 {
-    spdlog::info("FoodListModel::notify");
+    spdlog::debug("FoodListModel::notify");
     for (auto observer : m_observers)
     {
         observer->update();

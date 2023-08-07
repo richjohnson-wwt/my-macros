@@ -33,7 +33,7 @@ std::vector<Unit> FoodEditModel::getUnits()
 
 void FoodEditModel::saveFood(const Food &f)
 {
-    spdlog::debug("FoodEditModel::saveFood");
+    spdlog::info("FoodEditModel::saveFood");
     m_foodCommonModel->setInEditMode(false);
     if (f.id == NEW_FOOD_ID)
     {
@@ -48,5 +48,4 @@ void FoodEditModel::saveFood(const Food &f)
 void FoodEditModel::newFoodCancel()
 {
     m_foodCommonModel->setInEditMode(false);
-
 }

@@ -6,6 +6,21 @@ DbFood::DbFood(const std::string &dbfile): DbBase(dbfile)
 {
 }
 
+void DbFood::attach(IDbFoodObserver *observer)
+{
+    spdlog::debug("DbFood::attach");
+    m_observers.push_back(observer);
+}
+
+void DbFood::notify()
+{
+    spdlog::debug("DbFood::notify");
+    for (auto observer : m_observers)
+    {
+        observer->update();
+    }
+}
+
 std::vector<Food> DbFood::getFoods()
 {
     spdlog::debug("Db::getFoods");
@@ -74,6 +89,7 @@ void DbFood::addNewFood(const Food &f) {
         std::cerr << e.what() << std::endl;
         spdlog::error(e.what());
     }
+    notify();
 }
 
 std::vector<Unit> DbFood::getUnits()
@@ -104,6 +120,7 @@ void DbFood::deleteFood(int foodId) {
         std::cerr << e.what() << std::endl;
         spdlog::error(e.what());
     }
+    notify();
 }
 
 void DbFood::updateFood(const Food &f) {
@@ -127,5 +144,6 @@ void DbFood::updateFood(const Food &f) {
         std::cerr << e.what() << std::endl;
         spdlog::error(e.what());
     }
+    notify();
     
 }

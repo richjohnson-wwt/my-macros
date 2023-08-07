@@ -4,24 +4,22 @@
 
 #include "CurlWrapper.h"
 
+#include "FatSecretJson.h"
 #include "FatSecretModel.h"
-
 #include "Transformer.h"
-
-class IFoodEditModel;
 
 class FatSecretWrapper {
 public:
-    FatSecretWrapper(IFoodEditModel *foodModel);
+    FatSecretWrapper(IFatSecretModel *fatSecretModel);
     void refreshToken();
     FatSecret::SearchFoods searchFoods(std::string& name);
     FatSecret::GetFood getFood(const std::string& id);
     void addGetFoodToDb();
 
 private:
-    IFoodEditModel *m_foodModel;
+    IFatSecretModel *m_fatSecretModel;
     CurlWrapper m_curlWrapper;
-    FatSecret::FatSecretModel m_fatSecretModel;
+    FatSecret::FatSecretJson m_fatSecretJson;
     Transformer m_transformer;
 
     void writeTokenToFile(const std::string& token);

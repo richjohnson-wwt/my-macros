@@ -27,7 +27,7 @@ void DailyPresenter::postInit()
 
 void DailyPresenter::onDateChanged(const std::string& date)
 {
-    spdlog::info("DailyPresenter::onDateChanged() {}", date);
+    spdlog::debug("DailyPresenter::onDateChanged() {}", date);
     m_dailyModel->setSelectedDate(date);
     refresh();
 }
@@ -40,7 +40,7 @@ void DailyPresenter::onDeleteDailyFood()
 }
 
 void DailyPresenter::refresh() {
-    spdlog::info("DailyPresenter::refresh()");
+    spdlog::debug("DailyPresenter::refresh()");
     DailyFood df = m_dailyModel->getDailyFood();
     std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
     populateDailyFood(df, xdfVector);
@@ -49,7 +49,7 @@ void DailyPresenter::refresh() {
 
 void DailyPresenter::populateDailyFood(const DailyFood &df, const std::vector<XrefDailyFood>& xdfVector)
 {
-    spdlog::info("DailyPresenter::populateView");
+    spdlog::debug("DailyPresenter::populateView");
     
     m_dailyView->setDailyActivityBonus(std::to_string(df.dailyActivityBonusCalories));
     
@@ -58,7 +58,7 @@ void DailyPresenter::populateDailyFood(const DailyFood &df, const std::vector<Xr
 
 void DailyPresenter::populateTotals(const std::vector<XrefDailyFood>& xdfVector)
 {
-    spdlog::info("DailyPresenter::populateTotals");
+    spdlog::debug("DailyPresenter::populateTotals");
 
     int goalFat = m_dailyModel->getGoalFatGrams();
     int goalProtein = m_dailyModel->getGoalProteinGrams();
@@ -211,10 +211,6 @@ CalculatedMacros DailyPresenter::calculateRecipeMacros(int servings, const std::
     auto proteinCalories = (m.proteinGrams * 4);
     auto carbCalories = (m.carbGrams * 4);
     m.calories = fatCalories + proteinCalories + carbCalories;
-
-    // m.percentFat = (static_cast<double>(fatCalories) / m.calories) * 100;
-    // m.percentProtein = (static_cast<double>(proteinCalories) / m.calories) * 100;
-    // m.percentCarb = (static_cast<double>(carbCalories) / m.calories) * 100;
 
     return m;
 }

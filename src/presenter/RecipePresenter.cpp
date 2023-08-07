@@ -2,8 +2,8 @@
 
 #include <spdlog/spdlog.h>
 
-RecipePresenter::RecipePresenter(ITopRecipeView *view, IRecipeModel *model, IRecipeListSubject *recipeListSubject)
-: m_recipeModel(model), m_topRecipeView(view), m_recipeListSubject(recipeListSubject)
+RecipePresenter::RecipePresenter(IRecipeItemView *view, IRecipeModel *model, IRecipeListSubject *recipeListSubject)
+: m_recipeModel(model), m_recipeItemView(view), m_recipeListSubject(recipeListSubject)
 {
 }
 
@@ -14,68 +14,46 @@ void RecipePresenter::postInit()
 }
 
 void RecipePresenter::update() {
-    spdlog::info("RecipePresenter::update");
+    spdlog::debug("RecipePresenter::update");
     Recipe recipe = m_recipeModel->getRecipe();
-    m_topRecipeView->setRecipeId(std::to_string(recipe.id));
-    m_topRecipeView->setRecipeName(recipe.name);
-    m_topRecipeView->setRecipeDescription(recipe.description);
-    m_topRecipeView->setRecipeInstructions(recipe.instructions);
-    m_topRecipeView->setRecipeUrl(recipe.url);
-    m_topRecipeView->setRecipeServings(std::to_string(recipe.servings));
-    m_topRecipeView->setRecipeIngredients(m_recipeModel->getIngredients());
+    m_recipeItemView->setRecipeId(std::to_string(recipe.id));
+    m_recipeItemView->setRecipeName(recipe.name);
+    m_recipeItemView->setRecipeDescription(recipe.description);
+    m_recipeItemView->setRecipeInstructions(recipe.instructions);
+    m_recipeItemView->setRecipeUrl(recipe.url);
+    m_recipeItemView->setRecipeServings(std::to_string(recipe.servings));
+    m_recipeItemView->setRecipeIngredients(m_recipeModel->getIngredients());
 }
 
 void RecipePresenter::onNewRecipe()
 {
-    spdlog::info("RecipePresenter::onNewRecipe");
-    m_recipeModel->newRecipe();
+    spdlog::debug("RecipePresenter::onNewRecipe");
+    m_recipeModel->setInEditMode(true);
+    m_recipeItemView->insertNewPage(true);
 }
 
-void RecipePresenter::onCancelNewRecipe()
+void RecipePresenter::onEditRecipe()
 {
-    spdlog::info("RecipePresenter::onCancelNewRecipe");
-    m_recipeModel->cancelNewRecipe();
+    spdlog::debug("RecipePresenter::onEditRecipe");
+    m_recipeModel->setInEditMode(true);
+    m_recipeItemView->insertNewPage(false);
 }
 
-void RecipePresenter::onAddIngredient(double unitMultiplier)
+void RecipePresenter::onFocus()
 {
-    spdlog::info("RecipePresenter::onAddIngredient");
-    m_recipeModel->setRecipeName(m_topRecipeView->getRecipeName());
-    m_recipeModel->setRecipeDescription(m_topRecipeView->getRecipeDescription());
-    m_recipeModel->setRecipeInstructions(m_topRecipeView->getRecipeInstructions());
-    m_recipeModel->setRecipeUrl(m_topRecipeView->getRecipeUrl());
-    m_recipeModel->setRecipeServings(m_topRecipeView->getRecipeServings());
-    
-    m_recipeModel->addIngredient(unitMultiplier);
-}
-
-void RecipePresenter::onSaveRecipe()
-{
-    spdlog::info("RecipePresenter::onSaveRecipe");
-    m_recipeModel->setRecipeName(m_topRecipeView->getRecipeName());
-    m_recipeModel->setRecipeDescription(m_topRecipeView->getRecipeDescription());
-    m_recipeModel->setRecipeInstructions(m_topRecipeView->getRecipeInstructions());
-    m_recipeModel->setRecipeUrl(m_topRecipeView->getRecipeUrl());
-    m_recipeModel->setRecipeServings(m_topRecipeView->getRecipeServings());
-
-    m_recipeModel->saveRecipe();
+    spdlog::debug("RecipePresenter::onFocus");
+    m_recipeItemView->setButtonStatus(m_recipeModel->isInEditMode());
 }
 
 void RecipePresenter::onDeleteRecipe()
 {
-    spdlog::info("RecipePresenter::onDeleteRecipe");
+    spdlog::debug("RecipePresenter::onDeleteRecipe");
 
     m_recipeModel->deleteRecipe();
 }
 
-void RecipePresenter::onDeleteIngredient()
-{
-    spdlog::info("RecipePresenter::onDeleteIngredient");
-    m_recipeModel->deleteIngredient();
-}
-
 void RecipePresenter::onSelectIngredient(int id)
 {
-    spdlog::info("RecipePresenter::onSelectIngredient");
-    m_recipeModel->selectIngredient(id);
+    spdlog::debug("RecipePresenter::onSelectIngredient");
+    // m_recipeModel->selectIngredient(id);
 }

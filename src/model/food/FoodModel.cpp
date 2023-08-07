@@ -15,7 +15,7 @@ void FoodModel::attach(IFoodObserver *observer)
 
 void FoodModel::notify()
 {
-    spdlog::info("FoodModel::notify");
+    spdlog::debug("FoodModel::notify");
     for (auto observer : m_observers)
     {
         observer->update();
@@ -24,7 +24,7 @@ void FoodModel::notify()
 
 void FoodModel::setInEditMode(bool inEditMode)
 {
-    spdlog::info("FoodModel::setInEditMode {}", inEditMode);
+    spdlog::debug("FoodModel::setInEditMode {}", inEditMode);
     m_foodCommonModel->setInEditMode(inEditMode);
 }
 
@@ -35,7 +35,7 @@ bool FoodModel::isInEditMode()
 
 Food FoodModel::getFood()
 {
-    spdlog::info("FoodModel::getFood and selected is: {}", m_foodListModel->getSelectedId());
+    spdlog::debug("FoodModel::getFood and selected is: {}", m_foodListModel->getSelectedId());
     return m_dbFood->getFood(m_foodListModel->getSelectedId());
 }
 

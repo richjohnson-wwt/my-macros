@@ -60,7 +60,7 @@ void FoodListView::onFoodSelChange(wxListEvent &event)
 {
     wxListItem item = event.GetItem();
     wxInt16 id = wxAtoi(item.GetText());
-    spdlog::info("FoodListView::onFoodSelChange GetText({})", id);
+    spdlog::debug("FoodListView::onFoodSelChange GetText({})", id);
     m_foodListCallback->onFoodSelected(id);
 }
 

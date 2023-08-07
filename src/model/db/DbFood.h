@@ -3,9 +3,30 @@
 
 #include "DbBase.h"
 
+
+
+class IDbFoodObserver {
+public:
+    virtual void update() = 0;
+};
+
+class IDbFoodSubject {
+public:
+    virtual void attach(IDbFoodObserver* observer) = 0;
+    virtual void notify() = 0;
+};
+
 class DbFood : public DbBase {
+private:
+    std::vector<IDbFoodObserver*> m_observers;
+
+    void notify();
+
 public:
     DbFood(const std::string& dbfile);
+
+    void attach(IDbFoodObserver* observer);
+
     Food getFood(int id);
     std::vector<Food> getFoods();
 

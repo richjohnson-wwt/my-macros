@@ -151,7 +151,7 @@ void DailyView::setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFood
 }
 
 void DailyView::setTotalsList(const std::vector<XrefDailyFood> &totals, int percentFat, int percentProtein, int percentCarb) {
-    spdlog::info("DailyView::setTotalsList size: {}", totals.size());
+    spdlog::debug("DailyView::setTotalsList size: {}", totals.size());
 
     m_totalsListView->DeleteAllItems();
 

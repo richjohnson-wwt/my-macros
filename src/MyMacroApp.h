@@ -17,6 +17,8 @@
 #include "view/FatSecretView.h"
 #include "view/FoodItemEditView.h"
 #include "view/FoodItemView.h"
+#include "view/RecipeItemView.h"
+#include "view/RecipeEditView.h"
 
 // PRESENTER
 #include "presenter/FoodPresenter.h"
@@ -25,17 +27,21 @@
 #include "presenter/DailyPresenter.h"
 #include "presenter/RecipeListPresenter.h"
 #include "presenter/RecipePresenter.h"
+#include "presenter/RecipeEditPresenter.h"
 #include "presenter/FatSecretPresenter.h"
 
 // MODEL
+#include "model/DailyModel.h"
 #include "model/food/FoodCommonModel.h"
 #include "model/food/FoodModel.h"
 #include "model/food/FoodEditModel.h"
 #include "model/food/FoodListModel.h"
-#include "model/DailyModel.h"
-#include "model/recipe/RecipeModel.h"
-#include "model/recipe/RecipeListModel.h"
 #include "model/fatsecret/FatSecretWrapper.h"
+#include "model/fatsecret/FatSecretModel.h"
+#include "model/recipe/RecipeCommonModel.h"
+#include "model/recipe/RecipeModel.h"
+#include "model/recipe/RecipeEditModel.h"
+#include "model/recipe/RecipeListModel.h"
 
 // DB
 #include "model/db/DbFood.h"
@@ -53,8 +59,10 @@ private:
     MainNotebook m_mainNotebook;
 
     TopFoodView m_topFoodView;
+    TopRecipeView m_topRecipeView;
 
     FoodCommonModel m_foodCommonModel;
+    RecipeCommonModel m_recipeCommonModel;
     
     FoodEditPresenter m_foodEditPresenter;
     FoodItemEditView m_foodItemEditView;
@@ -75,14 +83,19 @@ private:
     RecipeListModel m_recipeListModel;
     RecipeListPresenter m_recipeListPresenter;
     RecipeListView m_recipeListView;
-
-    TopRecipeView m_topRecipeView;
+    
+    RecipeItemView m_recipeItemView;
     RecipePresenter m_recipePresenter;
     RecipeModel m_recipeModel;
+    
+    RecipeEditView m_recipeEditView;
+    RecipeEditPresenter m_recipeEditPresenter;
+    RecipeEditModel m_recipeEditModel;
 
     FatSecretView m_fatSecretView;
     FatSecretPresenter m_fatSecretPresenter;
     FatSecretWrapper m_fatSecretWrapper;
+    FatSecretModel m_fatSecretModel;
 
     DbFood m_dbFood;
     DbRecipe m_dbRecipe;

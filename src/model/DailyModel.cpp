@@ -25,20 +25,20 @@ void DailyModel::setSelectedDate(const std::string& date)
 
 DailyFood DailyModel::getDailyFood()
 {
-    spdlog::info("DailyModel::getDailyFood() {}", m_dateString);
+    spdlog::debug("DailyModel::getDailyFood() {}", m_dateString);
     DailyFood df = m_dbDaily->getDailyFood(m_dateString);
     return df;
 }
 
 std::vector<XrefDailyFood> DailyModel::getXrefDailyFoods(const DailyFood& df)
 {
-    spdlog::info("DailyModel::getXrefDailyFoods() {}", df.id);
+    spdlog::debug("DailyModel::getXrefDailyFoods() {}", df.id);
     return m_dbDaily->getXrefDailyFoods(df);
 }
 
 void DailyModel::addExercise(int exerciseCalories)
 {
-    spdlog::info("DailyModel::addExercise() {}", exerciseCalories);
+    spdlog::debug("DailyModel::addExercise() {}", exerciseCalories);
     DailyFood df = m_dbDaily->getDailyFood(m_dateString);
     df.dailyActivityBonusCalories += exerciseCalories;
     m_dbDaily->updateDailyFood(df);
@@ -46,38 +46,38 @@ void DailyModel::addExercise(int exerciseCalories)
 
 void DailyModel::addXrefDailyFood(const XrefDailyFood &xdf)
 {
-    spdlog::info("DailyModel::addDailyFood()");
+    spdlog::debug("DailyModel::addDailyFood()");
     m_dbDaily->addXrefDailyFood(xdf);
     
 }
 
 Food DailyModel::getFood()
 {
-    spdlog::info("DailyModel::getFood()");
+    spdlog::debug("DailyModel::getFood()");
     return m_foodListModel->getSelectedFood();
 }
 
 Recipe DailyModel::getRecipe()
 {
-    spdlog::info("DailyModel::getRecipe()");
+    spdlog::debug("DailyModel::getRecipe()");
     return m_recipeListModel->getSelectedRecipe();
 }
 
 std::vector<Ingredient> DailyModel::getIngredients()
 {
-    spdlog::info("DailyModel::getIngredients()");
+    spdlog::debug("DailyModel::getIngredients()");
     return m_recipeModel->getIngredients();
 }
 
 void DailyModel::setSelectedDailyFoodId(int id)
 {
-    spdlog::info("DailyModel::setSelectedDailyFoodId({})", id);
+    spdlog::debug("DailyModel::setSelectedDailyFoodId({})", id);
     m_selectedDailyFoodId = id;
 }
 
 void DailyModel::deleteXrefDailyFood()
 {
-    spdlog::info("DailyModel::deleteXrefDailyFood {}", m_selectedDailyFoodId);
+    spdlog::debug("DailyModel::deleteXrefDailyFood {}", m_selectedDailyFoodId);
     m_dbDaily->deleteXrefDailyFood(m_selectedDailyFoodId);
 }
 

@@ -8,25 +8,30 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_dbDaily("../db/my-macro.sqlite3"),
     m_foodModel(&m_dbFood, &m_foodListModel, &m_foodCommonModel), 
     m_foodEditModel(&m_dbFood, &m_foodListModel, &m_foodCommonModel), 
-    m_recipeModel(&m_dbRecipe, &m_recipeListModel, &m_foodListModel),
     m_foodListModel(&m_dbFood),
-    m_recipeListModel(&m_dbRecipe),
-    m_dailyModel(&m_dbDaily, &m_foodListModel, &m_recipeListModel, &m_recipeModel),
-    m_fatSecretWrapper(&m_foodEditModel),
     m_foodPresenter(&m_foodItemView, &m_foodModel, &m_foodListModel), 
     m_foodEditPresenter(&m_foodItemEditView, &m_foodEditModel, &m_foodListModel), 
-    m_topFoodView(&m_foodItemView, &m_fatSecretView), 
     m_foodListPresenter(&m_foodListView, &m_foodListModel, &m_foodModel), 
     m_foodListView(&m_foodListPresenter),
+    m_foodItemView(&m_foodPresenter, &m_foodItemEditView),
+    m_topFoodView(&m_foodItemView, &m_fatSecretView), 
+    m_foodItemEditView(&m_foodEditPresenter),
+    m_recipeModel(&m_dbRecipe, &m_recipeListModel, &m_recipeCommonModel),
+    m_recipeEditModel(&m_dbRecipe, &m_recipeListModel, &m_foodListModel, &m_recipeCommonModel),
+    m_recipeListModel(&m_dbRecipe),
+    m_recipePresenter(&m_recipeItemView, &m_recipeModel, &m_recipeListModel),
+    m_recipeListPresenter(&m_recipeListView, &m_recipeListModel, &m_recipeModel),
+    m_topRecipeView(&m_recipeItemView),
+    m_recipeListView(&m_recipeListPresenter),
+    m_recipeItemView(&m_recipePresenter, &m_recipeEditView),
+    m_recipeEditView(&m_recipeEditPresenter),
+    m_recipeEditPresenter(&m_recipeEditView, &m_recipeEditModel, &m_recipeListModel, &m_recipePresenter),
+    m_dailyModel(&m_dbDaily, &m_foodListModel, &m_recipeListModel, &m_recipeModel),
     m_dailyPresenter(&m_dailyView, &m_dailyModel), 
     m_dailyView(&m_dailyPresenter),
-    m_recipePresenter(&m_topRecipeView, &m_recipeModel, &m_recipeListModel),
-    m_topRecipeView(&m_recipePresenter),
-    m_recipeListPresenter(&m_recipeListView, &m_recipeListModel, &m_recipeModel),
-    m_recipeListView(&m_recipeListPresenter),
+    m_fatSecretModel(&m_dbFood),
+    m_fatSecretWrapper(&m_fatSecretModel),
     m_fatSecretView(&m_fatSecretPresenter),
-    m_foodItemView(&m_foodPresenter, &m_foodItemEditView),
-    m_foodItemEditView(&m_foodEditPresenter),
     m_fatSecretPresenter(&m_fatSecretView, &m_fatSecretWrapper),
     m_explorerNotebook(parent, &m_foodListView, &m_recipeListView),
     m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView),
@@ -63,7 +68,7 @@ void MyMacroApp::create() {
 
 void MyMacroApp::postInit()
 {
-    spdlog::info("MyMacroApp::postInit");
+    spdlog::debug("MyMacroApp::postInit");
     m_foodPresenter.postInit();
     m_foodListPresenter.postInit();
     m_recipePresenter.postInit();

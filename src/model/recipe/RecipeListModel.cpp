@@ -15,7 +15,7 @@ void RecipeListModel::attach(IRecipeListObserver *observer)
 
 void RecipeListModel::notify()
 {
-    spdlog::info("RecipeListModel::notify");
+    spdlog::debug("RecipeListModel::notify");
     for (auto observer : m_observers)
     {
         observer->update();

@@ -15,6 +15,6 @@ MyFrame::~MyFrame()
 }
 
 void MyFrame::postInit() {
-    spdlog::info("MyFrame::postInit");
+    spdlog::debug("MyFrame::postInit");
     m_app.postInit();
 }

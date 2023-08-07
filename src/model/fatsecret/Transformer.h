@@ -2,7 +2,7 @@
 #define FATSECRET_H
 
 #include "../MyMacroTypes.h"
-#include "FatSecretModel.h"
+#include "FatSecretJson.h"
 
 
 class Transformer {

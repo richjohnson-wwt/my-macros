@@ -22,31 +22,31 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
 
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
-    m_foodIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food ID:", m_foodIdTextCtrl), 0, wxALL, 10);
 
-    m_foodNameTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodNameTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food Name:", m_foodNameTextCtrl), 0, wxALL, 10);
 
-    m_foodFatTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodFatTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food Fat:", m_foodFatTextCtrl), 0, wxALL, 10);
 
-    m_foodProteinTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodProteinTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food Protein:", m_foodProteinTextCtrl), 0, wxALL, 10);
 
-    m_foodCarbTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodCarbTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food Carb:", m_foodCarbTextCtrl), 0, wxALL, 10);
 
-    m_foodCaloriesTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodCaloriesTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food Calories:", m_foodCaloriesTextCtrl), 0, wxALL, 10);
 
-    m_foodQuantityTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodQuantityTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food Quantity:", m_foodQuantityTextCtrl), 0, wxALL, 10);
 
     wxSizer *comboSizerRow = new wxBoxSizer(wxHORIZONTAL); 
     m_foodUnitComboBox = new wxComboBox(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
     // m_foodUnitComboBox->Bind(wxEVT_COMBOBOX, &FoodItemView::onFoodUnitComboBox, this);
-    comboSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Food Unit: ", wxDefaultPosition, wxSize(100, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
+    comboSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Food Unit: ", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY), 0, wxALIGN_LEFT | wxRIGHT, 5);
     comboSizerRow->Add(m_foodUnitComboBox, 0, wxALIGN_LEFT);
     topsizer->Add(comboSizerRow, 0, wxALL, 10);
 
@@ -69,6 +69,20 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
     panel->SetSizer(topsizer);
 
     return panel;
+}
+
+void FoodItemView::onNotebookPageChanged()
+{
+    spdlog::info("FoodItemView::onNotebookPageChanged");
+    m_foodCallback->onFocus();
+}
+
+void FoodItemView::setButtonStatus(bool isEdit)
+{
+    spdlog::info("FoodItemView::setButtonStatus {}", isEdit);
+    m_foodEditButton->Enable(!isEdit);
+    m_foodNewButton->Enable(!isEdit);
+    m_foodDeleteButton->Enable(!isEdit);
 }
 
 void FoodItemView::onDeleteFood(wxCommandEvent &event)

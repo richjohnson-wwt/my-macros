@@ -54,7 +54,7 @@ Food DbFood::getFood(int id)
     return f;
 }
 
-void DbFood::addFood(const Food &f) {
+void DbFood::addNewFood(const Food &f) {
     spdlog::debug("DbConnection::addFood");
     try
     {
@@ -106,11 +106,11 @@ void DbFood::deleteFood(int foodId) {
     }
 }
 
-void DbFood::saveFood(const Food &f) {
-    spdlog::debug("DbFood::saveFood");
+void DbFood::updateFood(const Food &f) {
+    spdlog::debug("DbFood::updateFood");
     try
     {
-        SQLite::Statement query(m_db, "INSERT INTO Foods (name, fat, protein, carb, calories, quantity, unit_id, popularity) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        SQLite::Statement query(m_db, "UPDATE Foods SET name = ?, fat = ?, protein = ?, carb = ?, calories = ?, quantity = ?, unit_id = ?, popularity = ? WHERE food_id = ?");
         query.bind(1, f.name);
         query.bind(2, f.fat);
         query.bind(3, f.protein);
@@ -119,6 +119,7 @@ void DbFood::saveFood(const Food &f) {
         query.bind(6, f.quantity);
         query.bind(7, f.unit_id);
         query.bind(8, f.popularity);
+        query.bind(9, f.id);
         query.exec();
     }
     catch (SQLite::Exception &e)
@@ -126,4 +127,5 @@ void DbFood::saveFood(const Food &f) {
         std::cerr << e.what() << std::endl;
         spdlog::error(e.what());
     }
+    
 }

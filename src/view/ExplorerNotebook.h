@@ -8,9 +8,8 @@
 #include "wx/listctrl.h"
 #include "wx/srchctrl.h"
 #include "wx/notebook.h"
-#include <wx/event.h>
 
-class ExplorerNotebook : public wxEvtHandler {
+class ExplorerNotebook {
 public:
     ExplorerNotebook(wxFrame* parent, FoodListView *foodListView, RecipeListView *recipeListView);
     wxNotebook *createExplorerBookCtrl();

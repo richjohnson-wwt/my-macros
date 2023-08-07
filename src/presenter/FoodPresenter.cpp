@@ -28,6 +28,17 @@ void FoodPresenter::update()
     m_foodItemView->setFoodUnit(food.unit_id, units);
 }
 
+void FoodPresenter::onFocus()
+{
+    spdlog::debug("FoodPresenter::onFocus");
+    m_foodItemView->setButtonStatus(m_foodModel->isInEditMode());
+}
+
+bool FoodPresenter::isInEditMode()
+{
+    return m_foodModel->isInEditMode();
+}
+
 void FoodPresenter::onDeleteFood()
 {
     spdlog::debug("FoodPresenter::onDeleteFood");
@@ -35,36 +46,16 @@ void FoodPresenter::onDeleteFood()
     m_foodListSubject->notify();
 }
 
-// void FoodPresenter::onSaveFood()
-// {
-//     spdlog::debug("FoodPresenter::onSaveFood");
-//     // Food food;
-//     // food.id = std::stoi(m_foodItemView->getFoodId());
-//     // food.name = m_foodItemView->getFoodName();
-//     // food.fat = std::stoi(m_foodItemView->getFoodFat());
-//     // food.protein = std::stoi(m_foodItemView->getFoodProtein());
-//     // food.carb = std::stoi(m_foodItemView->getFoodCarb());
-//     // food.calories = std::stoi(m_foodItemView->getFoodCalories());
-//     // food.quantity = std::stoi(m_foodItemView->getFoodQuantity());
-//     // food.unit_id = m_foodItemView->getFoodUnitId();
-//     // m_foodModel->saveFood(food);
-//     // m_foodListSubject->notify();
-// }
-
 void FoodPresenter::onNewFood()
 {
     spdlog::debug("FoodPresenter::onNewFood");
+    m_foodModel->setInEditMode(true);
     m_foodItemView->insertNewPage(true);
 }
 
-// void FoodPresenter::onNewFoodCancel()
-// {
-//     spdlog::debug("FoodPresenter::onNewFoodCancel");
-//     m_foodModel->newFoodCancel();
-// }
-
 void FoodPresenter::onEditFood()
 {
+    m_foodModel->setInEditMode(true);
     m_foodItemView->insertNewPage(false);
     
 }

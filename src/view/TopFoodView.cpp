@@ -17,6 +17,7 @@ wxPanel *TopFoodView::createFoodPanel(wxNotebook *parent)
 
     wxBoxSizer *notebookSizer = new wxBoxSizer(wxVERTICAL);
     m_foodFatSecretBookCtrl = new wxNotebook(topPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, _("Notebook"));
+    m_foodFatSecretBookCtrl->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &TopFoodView::onNotebookPageChanged, this);
 
     wxWindow *page1 = m_foodItemView->createFoodItemPanel(m_foodFatSecretBookCtrl);
     wxWindow *page2 = m_fatSecretView->createPanel(m_foodFatSecretBookCtrl);
@@ -28,4 +29,10 @@ wxPanel *TopFoodView::createFoodPanel(wxNotebook *parent)
     topPanel->SetSizer(notebookSizer);
 
     return topPanel;
+}
+
+void TopFoodView::onNotebookPageChanged(wxCommandEvent &event)
+{
+    spdlog::debug("TopFoodView::onNotebookPageChanged");
+    m_foodItemView->onNotebookPageChanged();
 }

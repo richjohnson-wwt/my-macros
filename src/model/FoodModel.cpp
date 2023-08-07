@@ -1,8 +1,8 @@
 #include "FoodModel.h"
 #include <spdlog/spdlog.h>
 
-FoodModel::FoodModel(DbFood *db, FoodListModel *foodListModel)
-:m_dbFood(db), m_foodListModel(foodListModel)
+FoodModel::FoodModel(DbFood *db, FoodListModel *foodListModel, FoodCommonModel *foodCommonModel)
+:m_dbFood(db), m_foodListModel(foodListModel), m_foodCommonModel(foodCommonModel)
 {
     
 }
@@ -20,6 +20,17 @@ void FoodModel::notify()
     {
         observer->update();
     }
+}
+
+void FoodModel::setInEditMode(bool inEditMode)
+{
+    spdlog::info("FoodModel::setInEditMode {}", inEditMode);
+    m_foodCommonModel->setInEditMode(inEditMode);
+}
+
+bool FoodModel::isInEditMode()
+{
+    return m_foodCommonModel->isInEditMode();
 }
 
 Food FoodModel::getFood()

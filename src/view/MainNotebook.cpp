@@ -17,7 +17,6 @@ wxNotebook *MainNotebook::createMainBookCtrl()
 {
     spdlog::debug("MainNotebook::MainNotebook");
     m_mainBookCtrl = new wxNotebook(m_wxFrame, wxID_ANY);
-    // m_mainBookCtrl->Bind(wxEVT_NOTEBOOK_PAGE_CHANGED, &MainNotebook::onNotebookPageChanged, this);
 
     wxWindow *page1 = m_dailyView->createDailyPanel(m_mainBookCtrl);
     wxWindow *page2 = m_topFoodView->createFoodPanel(m_mainBookCtrl);

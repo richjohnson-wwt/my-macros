@@ -23,7 +23,8 @@ wxPanel *FoodItemEditView::createFoodItemEditPanel(wxNotebook *parent)
     spdlog::info("FoodItemEditView::createFoodItemEditPanel2");
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
-    m_foodIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_foodIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
+    // m_foodIdTextCtrl->SetReadOnly(true);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Food ID:", m_foodIdTextCtrl), 0, wxALL, 10);
 
     m_foodNameTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
@@ -80,7 +81,6 @@ void FoodItemEditView::initNewPage(bool isNew) {
 
 void FoodItemEditView::deleteThisPage()
 {
-
     if ( m_parent )
     {
         int sel = m_parent->GetSelection();
@@ -88,6 +88,8 @@ void FoodItemEditView::deleteThisPage()
         if (sel != wxNOT_FOUND)
         {
             m_parent->DeletePage(sel);
+            m_parent->SetSelection(1);
+            m_parent->SetSelection(0);
         }
     }
 }

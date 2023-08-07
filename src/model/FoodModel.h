@@ -2,6 +2,7 @@
 #define FOOD_H
 
 #include "FoodListModel.h"
+#include "FoodCommonModel.h"
 #include "DbFood.h"
 #include "MyMacroTypes.h"
 #include <vector>
@@ -25,6 +26,8 @@ public:
     virtual Unit getUnit(const std::string& name) = 0;
     virtual std::vector<Unit> getUnits() = 0;;
     virtual void deleteFood() = 0;
+    virtual bool isInEditMode() = 0;
+    virtual void setInEditMode(bool inEditMode) = 0;
 
 };
 
@@ -32,11 +35,12 @@ class FoodModel : public IFoodModel, public IFoodSubject {
 private:
     DbFood *m_dbFood;
     FoodListModel *m_foodListModel;
+    FoodCommonModel *m_foodCommonModel;
     
     std::vector<IFoodObserver*> m_observers;
 
 public:
-    FoodModel(DbFood *db, FoodListModel *foodListModel);
+    FoodModel(DbFood *db, FoodListModel *foodListModel, FoodCommonModel *foodCommonModel);
     
     Food getFood() override;
     Unit getFoodUnit() override;
@@ -47,6 +51,8 @@ public:
     void notify() override;
 
     void deleteFood() override;
+    bool isInEditMode() override;
+    void setInEditMode(bool inEditMode) override;
 
 };
 

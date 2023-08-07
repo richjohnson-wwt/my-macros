@@ -6,14 +6,18 @@
 
 #include <wx/wx.h>
 #include "wx/notebook.h"
+#include <wx/event.h>
 
-class TopFoodView
+class TopFoodView : public wxEvtHandler
 {
 private:
     FatSecretView *m_fatSecretView;
     FoodItemView *m_foodItemView;
 
     wxNotebook *m_foodFatSecretBookCtrl;
+
+protected:
+    void onNotebookPageChanged(wxCommandEvent &event);
 
 public:
     TopFoodView(FoodItemView *foodItemView, FatSecretView *fatSecretView);

@@ -23,6 +23,7 @@ public:
     virtual void setFoodUnit(int unitId, const std::vector<Unit>& units) = 0;
 
     virtual void insertNewPage(bool isNew) = 0;
+    virtual void setButtonStatus(bool isEdit) = 0;
 };
 
 class FoodItemView : public wxEvtHandler, public IFoodItemView {
@@ -58,6 +59,7 @@ public:
     FoodItemView(IFoodCallback *callback, FoodItemEditView *foodItemEditView);
 
     wxPanel *createFoodItemPanel(wxNotebook *parent);
+    void onNotebookPageChanged();
 
     void setFoodId(const std::string& id) override;
     void setFoodName(const std::string& name) override;
@@ -69,6 +71,7 @@ public:
     void setFoodUnit(int unitId, const std::vector<Unit>& units) override;
 
     void insertNewPage(bool isNew) override;
+    void setButtonStatus(bool isEdit) override;
 
 };
 

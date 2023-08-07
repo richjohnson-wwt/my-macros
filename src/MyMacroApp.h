@@ -28,6 +28,7 @@
 #include "presenter/FatSecretPresenter.h"
 
 // MODEL
+#include "model/FoodCommonModel.h"
 #include "model/FoodModel.h"
 #include "model/FoodEditModel.h"
 #include "model/FoodListModel.h"
@@ -52,6 +53,8 @@ private:
     MainNotebook m_mainNotebook;
 
     TopFoodView m_topFoodView;
+
+    FoodCommonModel m_foodCommonModel;
     
     FoodEditPresenter m_foodEditPresenter;
     FoodItemEditView m_foodItemEditView;

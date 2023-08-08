@@ -51,6 +51,7 @@
 #include "model/db/DbFood.h"
 #include "model/db/DbRecipe.h"
 #include "model/db/DbDaily.h"
+#include "model/db/DbGoal.h"
 
 class MyMacroApp
 {
@@ -108,6 +109,7 @@ private:
     DbFood m_dbFood;
     DbRecipe m_dbRecipe;
     DbDaily m_dbDaily;
+    DbGoal m_dbGoal;
 
 public:
     MyMacroApp(wxFrame *parent);

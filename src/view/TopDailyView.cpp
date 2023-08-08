@@ -22,13 +22,13 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
 
     wxBoxSizer *activitySizer = new wxBoxSizer(wxHORIZONTAL);
     activitySizer->Add(new wxStaticText(panel, wxID_ANY, "Activity Bonus"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    m_dailyActivityBonusTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20));
+    m_dailyActivityBonusTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(75, 20));
     activitySizer->Add(m_dailyActivityBonusTextCtrl, 0, wxALL, 10);
     m_addActivityBonusButton = new wxButton(panel, -1, _T("Add Exercise"), wxDefaultPosition, wxDefaultSize, 0);
     m_addActivityBonusButton->Bind(wxEVT_BUTTON, &DailyView::onAddActivityBonus, this);
     activitySizer->Add(m_addActivityBonusButton, 0, wxALL, 10);
     activitySizer->Add(new wxStaticText(panel, wxID_ANY, "Weight"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    m_dailyWeightTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20));
+    m_dailyWeightTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(75, 20));
     activitySizer->Add(m_dailyWeightTextCtrl, 0, wxALL, 10);
     m_addWeightButton = new wxButton(panel, -1, _T("Add Weight"), wxDefaultPosition, wxDefaultSize, 0);
     m_addWeightButton->Bind(wxEVT_BUTTON, &DailyView::onAddWeight, this);
@@ -37,7 +37,7 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
 
     wxBoxSizer *addFoodSizer = new wxBoxSizer(wxHORIZONTAL);
     addFoodSizer->Add(new wxStaticText(panel, wxID_ANY, "Multiplier"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    m_foodMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(100, 20));
+    m_foodMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(75, 20));
     addFoodSizer->Add(m_foodMultiplierTextCtrl, 0, wxALL, 10);
     m_addDailyFoodButton = new wxButton(panel, -1, _T("Add Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_addDailyFoodButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyFood, this);

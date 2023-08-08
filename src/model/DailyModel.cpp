@@ -4,10 +4,12 @@
 #include <spdlog/spdlog.h>
 
 DailyModel::DailyModel(DbDaily *dbDaily, 
-    IFoodListModel *foodListModel, IRecipeListModel *recipeListModel, IRecipeModel *recipeModel)
-: m_dbDaily(dbDaily), m_foodListModel(foodListModel), m_recipeListModel(recipeListModel), m_recipeModel(recipeModel)
+    DbGoal *dbGoal,
+    IFoodListModel *foodListModel, 
+    IRecipeListModel *recipeListModel, 
+    IRecipeModel *recipeModel)
+: m_dbDaily(dbDaily), m_dbGoal(dbGoal), m_foodListModel(foodListModel), m_recipeListModel(recipeListModel), m_recipeModel(recipeModel)
 {
-
 }
 
 void DailyModel::setSelectedDate(const std::string& date)
@@ -89,22 +91,37 @@ void DailyModel::deleteXrefDailyFood()
     m_dbDaily->deleteXrefDailyFood(m_selectedDailyFoodId);
 }
 
+void DailyModel::loadGoal() {
+    m_goal = m_dbGoal->getGoal();
+}
+
 int DailyModel::getGoalFatGrams()
 {
-    return FAT_GRAMS;
+    spdlog::info("DailyModel::getGoalFatGrams() fatPercent: {} bmrCalories: {}", m_goal.fatPercent, m_goal.bmrCalories);
+    int fatCalories = (m_goal.fatPercent * m_goal.bmrCalories) / 100;
+    int grams = fatCalories / 9;
+    spdlog::info("DailyModel::getGoalFatGrams()fatCalories: {} grams: {}", fatCalories, grams);
+    return grams;
 }
 
 int DailyModel::getGoalProteinGrams()
 {
-    return PROTEIN_GRAMS;
+    int proteinCalories = m_goal.proteinPercent * m_goal.bmrCalories / 100;
+    int grams = proteinCalories / 4;
+    spdlog::info("DailyModel::getGoalProteinGrams() {}", grams);
+    return grams;
 }
 
 int DailyModel::getGoalCarbGrams()
 {
-    return CARB_GRAMS;
+    int carbCalories = m_goal.carbPercent * m_goal.bmrCalories / 100;
+    int grams = carbCalories / 4;
+    spdlog::info("DailyModel::getGoalCarbGrams() {}", grams);
+    return grams;
 }
 
 int DailyModel::getGoalCalories()
 {
-    return TOTAL_CALORIES;
+    spdlog::info("DailyModel::getGoalCalories() {}", m_goal.bmrCalories);
+    return m_goal.bmrCalories;
 }

@@ -2,6 +2,7 @@
 #define DAILY_MODEL_H
 
 #include "db/DbDaily.h"
+#include "db/DbGoal.h"
 #include "recipe/RecipeModel.h"
 #include "recipe/RecipeListModel.h"
 #include "food/FoodListModel.h"
@@ -25,25 +26,23 @@ public:
     virtual int getGoalProteinGrams() = 0;
     virtual int getGoalCarbGrams() = 0;
     virtual int getGoalCalories() = 0;
+    virtual void loadGoal() = 0;
 
 };
 
 class DailyModel : public IDailyModel {
 private:
     DbDaily *m_dbDaily;
+    DbGoal *m_dbGoal;
     IFoodListModel *m_foodListModel;
     IRecipeListModel *m_recipeListModel;
     IRecipeModel *m_recipeModel;
     std::string m_dateString;
     int m_selectedDailyFoodId;
-
-    const int FAT_GRAMS = 168;
-    const int PROTEIN_GRAMS = 101;
-    const int CARB_GRAMS = 25;
-    const int TOTAL_CALORIES = 2010;
+    Goal m_goal;
 
 public:
-    DailyModel(DbDaily *dbDaily, IFoodListModel *foodListModel, IRecipeListModel *recipeListModel, IRecipeModel *recipeModel);
+    DailyModel(DbDaily *dbDaily, DbGoal *dbGoal, IFoodListModel *foodListModel, IRecipeListModel *recipeListModel, IRecipeModel *recipeModel);
 
     void setSelectedDate(const std::string& date) override;
 
@@ -64,6 +63,8 @@ public:
     int getGoalProteinGrams() override;
     int getGoalCarbGrams() override;
     int getGoalCalories() override;
+
+    void loadGoal() override;
 
 
 };

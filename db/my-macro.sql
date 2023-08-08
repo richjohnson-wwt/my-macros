@@ -148,3 +148,17 @@ INSERT INTO xref_daily_foods VALUES (3, 4, 'Almonds 1 cup (0.2)', 303, 0, 0, 272
 INSERT INTO xref_daily_foods VALUES (4, 4, 'Mozzarella 2 oz (3)', 56, 0, 0, 500);
 INSERT INTO xref_daily_foods VALUES (5, 4, 'Cream Cheese 1 oz (1)', 44, 0, 0, 400);
 INSERT INTO xref_daily_foods VALUES (6, 4, 'Kerry gold butter - Butter 2 tbsp (0.5)', 110, 0, 0, 1000);
+
+-- drop if table exists and create table goal
+DROP TABLE IF EXISTS goal;
+CREATE TABLE goal (
+    id INTEGER PRIMARY KEY,
+    start_date TEXT,
+    target_weight REAL,
+    bmr_calories INTEGER,
+    fat_percent INTEGER,
+    protein_percent INTEGER,
+    carb_percent INTEGER
+);
+
+INSERT INTO goal VALUES (1, '2023-05-31', 160, 1702, 75, 20, 5);

@@ -13,6 +13,7 @@ DailyPresenter::DailyPresenter(IDailyView *view, IDailyModel *model)
 void DailyPresenter::postInit()
 {
     spdlog::debug("DailyPresenter::postInit() Populate today");
+    m_dailyModel->loadGoal();
 
     // Get todays date in iso format yyyy-mm-dd using std::chrono
     auto now = std::chrono::system_clock::now();

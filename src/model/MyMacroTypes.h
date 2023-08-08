@@ -67,4 +67,15 @@ struct XrefDailyFood
     int calories;
 };
 
+struct Goal
+{
+    int id;
+    std::string startDate;
+    double targetWeight;
+    int bmrCalories;
+    int fatPercent;
+    int proteinPercent;
+    int carbPercent;
+};
+
 #endif // MY_MACRO_TYPES_H

@@ -52,6 +52,9 @@ void DailyPresenter::populateDailyFood(const DailyFood &df, const std::vector<Xr
     spdlog::debug("DailyPresenter::populateView");
     
     m_dailyView->setDailyActivityBonus(std::to_string(df.dailyActivityBonusCalories));
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(1) << df.weight;
+    m_dailyView->setDailyWeight(ss.str());
     
     m_dailyView->setDailyFoodList(xdfVector);
 }
@@ -123,6 +126,13 @@ void DailyPresenter::onAddExercise()
 {
     spdlog::debug("DailyPresenter::onAddExercise");
     m_dailyModel->addExercise(m_dailyView->getActivityBonus());
+    refresh();
+}
+
+void DailyPresenter::onAddWeight()
+{
+    spdlog::debug("DailyPresenter::onAddWeight");
+    m_dailyModel->addWeight(m_dailyView->getWeight());
     refresh();
 }
 

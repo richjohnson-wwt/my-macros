@@ -16,22 +16,28 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
     topsizer->Add(new wxStaticText(panel, wxID_ANY, "Daily Food Diary"), 0, wxALIGN_CENTRE_VERTICAL | wxLEFT, 5);
-    m_datePicker = new wxDatePickerCtrl(panel, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxSize(200, 20));
+    m_datePicker = new wxDatePickerCtrl(panel, wxID_ANY, wxDefaultDateTime, wxDefaultPosition, wxSize(100, 20));
     m_datePicker->Bind(wxEVT_DATE_CHANGED, &DailyView::onDateChanged, this);
     topsizer->Add(m_datePicker, 0, wxALL, 10);
 
     wxBoxSizer *activitySizer = new wxBoxSizer(wxHORIZONTAL);
     activitySizer->Add(new wxStaticText(panel, wxID_ANY, "Activity Bonus"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    m_dailyActivityBonusTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_dailyActivityBonusTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20));
     activitySizer->Add(m_dailyActivityBonusTextCtrl, 0, wxALL, 10);
-    m_addActivityBonusButton = new wxButton(panel, -1, _T("Add"), wxDefaultPosition, wxDefaultSize, 0);
+    m_addActivityBonusButton = new wxButton(panel, -1, _T("Add Exercise"), wxDefaultPosition, wxDefaultSize, 0);
     m_addActivityBonusButton->Bind(wxEVT_BUTTON, &DailyView::onAddActivityBonus, this);
     activitySizer->Add(m_addActivityBonusButton, 0, wxALL, 10);
+    activitySizer->Add(new wxStaticText(panel, wxID_ANY, "Weight"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
+    m_dailyWeightTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20));
+    activitySizer->Add(m_dailyWeightTextCtrl, 0, wxALL, 10);
+    m_addWeightButton = new wxButton(panel, -1, _T("Add Weight"), wxDefaultPosition, wxDefaultSize, 0);
+    m_addWeightButton->Bind(wxEVT_BUTTON, &DailyView::onAddWeight, this);
+    activitySizer->Add(m_addWeightButton, 0, wxALL, 10);
     topsizer->Add(activitySizer, 0, wxALL, 10);
 
     wxBoxSizer *addFoodSizer = new wxBoxSizer(wxHORIZONTAL);
     addFoodSizer->Add(new wxStaticText(panel, wxID_ANY, "Multiplier"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    m_foodMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20));
+    m_foodMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(100, 20));
     addFoodSizer->Add(m_foodMultiplierTextCtrl, 0, wxALL, 10);
     m_addDailyFoodButton = new wxButton(panel, -1, _T("Add Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_addDailyFoodButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyFood, this);
@@ -123,6 +129,11 @@ void DailyView::onAddActivityBonus(wxCommandEvent& event) {
     m_dailyCallback->onAddExercise();
 }
 
+void DailyView::onAddWeight(wxCommandEvent& event) {
+    spdlog::debug("DailyView::onAddWeight");
+    m_dailyCallback->onAddWeight();
+}
+
 void DailyView::onSelectDailyFood(wxListEvent& event) {
     wxListItem item = event.GetItem();
     int id = wxAtoi(item.GetText());
@@ -133,6 +144,10 @@ void DailyView::onSelectDailyFood(wxListEvent& event) {
 void DailyView::setDailyActivityBonus(const std::string& bonus) {
     spdlog::debug("DailyView::setDailyActivityBonus");
     m_dailyActivityBonusTextCtrl->SetValue(bonus);
+}
+
+void DailyView::setDailyWeight(const std::string& weight) {
+    m_dailyWeightTextCtrl->SetValue(weight);
 }
 
 void DailyView::setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFoods) {
@@ -171,6 +186,10 @@ void DailyView::setTotalsList(const std::vector<XrefDailyFood> &totals, int perc
 int DailyView::getActivityBonus() {
     spdlog::debug("DailyView::getActivityBonus");
     return std::stoi(m_dailyActivityBonusTextCtrl->GetValue().ToStdString());
+}
+
+double DailyView::getWeight() {
+    return std::stod(m_dailyWeightTextCtrl->GetValue().ToStdString());
 }
 
 double DailyView::getDailyMultiplier() {

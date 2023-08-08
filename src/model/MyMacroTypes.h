@@ -53,6 +53,7 @@ struct DailyFood
     int id;
     std::string date;
     int dailyActivityBonusCalories;
+    double weight;
 };
 
 struct XrefDailyFood

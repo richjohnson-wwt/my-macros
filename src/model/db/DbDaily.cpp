@@ -16,6 +16,7 @@ DailyFood DbDaily::getDailyFood(const std::string& date) {
             dailyFood.id = query.getColumn(0);
             dailyFood.date = std::string(query.getColumn(1));
             dailyFood.dailyActivityBonusCalories = query.getColumn(2);
+            dailyFood.weight = query.getColumn(3);
         }
     } catch (SQLite::Exception &e) {
         std::cerr << e.what() << std::endl;
@@ -58,6 +59,7 @@ std::vector<DailyFood> DbDaily::getDailyFoodByRange(const std::string& startDate
             dailyFood.id = query.getColumn(0);
             dailyFood.date = std::string(query.getColumn(1));
             dailyFood.dailyActivityBonusCalories = query.getColumn(2);
+            dailyFood.weight = query.getColumn(3);
             dailyFoods.push_back(dailyFood);
         }
     } catch (SQLite::Exception &e) {
@@ -110,9 +112,10 @@ bool DbDaily::doesTodayExist(const std::string& today)
 void DbDaily::saveDailyFood(const DailyFood& df)
 {
     try {
-        SQLite::Statement query(m_db, "INSERT INTO daily_food (date, exercise_calorie_bonus) VALUES (?, ?)");
+        SQLite::Statement query(m_db, "INSERT INTO daily_food (date, exercise_calorie_bonus, weight) VALUES (?, ?, ?)");
         query.bind(1, df.date);
         query.bind(2, df.dailyActivityBonusCalories);
+        query.bind(3, df.weight);
         query.exec();
     } catch (SQLite::Exception &e) {
         std::cerr << e.what() << std::endl;
@@ -122,9 +125,10 @@ void DbDaily::saveDailyFood(const DailyFood& df)
 void DbDaily::updateDailyFood(const DailyFood& df)
 {
     try {
-        SQLite::Statement query(m_db, "UPDATE daily_food SET exercise_calorie_bonus = ? WHERE id = ?");
+        SQLite::Statement query(m_db, "UPDATE daily_food SET exercise_calorie_bonus = ?, weight = ? WHERE id = ?");
         query.bind(1, df.dailyActivityBonusCalories);
-        query.bind(2, df.id);
+        query.bind(2, df.weight);
+        query.bind(3, df.id);
         query.exec();
     } catch (SQLite::Exception &e) {
         std::cerr << e.what() << std::endl;

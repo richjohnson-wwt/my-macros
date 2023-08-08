@@ -41,7 +41,7 @@ void OutlookPresenter::postInit()
     int totalCalories = 0;
     for (auto x : xrefDailyFoods)
     {
-        spdlog::info("OutlookPresenter::postInit() adding: {} to total: {}", x.calories, totalCalories );
+        spdlog::debug("OutlookPresenter::postInit() adding: {} to total: {}", x.calories, totalCalories );
         totalCalories += x.calories;
     }
     m_outlookView->setTotalCaloriesForWeek(totalCalories);

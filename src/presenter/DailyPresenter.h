@@ -13,6 +13,7 @@ class IDailyCallback {
 public:
     virtual void onDateChanged(const std::string& date) = 0;
     virtual void onAddExercise() = 0;
+    virtual void onAddWeight() = 0;
     virtual void onAddDailyFood() = 0;
     virtual void onAddDailyRecipe() = 0;
     virtual void onDeleteDailyFood() = 0;
@@ -45,6 +46,7 @@ public:
 
     void onDateChanged(const std::string& date) override;
     void onAddExercise() override;
+    void onAddWeight() override;
     void onAddDailyFood() override;
     void onAddDailyRecipe() override;
     void onDeleteDailyFood() override;

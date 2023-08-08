@@ -44,6 +44,14 @@ void DailyModel::addExercise(int exerciseCalories)
     m_dbDaily->updateDailyFood(df);
 }
 
+void DailyModel::addWeight(double weight)
+{
+    spdlog::debug("DailyModel::addWeight() {}", weight);
+    DailyFood df = m_dbDaily->getDailyFood(m_dateString);
+    df.weight = weight;
+    m_dbDaily->updateDailyFood(df);
+}
+
 void DailyModel::addXrefDailyFood(const XrefDailyFood &xdf)
 {
     spdlog::debug("DailyModel::addDailyFood()");

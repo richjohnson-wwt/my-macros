@@ -89,7 +89,7 @@ DROP TABLE IF EXISTS xref_recipe_foods;
 CREATE TABLE xref_recipe_foods (
     recipe_id INTEGER,
     food_id INTEGER,
-    amount INTEGER,
+    amount REAL,
     unit_id INTEGER
 );
 
@@ -123,6 +123,7 @@ CREATE TABLE daily_food (
     id INTEGER PRIMARY KEY,
     date TEXT,
     exercise_calorie_bonus INTEGER
+    weight REAL
 );
 
 INSERT INTO daily_food VALUES (1, '2023-07-31', 0);

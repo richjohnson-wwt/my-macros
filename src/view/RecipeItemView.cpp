@@ -85,7 +85,7 @@ void RecipeItemView::createRightFoodItemPanel(wxPanel *panel)
     m_recipeIngredientsListView->SetColumnWidth(2, 100);
     m_recipeIngredientsListView->SetColumnWidth(3, 100);
     m_recipeIngredientsListView->SetColumnWidth(4, 100);
-    topsizer->Add(m_recipeIngredientsListView, 1, wxEXPAND | wxALL, 10);
+    topsizer->Add(m_recipeIngredientsListView, 4, wxEXPAND | wxALL, 10);
 
     wxBoxSizer *recipeButtonsSizer = new wxBoxSizer(wxHORIZONTAL);
     m_recipeDeleteButton = new wxButton(panel, -1, _T("Delete"), wxDefaultPosition, wxDefaultSize, 0);
@@ -98,7 +98,7 @@ void RecipeItemView::createRightFoodItemPanel(wxPanel *panel)
     recipeButtonsSizer->Add(m_recipeDeleteButton, 0, wxALL, 10);
     recipeButtonsSizer->Add(m_recipeNewButton, 0, wxALL, 10);
     recipeButtonsSizer->Add(m_recipeEditButton, 0, wxALL, 10);
-    topsizer->Add(recipeButtonsSizer, 0, wxALL, 10);
+    topsizer->Add(recipeButtonsSizer, 1, wxALL, 10);
 
     panel->SetSizer(topsizer);
 }
@@ -111,7 +111,7 @@ void RecipeItemView::onDeleteRecipe(wxCommandEvent &event)
 void RecipeItemView::insertNewPage(bool isNew)
 {
     static unsigned s_pageIns = 0;
-    wxPanel *page = m_recipeEditView->createRecipePanel(m_parent);
+    wxPanel *page = m_recipeEditView->createRecipeEditPanel(m_parent);
     if (m_parent) {
         m_parent->InsertPage( 0, page,
                 wxString::Format("NEWBIE" "%u", ++s_pageIns), false, 0 );

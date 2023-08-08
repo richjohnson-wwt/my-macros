@@ -37,7 +37,7 @@ private:
     IRecipeEditCallback *m_recipeEditCallback;
     wxNotebook *m_parent;
 
-    void createRightFoodItemPanel(wxPanel *panel);
+    // void createRightFoodItemPanel(wxPanel *panel);
 
     wxTextCtrl *m_recipeIdTextCtrl;
     wxTextCtrl *m_recipeNameTextCtrl;
@@ -69,7 +69,7 @@ protected:
 public:
     RecipeEditView(IRecipeEditCallback *callback);
 
-    wxPanel *createRecipePanel(wxNotebook *parent);
+    wxPanel *createRecipeEditPanel(wxNotebook *parent);
     void initNewPage(bool isNew);
 
     void setRecipeId(const std::string &id) override;

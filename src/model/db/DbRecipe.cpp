@@ -207,29 +207,3 @@ void DbRecipe::deleteIngredient(int recipeId, int foodId)
     notify();
 }
 
-void DbRecipe::updateRecipe(const Recipe &r)
-{
-    spdlog::debug("DbRecipe::updateRecipe");
-    try
-    {
-        SQLite::Statement query(m_db, "UPDATE Recipes SET name = ?, description = ?, instructions = ?, url = ?, servings = ? WHERE recipe_id = ?");
-        query.bind(1, r.name);
-        query.bind(2, r.description);
-        query.bind(3, r.instructions);
-        query.bind(4, r.url);
-        query.bind(5, r.servings);
-        query.bind(6, r.id);
-        query.exec();
-
-        Recipe newRecipe = getRecipe(r.name);
-        int newRecipeId = newRecipe.id;
-
-        // BIG TODO HERE
-    }
-    catch (SQLite::Exception &e)
-    {
-        std::cerr << e.what() << std::endl;
-        spdlog::error(e.what());
-    }
-    notify();
-}

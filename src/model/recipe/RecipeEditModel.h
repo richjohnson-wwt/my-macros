@@ -31,6 +31,7 @@ private:
     const int NEW_RECIPE_ID = -1;
 
     std::vector<Ingredient> m_ingredientsUnderConstruction;
+    std::vector<Ingredient> m_ingredientsOriginal;
     int m_selectedIngredient = 0;
 
 public:

@@ -44,8 +44,6 @@ public:
     void deleteRecipe(int id);
     void deleteIngredient(int recipeId, int foodId);
 
-    // Updates
-    void updateRecipe(const Recipe& r);
 };
 
 #endif // DB_RECIPE_H

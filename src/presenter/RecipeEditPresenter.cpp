@@ -69,6 +69,7 @@ void RecipeEditPresenter::onDeleteIngredient()
 {
     spdlog::debug("RecipeEditPresenter::onDeleteIngredient");
     m_recipeEditModel->deleteIngredient();
+    m_recipeEditView->setRecipeIngredients(m_recipeEditModel->getIngredients());
 }
 
 void RecipeEditPresenter::onSelectIngredient(int id)

@@ -9,6 +9,8 @@
 // VIEW
 #include "view/ExplorerNotebook.h"
 #include "view/MainNotebook.h"
+#include "view/OutlookView.h"
+
 #include "view/FoodListView.h"
 #include "view/RecipeListView.h"
 #include "view/TopFoodView.h"
@@ -29,6 +31,7 @@
 #include "presenter/RecipePresenter.h"
 #include "presenter/RecipeEditPresenter.h"
 #include "presenter/FatSecretPresenter.h"
+#include "presenter/OutlookPresenter.h"
 
 // MODEL
 #include "model/DailyModel.h"
@@ -42,6 +45,7 @@
 #include "model/recipe/RecipeModel.h"
 #include "model/recipe/RecipeEditModel.h"
 #include "model/recipe/RecipeListModel.h"
+#include "model/OutlookModel.h"
 
 // DB
 #include "model/db/DbFood.h"
@@ -57,6 +61,10 @@ private:
     wxFrame *m_wxFrame;
     ExplorerNotebook m_explorerNotebook;
     MainNotebook m_mainNotebook;
+
+    OutlookView m_outlookView;
+    OutlookPresenter m_outlookPresenter;
+    OutlookModel m_outlookModel;
 
     TopFoodView m_topFoodView;
     TopRecipeView m_topRecipeView;

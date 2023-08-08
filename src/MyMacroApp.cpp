@@ -35,6 +35,9 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_fatSecretPresenter(&m_fatSecretView, &m_fatSecretWrapper),
     m_explorerNotebook(parent, &m_foodListView, &m_recipeListView),
     m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView),
+    m_outlookView(parent),
+    m_outlookPresenter(&m_outlookView, &m_outlookModel),
+    m_outlookModel(&m_dbDaily),
     m_wxFrame(parent)
 {
 }
@@ -47,22 +50,21 @@ void MyMacroApp::create() {
     spdlog::set_level(spdlog::level::info);
 
     spdlog::debug("MyMacroApp::run");
-    m_logWindow = new wxTextCtrl(m_wxFrame, wxID_ANY, wxEmptyString,
-                                 wxDefaultPosition, wxDefaultSize,
-                                 wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
-    m_logOld = wxLog::SetActiveTarget(new wxLogTextCtrl(m_logWindow));
+    // m_logWindow = new wxTextCtrl(m_wxFrame, wxID_ANY, wxEmptyString,
+    //                              wxDefaultPosition, wxDefaultSize,
+    //                              wxTE_READONLY | wxTE_MULTILINE | wxSUNKEN_BORDER);
+    // m_logOld = wxLog::SetActiveTarget(new wxLogTextCtrl(m_logWindow));
 
     // notify wxAUI which frame to use
     m_mgr.SetManagedWindow(m_wxFrame);
 
     // add the panes to the manager
     m_mgr.AddPane(m_explorerNotebook.createExplorerBookCtrl(), wxLEFT, wxT("Foods/Recipes"));
-    m_mgr.AddPane(m_logWindow, wxBOTTOM, wxT("Log Console"));
+    m_mgr.AddPane(m_outlookView.createRecipePanel(), wxBOTTOM, wxT("Last 7 Days"));
     m_mgr.AddPane(m_mainNotebook.createMainBookCtrl(), wxCENTER);
 
     // tell the manager to "commit" all the changes just made
     m_mgr.Update();
-    wxLogMessage("Macro App Running...");
 
 }
 
@@ -74,6 +76,5 @@ void MyMacroApp::postInit()
     m_recipePresenter.postInit();
     m_recipeListPresenter.postInit();
     m_dailyPresenter.postInit();
-
-
+    m_outlookPresenter.postInit();
 }

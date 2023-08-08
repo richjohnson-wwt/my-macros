@@ -171,7 +171,7 @@ void RecipeItemView::setRecipeIngredients(const std::vector<Ingredient> &ingredi
     int row = 0;
     for (auto i : ingredients)
     {
-        wxLogMessage("RecipePanel::update Add ingredient: %s", i.food.name);
+        spdlog::debug("RecipePanel::update Add ingredient: {}", i.food.name);
 
         m_recipeIngredientsListView->InsertItem(row, std::to_string(i.food.id));
         m_recipeIngredientsListView->SetItem(row, 1, i.food.name);

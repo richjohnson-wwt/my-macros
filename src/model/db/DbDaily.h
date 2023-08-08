@@ -9,6 +9,8 @@ public:
 
     DailyFood getDailyFood(const std::string& date);
     std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df);
+    std::vector<DailyFood> getDailyFoodByRange(const std::string& startDate, const std::string& endDate);
+    std::vector<XrefDailyFood> getXrefDailyFoodByDailyFood(const DailyFood& df);
     bool doesTodayExist(const std::string& today);
 
     void saveDailyFood(const DailyFood& df);

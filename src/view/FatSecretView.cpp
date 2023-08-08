@@ -184,7 +184,6 @@ void FatSecretView::onSearch(wxCommandEvent &event)
 {
     spdlog::debug("onSearch");
     const wxString searchText = m_searchText->GetValue();
-    wxLogMessage("FatSecretPanel::onSearch: %s", searchText);
     auto stdStringSearchText = std::string(searchText);
     m_fatSecretCallback->onSearch(stdStringSearchText);
 }
@@ -209,10 +208,10 @@ void FatSecretView::onGetResult(wxCommandEvent &event)
         long value;
         if (!number.ToLong(&value))
         {
-            wxLogMessage("Unable to convert string to long {}", number);
+            spdlog::error("Unable to convert string to long {}", std::string(number));
             return;
         }
-        wxLogMessage("Food ID: %s", foodId);
+        spdlog::debug("Food ID: {}", std::string(foodId));
         m_fatSecretCallback->onGetResult(std::string(foodId));
     }
 }

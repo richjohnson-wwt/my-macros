@@ -67,13 +67,13 @@ void FoodListView::onFoodSelChange(wxListEvent &event)
 void FoodListView::OnSearch(wxCommandEvent& event)
 {
     const wxString searchText = m_foodSearchTextCtrl->GetValue();
-    wxLogMessage("FoodListView::OnSearch: %s", searchText);
+    spdlog::info("FoodListView::OnSearch: {}", std::string(searchText));
     m_foodListCallback->onSearch(searchText.ToStdString());
 }
 
 void FoodListView::OnSearchCancel(wxCommandEvent& event)
 {
-    wxLogMessage("FoodListView::OnSearchCancel");
+    spdlog::debug("FoodListView::OnSearchCancel");
     m_foodListCallback->onSearchCancel();
 }
 

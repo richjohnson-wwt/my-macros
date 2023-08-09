@@ -19,7 +19,7 @@ wxPanel *TopRecipeView::createRecipePanel(wxNotebook *parent)
 
     wxWindow *page1 = m_recipeItemView->createRecipeItemPanel(m_recipeBookCtrl);
     
-    m_recipeBookCtrl->AddPage(page1, "Food Item", false, 0);
+    m_recipeBookCtrl->AddPage(page1, "Recipe Item", false, 0);
 
     notebookSizer->Add(m_recipeBookCtrl, 0, wxEXPAND, 0);
     topPanel->SetSizer(notebookSizer);

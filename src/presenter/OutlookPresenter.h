@@ -1,7 +1,7 @@
 #ifndef OUTLOOK_PRESENTER_H
 #define OUTLOOK_PRESENTER_H
 
-
+#include "TimeHelper.h"
 
 class IOutlookModel;
 class IOutlookView;
@@ -15,6 +15,11 @@ class OutlookPresenter : public IOutlookCallback {
 private:
     IOutlookModel *m_outlookModel;
     IOutlookView *m_outlookView;
+    TimeHelper m_timeHelper;
+
+    void populateCalorieSection();
+    void populateProgressWeightSection();
+    void populateGoalWeightSection();
 
 public:
     OutlookPresenter(IOutlookView *view, IOutlookModel *model);

@@ -126,8 +126,33 @@ CREATE TABLE daily_food (
     weight REAL
 );
 
-INSERT INTO daily_food VALUES (1, '2023-07-31', 0);
-INSERT INTO daily_food VALUES (2, '2023-07-31', 0);
+INSERT INTO daily_food VALUES (1, '2023-05-12', 0, 223.5);
+INSERT INTO daily_food VALUES (2, '2023-05-13', 0, 223.6);
+INSERT INTO daily_food VALUES (3, '2023-05-22', 0, 218.2);
+INSERT INTO daily_food VALUES (4, '2023-06-05', 0, 214.4);
+INSERT INTO daily_food VALUES (5, '2023-06-08', 0, 213.8);
+INSERT INTO daily_food VALUES (6, '2023-06-17', 0, 213.6);
+INSERT INTO daily_food VALUES (7, '2023-06-21', 0, 212.6);
+INSERT INTO daily_food VALUES (8, '2023-06-22', 0, 211.4);
+INSERT INTO daily_food VALUES (9, '2023-06-23', 0, 210.6);
+INSERT INTO daily_food VALUES (10, '2023-06-29', 0, 211.2);
+INSERT INTO daily_food VALUES (11, '2023-06-30', 0, 209.4);
+INSERT INTO daily_food VALUES (12, '2023-07-07', 0, 209.4);
+INSERT INTO daily_food VALUES (13, '2023-07-08', 0, 208.2);
+INSERT INTO daily_food VALUES (14, '2023-07-09', 0, 207.0);
+INSERT INTO daily_food VALUES (15, '2023-07-13', 0, 206.8);
+INSERT INTO daily_food VALUES (16, '2023-07-14', 0, 206.0);
+INSERT INTO daily_food VALUES (17, '2023-07-15', 0, 205.0);
+INSERT INTO daily_food VALUES (18, '2023-07-16', 0, 204.4);
+INSERT INTO daily_food VALUES (19, '2023-07-24', 0, 205.8);
+INSERT INTO daily_food VALUES (20, '2023-07-26', 0, 205.2);
+INSERT INTO daily_food VALUES (21, '2023-07-27', 0, 205.2);
+INSERT INTO daily_food VALUES (22, '2023-07-28', 0, 204.0);
+INSERT INTO daily_food VALUES (23, '2023-08-02', 0, 202.8);
+INSERT INTO daily_food VALUES (24, '2023-08-03', 0, 202.4);
+INSERT INTO daily_food VALUES (25, '2023-08-04', 0, 200.4);
+INSERT INTO daily_food VALUES (26, '2023-08-07', 0, 200.2);
+INSERT INTO daily_food VALUES (27, '2023-08-08', 0, 200.8);
 
 -- drop if table exists and create table xref_daily_food with primary key daily_food_id, food_id, multiplier
 DROP TABLE IF EXISTS xref_daily_foods;

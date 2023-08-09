@@ -13,6 +13,7 @@ public:
     std::chrono::seconds getSecondsBetweenDateAndToday(const std::chrono::system_clock::time_point &tpDate);
     std::string getFutureDateInWeeks(const std::chrono::system_clock::time_point &tpStartDate, long weeks);
     std::string getOneWeekAgo();
+    bool isDateInFuture(const std::string& date_str);
 
 
 };

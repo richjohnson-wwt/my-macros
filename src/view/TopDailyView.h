@@ -37,6 +37,7 @@ public:
     virtual int getActivityBonus() = 0;
     virtual double getWeight() = 0;
     virtual double getDailyMultiplier() = 0;
+    virtual void warnFutureDate() = 0;
 };
 
 class DailyView : public wxEvtHandler, public IDailyView {
@@ -87,6 +88,7 @@ public:
     int getActivityBonus() override;
     double getWeight() override;
     double getDailyMultiplier() override;
+    void warnFutureDate() override;
 
 };
 

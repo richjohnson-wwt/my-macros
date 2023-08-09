@@ -11,6 +11,7 @@
 
 class IDailyModel {
 public:
+    virtual void createDailyFood(const DailyFood& df) = 0;
     virtual void setSelectedDate(const std::string& date) = 0;
     virtual DailyFood getDailyFood() = 0;
     virtual std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df) = 0;
@@ -27,6 +28,7 @@ public:
     virtual int getGoalCarbGrams() = 0;
     virtual int getGoalCalories() = 0;
     virtual void loadGoal() = 0;
+    virtual bool doesDateExist(const std::string& date) = 0;
 
 };
 
@@ -45,6 +47,7 @@ public:
     DailyModel(DbDaily *dbDaily, DbGoal *dbGoal, IFoodListModel *foodListModel, IRecipeListModel *recipeListModel, IRecipeModel *recipeModel);
 
     void setSelectedDate(const std::string& date) override;
+    void createDailyFood(const DailyFood& df) override;
 
     DailyFood getDailyFood() override;
     std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df) override;
@@ -65,6 +68,7 @@ public:
     int getGoalCalories() override;
 
     void loadGoal() override;
+    bool doesDateExist(const std::string& date) override;
 
 
 };

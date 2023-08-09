@@ -9,6 +9,25 @@ std::string TimeHelper::getNow() {
     return ss.str();
 }
 
+bool TimeHelper::isDateInFuture(const std::string& date_str) {
+    // Parse the date string into a timestamp
+    std::tm tm = {};
+    std::stringstream ss(date_str);
+    ss >> std::get_time(&tm, "%Y-%m-%d");
+    std::chrono::system_clock::time_point dateStringTp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
+
+    // Check if the date is in the future
+    std::chrono::system_clock::time_point nowTp = std::chrono::system_clock::now();
+    std::chrono::duration<double> diff = dateStringTp - nowTp;
+    if (diff > std::chrono::seconds(0)) {
+        // The date is in the future
+        return true;
+    } else {
+        // The date is in the past or present
+        return false;
+    }
+}
+
 std::chrono::system_clock::time_point TimeHelper::getTimePointFromString(const std::string &dateString) {
     std::tm tm = {};
     std::stringstream ss(dateString);

@@ -35,6 +35,7 @@ Stories
 Backlog
 
     * Daily - Only create daily row if date is not in future
+    * Goal - Create Goal top-level notebook
 
 Completed
 

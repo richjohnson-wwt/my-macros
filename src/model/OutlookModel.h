@@ -13,6 +13,7 @@ public:
     virtual std::string getGoalStartDate() = 0;
     virtual DailyFood getDailyFoodByDate(const std::string& date) = 0;
     virtual long getGoalTargetWeight() = 0;
+    virtual long getBmr() = 0;
 
 };
 
@@ -29,6 +30,7 @@ public:
     std::string getGoalStartDate() override;
     DailyFood getDailyFoodByDate(const std::string& date) override;
     long getGoalTargetWeight() override;
+    long getBmr() override;
 
 };
 

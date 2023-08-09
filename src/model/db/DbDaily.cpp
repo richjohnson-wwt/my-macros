@@ -92,9 +92,7 @@ std::vector<XrefDailyFood> DbDaily::getXrefDailyFoodByDailyFood(const DailyFood&
     return xrefDailyFoods;
 }
 
-
-
-bool DbDaily::doesTodayExist(const std::string& today)
+bool DbDaily::doesDateExist(const std::string& today)
 {
     bool exists = false;
     try {

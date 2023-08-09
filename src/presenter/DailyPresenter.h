@@ -3,6 +3,7 @@
 
 #include "../model/DailyModel.h"
 #include "../view/TopDailyView.h"
+#include "TimeHelper.h"
 
 enum class DailyPage {
     FoodBook,
@@ -24,6 +25,7 @@ class DailyPresenter : public IDailyCallback {
 private:
     IDailyModel *m_dailyModel;
     IDailyView *m_dailyView;
+    TimeHelper m_timeHelper;
 
     void refresh();
 
@@ -38,6 +40,7 @@ private:
             int servings,
             const std::vector<Ingredient> &ingredients, 
             double multiplier = 1.0);
+    // bool is_future_date(const std::string& date_str);
 
 public:
     DailyPresenter(IDailyView *view, IDailyModel *model);

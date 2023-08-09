@@ -20,6 +20,7 @@ private:
     void populateCalorieSection();
     void populateProgressWeightSection();
     void populateGoalWeightSection();
+    void populateActualWeightLostLastWeek();
 
 public:
     OutlookPresenter(IOutlookView *view, IOutlookModel *model);

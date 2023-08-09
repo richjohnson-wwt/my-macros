@@ -24,3 +24,7 @@ DailyFood OutlookModel::getDailyFoodByDate(const std::string& date) {
 long OutlookModel::getGoalTargetWeight() {
     return m_dbGoal->getGoal().targetWeight;
 }
+
+long OutlookModel::getBmr() {
+    return m_dbGoal->getGoal().bmrCalories;
+}

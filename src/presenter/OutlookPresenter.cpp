@@ -18,6 +18,7 @@ void OutlookPresenter::postInit()
     populateCalorieSection();
     populateProgressWeightSection();
     populateGoalWeightSection();
+    populateActualWeightLostLastWeek();
 }
 
 void OutlookPresenter::populateCalorieSection()
@@ -36,6 +37,7 @@ void OutlookPresenter::populateCalorieSection()
         auto xdfs = m_outlookModel->getXrefDailyFoods(df);
         xrefDailyFoods.insert(xrefDailyFoods.end(), xdfs.begin(), xdfs.end());
     }
+    m_outlookView->setTotalExerciseCaloriesForWeek(exerciseCalories);
 
     int totalCalories = 0;
     for (auto x : xrefDailyFoods)
@@ -44,7 +46,16 @@ void OutlookPresenter::populateCalorieSection()
         totalCalories += x.calories;
     }
     m_outlookView->setTotalCaloriesForWeek(totalCalories);
-    m_outlookView->setTotalExerciseCaloriesForWeek(exerciseCalories);
+
+    auto bmr = m_outlookModel->getBmr();
+    auto sevenDaysCalories = bmr * 7;
+    auto sevenDaysCaloriesPlusExercise = sevenDaysCalories + exerciseCalories;
+    auto deficit = sevenDaysCaloriesPlusExercise - totalCalories;
+    double poundsLost = static_cast<double>(deficit) / 3500;
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(1) << poundsLost;
+    m_outlookView->setPredictedPoundsLost(ss.str());
+    
 }
 
 void OutlookPresenter::populateGoalWeightSection()
@@ -69,6 +80,33 @@ void OutlookPresenter::populateGoalWeightSection()
     std::string goalDate = m_timeHelper.getFutureDateInWeeks(m_timeHelper.getTimePointFromString(startDate), numberOfWeeksToGoal);
 
     m_outlookView->setTargetDate(goalDate);
+}
+
+void OutlookPresenter::populateActualWeightLostLastWeek()
+{
+    std::string sevenDaysAgo = m_timeHelper.getOneWeekAgo();
+    std::string endDate = m_timeHelper.getNow();
+
+    std::vector<DailyFood> dailyFoodsSinceStartDate = m_outlookModel->getDailyFoodsByRange(sevenDaysAgo, endDate);
+    double high = 0;
+    double low = 1000;
+    for (auto df : dailyFoodsSinceStartDate) {
+        if (df.weight > 0) {
+            std::cout << "weight: " << df.weight << std::endl;
+            if (df.weight > high) {
+                high = df.weight;
+            }
+            if (df.weight < low) {
+                low = df.weight;
+            }
+            std::cout << "\thigh: " << high << std::endl;
+            std::cout << "\tlow: " << low << std::endl;
+        }
+    }
+    double diff = high - low;
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(1) << diff;
+    m_outlookView->setActualPoundsLost(ss.str());
 }
 
 void OutlookPresenter::populateProgressWeightSection()

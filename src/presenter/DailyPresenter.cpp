@@ -15,12 +15,7 @@ void DailyPresenter::postInit()
     spdlog::debug("DailyPresenter::postInit() Populate today");
     m_dailyModel->loadGoal();
 
-    // Get todays date in iso format yyyy-mm-dd using std::chrono
-    auto now = std::chrono::system_clock::now();
-    auto in_time_t = std::chrono::system_clock::to_time_t(now);
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d");
-    std::string today = ss.str();
+    auto today = m_timeHelper.getNow();
     spdlog::info("DailyPresenter::postInit() today {}", today);
     m_dailyModel->setSelectedDate(today);
     refresh();
@@ -30,6 +25,20 @@ void DailyPresenter::onDateChanged(const std::string& date)
 {
     spdlog::debug("DailyPresenter::onDateChanged() {}", date);
     m_dailyModel->setSelectedDate(date);
+    if (m_dailyModel->doesDateExist(date)) {
+        spdlog::info("DailyPresenter::onDateChanged() {} does exist", date);
+    } else {
+        spdlog::info("DailyPresenter::onDateChanged() {} does not exist", date);
+        if (m_timeHelper.isDateInFuture(date)) {
+            spdlog::info("DailyPresenter::onDateChanged() {} is in the future", date);
+            m_dailyView->warnFutureDate();
+            return;
+        } else {
+            spdlog::info("DailyPresenter::onDateChanged() {} is NOT in the future", date);
+            DailyFood df = DailyFood{0, date, 0};
+            m_dailyModel->createDailyFood(df);
+        }
+    }
     refresh();
 }
 
@@ -108,15 +117,18 @@ void DailyPresenter::populateTotals(const std::vector<XrefDailyFood>& xdfVector)
 
     double percentFat = 0.0;
     if (totalFat > 0) {
-        percentFat = ((static_cast<double>(totalFat) * 9) / totalCalories) * 100;
+        auto fatCal = totalCalories - (totalCalories - (totalFat * 9));
+        percentFat = ((static_cast<double>(fatCal)) / totalCalories) * 100;
     }
     double percentProtein = 0.0;
     if (totalProtein > 0) {
-        percentProtein = ((static_cast<double>(totalProtein) * 4) / totalCalories) * 100;
+        auto proteinCal = totalCalories - (totalCalories - (totalProtein * 4));
+        percentProtein = ((static_cast<double>(proteinCal)) / totalCalories) * 100;
     }
     double percentCarb = 0.0;
     if (totalCarb > 0) {
-        percentCarb = ((static_cast<double>(totalCarb) * 4) / totalCalories) * 100;
+        auto carbCal = totalCalories - (totalCalories - (totalCarb * 4));
+        percentCarb = ((static_cast<double>(carbCal)) / totalCalories) * 100;
     }
     
     spdlog::debug("DailyPresenter::populateTotals percentFat:{} percentProtein: {}, percentCarb: {}", percentFat, percentProtein, percentCarb);

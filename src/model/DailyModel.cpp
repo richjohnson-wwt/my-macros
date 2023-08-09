@@ -12,17 +12,22 @@ DailyModel::DailyModel(DbDaily *dbDaily,
 {
 }
 
+void DailyModel::createDailyFood(const DailyFood& df)
+{
+    spdlog::debug("DailyModel::createDailyFood() {}", df.date);
+    m_dbDaily->saveDailyFood(df);
+}
+
+bool DailyModel::doesDateExist(const std::string& date)
+{
+    spdlog::debug("DailyModel::doesDateExist() {}", date);
+    return m_dbDaily->doesDateExist(date);
+}
+
 void DailyModel::setSelectedDate(const std::string& date)
 {
     spdlog::debug("DailyModel::setSelectedDate() {}", date);
     m_dateString = date;
-    if (m_dbDaily->doesTodayExist(date)){
-        spdlog::info("DailyModel::setSelectedDate() {} does exist", date);
-    } else {
-        spdlog::info("DailyModel::setSelectedDate() {} does not exist", date);
-        DailyFood df = DailyFood{0, date, 0};
-        m_dbDaily->saveDailyFood(df);
-    }
 }
 
 DailyFood DailyModel::getDailyFood()

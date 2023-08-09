@@ -52,9 +52,9 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     m_dailyFoodListView->AppendColumn("Id");
     m_dailyFoodListView->AppendColumn("Food Name");
     m_dailyFoodListView->AppendColumn("Calories");
-    m_dailyFoodListView->AppendColumn("Fat");
-    m_dailyFoodListView->AppendColumn("Protein");
-    m_dailyFoodListView->AppendColumn("Carb");
+    m_dailyFoodListView->AppendColumn("Fat g");
+    m_dailyFoodListView->AppendColumn("Protein g");
+    m_dailyFoodListView->AppendColumn("Carb g");
     m_dailyFoodListView->SetColumnWidth(0, 100);
     m_dailyFoodListView->SetColumnWidth(1, 320);
     m_dailyFoodListView->SetColumnWidth(2, 100);
@@ -71,9 +71,9 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     m_totalsListView = new wxListView(panel);
     m_totalsListView->AppendColumn("Food Name");
     m_totalsListView->AppendColumn("Calories");
-    m_totalsListView->AppendColumn("Fat");
-    m_totalsListView->AppendColumn("Protein");
-    m_totalsListView->AppendColumn("Carb");
+    m_totalsListView->AppendColumn("Fat g");
+    m_totalsListView->AppendColumn("Protein g");
+    m_totalsListView->AppendColumn("Carb g");
     m_totalsListView->SetColumnWidth(0, 320);
     m_totalsListView->SetColumnWidth(1, 100);
     m_totalsListView->SetColumnWidth(2, 100);
@@ -195,4 +195,8 @@ double DailyView::getWeight() {
 double DailyView::getDailyMultiplier() {
     spdlog::debug("DailyView::getDailyMultiplier");
     return std::stod(m_foodMultiplierTextCtrl->GetValue().ToStdString());
+}
+
+void DailyView::warnFutureDate() {
+    wxMessageBox("You cannot enter data for a future date", "Warning", wxICON_WARNING);
 }

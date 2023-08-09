@@ -23,33 +23,26 @@ wxPanel *RecipeEditView::createRecipeEditPanel(wxNotebook *parent)
     m_parent = parent;
     wxPanel *panel = new wxPanel(parent);
 
-    // createRightFoodItemPanel(topPanel);
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
-    // Create RecipeID as wxTextCtrl
-    m_recipeIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    m_recipeIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe ID:", m_recipeIdTextCtrl), 0, wxALL, 10);
 
-    // Recipe Name wxTextCtrl
     m_recipeNameTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Name:", m_recipeNameTextCtrl), 0, wxALL, 10);
 
-    // Recipe Description wxTextCtrl
     m_recipeDescriptionTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Description:", m_recipeDescriptionTextCtrl), 0, wxALL, 10);
 
-    // Recipe URL wxTextCtrl
-    m_recipeUrlHyperlinkCtrl = new wxHyperlinkCtrl(panel, wxID_ANY, "Recipe URL", "www.google.com", wxDefaultPosition, wxSize(300, 20));
+    m_recipeUrlTextCtrl = new wxTextCtrl(panel, wxID_ANY, "www.google.com", wxDefaultPosition, wxSize(300, 20));
     wxSizer *urlSizerRow = new wxBoxSizer(wxHORIZONTAL);
-    urlSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Url:", wxDefaultPosition, wxSize(200, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
-    urlSizerRow->Add(m_recipeUrlHyperlinkCtrl, 0, wxALIGN_LEFT);
+    urlSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Recipe URL:", wxDefaultPosition, wxSize(200, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
+    urlSizerRow->Add(m_recipeUrlTextCtrl, 0, wxALIGN_LEFT);
     topsizer->Add(urlSizerRow, 0, wxALL, 10);
 
-    // Recipe Servings wxTextCtrl
     m_recipeServingsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20));
     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Servings:", m_recipeServingsTextCtrl), 0, wxALL, 10);
 
-    // Recipe Instructions wxTextCtrl
     m_recipeInstructionsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Instructions:", m_recipeInstructionsTextCtrl), 0, wxALL, 10);
 
@@ -62,7 +55,6 @@ wxPanel *RecipeEditView::createRecipeEditPanel(wxNotebook *parent)
     ingredientButtonsSizer->Add(m_recipeIngredientMultiplierTextCtrl, 0, wxALL, 10);
     topsizer->Add(ingredientButtonsSizer, 0, wxALL, 10);
 
-    // Recipe Ingredients - List Ctrl
     m_recipeIngredientsListView = new wxListView(panel);
     m_recipeIngredientsListView->AppendColumn("ID");
     m_recipeIngredientsListView->AppendColumn("Name");
@@ -94,78 +86,6 @@ wxPanel *RecipeEditView::createRecipeEditPanel(wxNotebook *parent)
     spdlog::debug("RecipeEditView::createRecipePanel bye");
     return panel;
 }
-
-
-// void RecipeEditView::createRightFoodItemPanel(wxPanel *panel)
-// {
-//     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
-
-//     // Create RecipeID as wxTextCtrl
-//     m_recipeIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
-//     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe ID:", m_recipeIdTextCtrl), 0, wxALL, 10);
-
-//     // Recipe Name wxTextCtrl
-//     m_recipeNameTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
-//     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Name:", m_recipeNameTextCtrl), 0, wxALL, 10);
-
-//     // Recipe Description wxTextCtrl
-//     m_recipeDescriptionTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
-//     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Description:", m_recipeDescriptionTextCtrl), 0, wxALL, 10);
-
-//     // Recipe URL wxTextCtrl
-//     m_recipeUrlHyperlinkCtrl = new wxHyperlinkCtrl(panel, wxID_ANY, "Recipe URL", "www.google.com", wxDefaultPosition, wxSize(300, 20));
-//     wxSizer *urlSizerRow = new wxBoxSizer(wxHORIZONTAL);
-//     urlSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Url:", wxDefaultPosition, wxSize(200, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
-//     urlSizerRow->Add(m_recipeUrlHyperlinkCtrl, 0, wxALIGN_LEFT);
-//     topsizer->Add(urlSizerRow, 0, wxALL, 10);
-
-//     // Recipe Servings wxTextCtrl
-//     m_recipeServingsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20));
-//     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Servings:", m_recipeServingsTextCtrl), 0, wxALL, 10);
-
-//     // Recipe Instructions wxTextCtrl
-//     m_recipeInstructionsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
-//     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Instructions:", m_recipeInstructionsTextCtrl), 0, wxALL, 10);
-
-//     wxBoxSizer *ingredientButtonsSizer = new wxBoxSizer(wxHORIZONTAL);
-//     m_addRecipeIngredientButton = new wxButton(panel, -1, _T("Add Food With Multiplier"), wxDefaultPosition, wxDefaultSize, 0);
-//     m_addRecipeIngredientButton->Bind(wxEVT_BUTTON, &RecipeEditView::onAddIngredient, this);
-
-//     m_recipeIngredientMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20));
-//     ingredientButtonsSizer->Add(m_addRecipeIngredientButton, 0, wxALL, 10);
-//     ingredientButtonsSizer->Add(m_recipeIngredientMultiplierTextCtrl, 0, wxALL, 10);
-//     topsizer->Add(ingredientButtonsSizer, 0, wxALL, 10);
-
-//     // Recipe Ingredients - List Ctrl
-//     m_recipeIngredientsListView = new wxListView(panel);
-//     m_recipeIngredientsListView->AppendColumn("ID");
-//     m_recipeIngredientsListView->AppendColumn("Name");
-//     m_recipeIngredientsListView->AppendColumn("Qty");
-//     m_recipeIngredientsListView->AppendColumn("Unit");
-//     m_recipeIngredientsListView->AppendColumn("Multiplier");
-//     m_recipeIngredientsListView->SetColumnWidth(0, 40);
-//     m_recipeIngredientsListView->SetColumnWidth(1, 320);
-//     m_recipeIngredientsListView->SetColumnWidth(2, 100);
-//     m_recipeIngredientsListView->SetColumnWidth(3, 100);
-//     m_recipeIngredientsListView->SetColumnWidth(4, 100);
-//     m_recipeIngredientsListView->Bind(wxEVT_LIST_ITEM_SELECTED, &RecipeEditView::onIngredientSelChange, this);
-//     topsizer->Add(m_recipeIngredientsListView, 5, wxEXPAND | wxALL, 10);
-
-//     m_deleteRecipeIngredientButton = new wxButton(panel, -1, _T("Delete Selected Ingredient"), wxDefaultPosition, wxDefaultSize, 0);
-//     m_deleteRecipeIngredientButton->Bind(wxEVT_BUTTON, &RecipeEditView::onDeleteIngredient, this);
-//     topsizer->Add(m_deleteRecipeIngredientButton, 1, wxALL, 10);
-
-//     wxBoxSizer *recipeButtonsSizer = new wxBoxSizer(wxHORIZONTAL);
-//     m_recipeSaveButton = new wxButton(panel, -1, _T("Save"), wxDefaultPosition, wxDefaultSize, 0);
-//     m_recipeSaveButton->Bind(wxEVT_BUTTON, &RecipeEditView::onSaveRecipe, this);
-//     m_recipeCancelNewButton = new wxButton(panel, -1, _T("Cancel"), wxDefaultPosition, wxDefaultSize, 0);
-//     m_recipeCancelNewButton->Bind(wxEVT_BUTTON, &RecipeEditView::onCancelNewRecipe, this);
-//     recipeButtonsSizer->Add(m_recipeSaveButton, 0, wxALL, 10);
-//     recipeButtonsSizer->Add(m_recipeCancelNewButton, 0, wxALL, 10);
-//     topsizer->Add(recipeButtonsSizer, 0, wxALL, 10);
-
-//     panel->SetSizer(topsizer);
-// }
 
 void RecipeEditView::initNewPage(bool isNew) {
     if (isNew) {
@@ -248,9 +168,7 @@ void RecipeEditView::setRecipeDescription(const std::string &description)
 
 void RecipeEditView::setRecipeUrl(const std::string &url)
 {
-    m_recipeUrlHyperlinkCtrl->SetURL(url);
-    m_recipeUrlHyperlinkCtrl->SetFont(wxFont(14, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
-    m_recipeUrlHyperlinkCtrl->SetForegroundColour(wxColor(255, 255, 255));
+    m_recipeUrlTextCtrl->SetValue(url);
 }
 
 void RecipeEditView::setRecipeServings(const std::string &servings)
@@ -302,7 +220,7 @@ std::string RecipeEditView::getRecipeDescription()
 
 std::string RecipeEditView::getRecipeUrl()
 {
-    return m_recipeUrlHyperlinkCtrl->GetURL().ToStdString();
+    return m_recipeUrlTextCtrl->GetValue().ToStdString();
 }
 
 std::string RecipeEditView::getRecipeServings()

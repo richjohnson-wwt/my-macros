@@ -8,8 +8,6 @@
 #include <sstream>
 #include <spdlog/spdlog.h>
 
-
-
 OutlookPresenter::OutlookPresenter(IOutlookView *view, IOutlookModel *model) : m_outlookView(view), m_outlookModel(model)
 {
     
@@ -24,17 +22,9 @@ void OutlookPresenter::postInit()
 
 void OutlookPresenter::populateCalorieSection()
 {
-    std::chrono::system_clock::time_point today = std::chrono::system_clock::now();
-    auto today_time_t = std::chrono::system_clock::to_time_t(today);
-    std::stringstream ss;
-    ss << std::put_time(std::localtime(&today_time_t), "%Y-%m-%d");
-    std::string endDate = ss.str();
+    std::string endDate = m_timeHelper.getNow();
 
-    std::chrono::system_clock::time_point oneWeekAgo = today - std::chrono::hours(7 * 24);
-    auto one_week_ago_time_t = std::chrono::system_clock::to_time_t(oneWeekAgo);
-    std::stringstream ss2;
-    ss2 << std::put_time(std::localtime(&one_week_ago_time_t), "%Y-%m-%d");
-    std::string startDate = ss2.str();
+    std::string startDate = m_timeHelper.getOneWeekAgo();
 
     spdlog::info("OutlookPresenter::postInit() one week ago {} to {}", startDate, endDate);
     std::vector<DailyFood> dailyFoods = m_outlookModel->getDailyFoodsByRange(startDate, endDate);
@@ -83,30 +73,44 @@ void OutlookPresenter::populateGoalWeightSection()
 
 void OutlookPresenter::populateProgressWeightSection()
 {
+    spdlog::info("OutlookPresenter::populateProgressWeightSection()");
     std::string endDate = m_timeHelper.getNow();
 
     auto startDate = m_outlookModel->getGoalStartDate();
     auto tpStartDate = m_timeHelper.getTimePointFromString(startDate);
 
     auto secondsElapsed = m_timeHelper.getSecondsBetweenDateAndToday(tpStartDate);
+    spdlog::info("OutlookPresenter::populateProgressWeightSection() secondsElapsed: {}", secondsElapsed.count());
     auto daysElapsed = secondsElapsed.count() / 60 / 60 / 24;
+    spdlog::info("OutlookPresenter::populateProgressWeightSection() daysElapsed: {}", daysElapsed);
 
     std::vector<DailyFood> dailyFoodsSinceStartDate = m_outlookModel->getDailyFoodsByRange(startDate, endDate);
-    std::cout << "Point size: " << dailyFoodsSinceStartDate.size() << std::endl;
+    spdlog::info("OutlookPresenter::populateProgressWeightSection() dailyFoodsSinceStartDate: {}", dailyFoodsSinceStartDate.size());
     std::vector<double> weights;
     for (auto df : dailyFoodsSinceStartDate) {
-        weights.push_back(df.weight);
+        if (df.weight > 0) {
+            spdlog::debug("OutlookPresenter::populateProgressWeightSection() adding weight: {}", df.weight);
+            weights.push_back(df.weight);
+        }
     }
 
     WeightLossProjector weightLossProjector(weights);
     weightLossProjector.calculate();
+
+    auto fooSlope = weightLossProjector.getSlope();
+    auto barIntercept = weightLossProjector.getIntercept();
+
+    spdlog::info("OutlookPresenter::populateProgressWeightSection() fooSlope: {} barIntercept: {}", fooSlope, barIntercept);
     long numberOfWeeksToGoal = weightLossProjector.numberOfWeeksToGoal(m_outlookModel->getGoalTargetWeight());
+    spdlog::info("OutlookPresenter::populateProgressWeightSection() numberOfWeeksToGoal: {}", numberOfWeeksToGoal);
     double percentage = static_cast<double>(dailyFoodsSinceStartDate.size()) / daysElapsed;
     double numberOfWeeksNormalized = static_cast<double>(numberOfWeeksToGoal) / percentage;
+    spdlog::info("OutlookPresenter::populateProgressWeightSection() numberOfWeeksNormalized: {}", numberOfWeeksNormalized);
 
     long numberOfWeeksNormalizedLong = static_cast<long>(numberOfWeeksNormalized);
 
     std::string goalDate = m_timeHelper.getFutureDateInWeeks(tpStartDate, numberOfWeeksNormalizedLong);
+    spdlog::info("OutlookPresenter::populateProgressWeightSection() goalDate: {}", goalDate);
 
     m_outlookView->setProgressDate(goalDate);
 }

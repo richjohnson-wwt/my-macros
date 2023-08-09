@@ -151,6 +151,7 @@ void RecipeItemView::setRecipeDescription(const std::string &description)
 void RecipeItemView::setRecipeUrl(const std::string &url)
 {
     m_recipeUrlHyperlinkCtrl->SetURL(url);
+    m_recipeUrlHyperlinkCtrl->SetLabel(url);
     m_recipeUrlHyperlinkCtrl->SetFont(wxFont(14, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
     m_recipeUrlHyperlinkCtrl->SetForegroundColour(wxColor(255, 255, 255));
 }

@@ -27,3 +27,11 @@ std::string TimeHelper::getFutureDateInWeeks(const std::chrono::system_clock::ti
     ss << std::put_time(std::localtime(&normalizedTime_t), "%Y-%m-%d");
     return ss.str();
 }
+
+std::string TimeHelper::getOneWeekAgo() {
+    std::chrono::system_clock::time_point oneWeekAgo = std::chrono::system_clock::now() - std::chrono::hours(7 * 24);
+    auto one_week_ago_time_t = std::chrono::system_clock::to_time_t(oneWeekAgo);
+    std::stringstream ss;
+    ss << std::put_time(std::localtime(&one_week_ago_time_t), "%Y-%m-%d");
+    return ss.str();
+}

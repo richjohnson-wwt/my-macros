@@ -12,6 +12,7 @@ public:
     std::chrono::system_clock::time_point getTimePointFromString(const std::string &dateString);
     std::chrono::seconds getSecondsBetweenDateAndToday(const std::chrono::system_clock::time_point &tpDate);
     std::string getFutureDateInWeeks(const std::chrono::system_clock::time_point &tpStartDate, long weeks);
+    std::string getOneWeekAgo();
 
 
 };

@@ -32,6 +32,11 @@ DB
 
 Stories
 -----
+Backlog
+
+    * Daily - Only create daily row if date is not in future
+
+Completed
 
     * X Explorer - Add popularity to Food list
     * X Explorer - Food/Recipe Search (filter)
@@ -44,6 +49,6 @@ Stories
     * X Recipe - Delete
     * X Daily - Auto-create Today Date DailyFood in Db
     * X Daily - Add Daily Food
-    * Macro - 3rd panel macro breakdown
+    * X Macro - 3rd panel macro breakdown
     * X Food - StaticText for FoodItem. Use FoodItemEdit and FoodItemEditView panels
     * X Recipe - StaticText for RecipeItem

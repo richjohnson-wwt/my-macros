@@ -97,10 +97,10 @@ void DailyModel::loadGoal() {
 
 int DailyModel::getGoalFatGrams()
 {
-    spdlog::info("DailyModel::getGoalFatGrams() fatPercent: {} bmrCalories: {}", m_goal.fatPercent, m_goal.bmrCalories);
+    spdlog::debug("DailyModel::getGoalFatGrams() fatPercent: {} bmrCalories: {}", m_goal.fatPercent, m_goal.bmrCalories);
     int fatCalories = (m_goal.fatPercent * m_goal.bmrCalories) / 100;
     int grams = fatCalories / 9;
-    spdlog::info("DailyModel::getGoalFatGrams()fatCalories: {} grams: {}", fatCalories, grams);
+    spdlog::debug("DailyModel::getGoalFatGrams()fatCalories: {} grams: {}", fatCalories, grams);
     return grams;
 }
 
@@ -108,7 +108,7 @@ int DailyModel::getGoalProteinGrams()
 {
     int proteinCalories = m_goal.proteinPercent * m_goal.bmrCalories / 100;
     int grams = proteinCalories / 4;
-    spdlog::info("DailyModel::getGoalProteinGrams() {}", grams);
+    spdlog::debug("DailyModel::getGoalProteinGrams() {}", grams);
     return grams;
 }
 
@@ -116,12 +116,12 @@ int DailyModel::getGoalCarbGrams()
 {
     int carbCalories = m_goal.carbPercent * m_goal.bmrCalories / 100;
     int grams = carbCalories / 4;
-    spdlog::info("DailyModel::getGoalCarbGrams() {}", grams);
+    spdlog::debug("DailyModel::getGoalCarbGrams() {}", grams);
     return grams;
 }
 
 int DailyModel::getGoalCalories()
 {
-    spdlog::info("DailyModel::getGoalCalories() {}", m_goal.bmrCalories);
+    spdlog::debug("DailyModel::getGoalCalories() {}", m_goal.bmrCalories);
     return m_goal.bmrCalories;
 }

@@ -37,12 +37,10 @@ private:
     IRecipeEditCallback *m_recipeEditCallback;
     wxNotebook *m_parent;
 
-    // void createRightFoodItemPanel(wxPanel *panel);
-
     wxTextCtrl *m_recipeIdTextCtrl;
     wxTextCtrl *m_recipeNameTextCtrl;
     wxTextCtrl *m_recipeDescriptionTextCtrl;
-    wxHyperlinkCtrl *m_recipeUrlHyperlinkCtrl;
+    wxTextCtrl *m_recipeUrlTextCtrl;
     wxTextCtrl *m_recipeServingsTextCtrl;
     wxTextCtrl *m_recipeInstructionsTextCtrl;
     wxListView *m_recipeIngredientsListView;

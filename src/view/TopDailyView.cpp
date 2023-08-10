@@ -69,6 +69,7 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     topsizer->Add(m_deleteDailyFoodButton, 0, wxALL, 10);
 
     m_totalsListView = new wxListView(panel);
+    m_totalsListView->SetMaxSize(wxSize(2000, 100));
     m_totalsListView->AppendColumn("Food Name");
     m_totalsListView->AppendColumn("Calories");
     m_totalsListView->AppendColumn("Fat g");
@@ -79,7 +80,7 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     m_totalsListView->SetColumnWidth(2, 100);
     m_totalsListView->SetColumnWidth(3, 100);
     m_totalsListView->SetColumnWidth(4, 100);
-    topsizer->Add(m_totalsListView, 1, wxEXPAND | wxALL, 10);
+    topsizer->Add(m_totalsListView, 1, wxEXPAND | wxRIGHT, 10);
 
     wxBoxSizer *percentsSizer = new wxBoxSizer(wxHORIZONTAL);
     percentsSizer->Add(new wxStaticText(panel, wxID_ANY, "Percent Fat"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);

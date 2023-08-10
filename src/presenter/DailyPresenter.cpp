@@ -1,13 +1,13 @@
 #include "DailyPresenter.h"
+#include "TimeHelper.h"
 
 #include <spdlog/spdlog.h>
 #include <chrono>
 #include <iomanip>
 #include <sstream>
 
-DailyPresenter::DailyPresenter(IDailyView *view, IDailyModel *model)
-: m_dailyModel(model), m_dailyView(view)
-{
+DailyPresenter::DailyPresenter(IDailyView *view, IDailyModel *model, TimeHelper *timeHelper)
+: m_dailyModel(model), m_dailyView(view), m_timeHelper(timeHelper) {
 }
 
 void DailyPresenter::postInit()
@@ -15,8 +15,9 @@ void DailyPresenter::postInit()
     spdlog::debug("DailyPresenter::postInit() Populate today");
     m_dailyModel->loadGoal();
 
-    auto today = m_timeHelper.getNow();
+    auto today = m_timeHelper->getNow();
     spdlog::info("DailyPresenter::postInit() today {}", today);
+    onDateChanged(today);
     m_dailyModel->setSelectedDate(today);
     refresh();
 }
@@ -29,7 +30,7 @@ void DailyPresenter::onDateChanged(const std::string& date)
         spdlog::info("DailyPresenter::onDateChanged() {} does exist", date);
     } else {
         spdlog::info("DailyPresenter::onDateChanged() {} does not exist", date);
-        if (m_timeHelper.isDateInFuture(date)) {
+        if (m_timeHelper->isDateInFuture(date)) {
             spdlog::info("DailyPresenter::onDateChanged() {} is in the future", date);
             m_dailyView->warnFutureDate();
             return;

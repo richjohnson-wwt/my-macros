@@ -63,7 +63,6 @@ void DailyModel::addXrefDailyFood(const XrefDailyFood &xdf)
 {
     spdlog::debug("DailyModel::addDailyFood()");
     m_dbDaily->addXrefDailyFood(xdf);
-    
 }
 
 Food DailyModel::getFood()

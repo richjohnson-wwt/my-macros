@@ -5,27 +5,25 @@
 
 class IOutlookModel;
 class IOutlookView;
+class TimeHelper;
 
-class IOutlookCallback {
-public:
-
-};
-
-class OutlookPresenter : public IOutlookCallback {
+class OutlookPresenter {
 private:
     IOutlookModel *m_outlookModel;
     IOutlookView *m_outlookView;
-    TimeHelper m_timeHelper;
+    TimeHelper *m_timeHelper;
+
+    
+
+public:
+    OutlookPresenter(IOutlookView *view, IOutlookModel *model, TimeHelper *timeHelper);
+
+    void postInit();
 
     void populateCalorieSection();
     void populateProgressWeightSection();
     void populateGoalWeightSection();
     void populateActualWeightLostLastWeek();
-
-public:
-    OutlookPresenter(IOutlookView *view, IOutlookModel *model);
-
-    void postInit();
 };
 
 #endif // OUTLOOK_PRESENTER_H

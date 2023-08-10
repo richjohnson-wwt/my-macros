@@ -28,7 +28,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_recipeEditView(&m_recipeEditPresenter),
     m_recipeEditPresenter(&m_recipeEditView, &m_recipeEditModel, &m_recipeListModel, &m_recipePresenter),
     m_dailyModel(&m_dbDaily, &m_dbGoal, &m_foodListModel, &m_recipeListModel, &m_recipeModel),
-    m_dailyPresenter(&m_dailyView, &m_dailyModel), 
+    m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_timeHelper), 
     m_dailyView(&m_dailyPresenter),
     m_fatSecretModel(&m_dbFood),
     m_fatSecretWrapper(&m_fatSecretModel),
@@ -37,7 +37,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_explorerNotebook(parent, &m_foodListView, &m_recipeListView),
     m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView),
     m_outlookView(parent),
-    m_outlookPresenter(&m_outlookView, &m_outlookModel),
+    m_outlookPresenter(&m_outlookView, &m_outlookModel, &m_timeHelper),
     m_outlookModel(&m_dbDaily, &m_dbGoal),
     m_wxFrame(parent)
 {
@@ -57,8 +57,18 @@ void MyMacroApp::create() {
 
     // add the panes to the manager
     m_mgr.AddPane(m_explorerNotebook.createExplorerBookCtrl(), wxLEFT, wxT("Foods/Recipes"));
-    m_mgr.AddPane(m_outlookView.createRecipePanel(), wxBOTTOM, wxT("Progress"));
+    auto outlookPanel = m_outlookView.createRecipePanel();
+    m_mgr.AddPane(outlookPanel, wxBOTTOM, wxT("Progress"));
     m_mgr.AddPane(m_mainNotebook.createMainBookCtrl(), wxCENTER);
+
+    // hack
+    m_mgr.GetPane(outlookPanel).MinSize(-1, 200);
+    m_mgr.GetPane(outlookPanel).Fixed();
+    m_mgr.Update();
+
+    //now make resizable again
+    m_mgr.GetPane(outlookPanel).Resizable();
+    m_mgr.Update();
 
     // tell the manager to "commit" all the changes just made
     m_mgr.Update();

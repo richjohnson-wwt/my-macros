@@ -58,12 +58,11 @@ void RecipeItemView::createRightFoodItemPanel(wxPanel *panel)
     topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Description:", m_recipeDescriptionTextCtrl), 0, wxALL, 10);
 
     // Recipe URL wxTextCtrl
-    m_recipeUrlHyperlinkCtrl = new wxHyperlinkCtrl(panel, wxID_ANY, "Recipe URL", "www.google.com", wxDefaultPosition, wxSize(300, 20));
+    m_recipeUrlHyperlinkCtrl = new wxHyperlinkCtrl(panel, wxID_ANY, "Recipe URL", "www.google.com", wxDefaultPosition, wxSize(300, 20), wxHL_ALIGN_LEFT);
     wxSizer *urlSizerRow = new wxBoxSizer(wxHORIZONTAL);
-    urlSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Url:", wxDefaultPosition, wxSize(200, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
+    urlSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Url:", wxDefaultPosition, wxSize(200, 20)), 0, wxALIGN_LEFT, 5);
     urlSizerRow->Add(m_recipeUrlHyperlinkCtrl, 0, wxALIGN_LEFT);
     topsizer->Add(urlSizerRow, 0, wxALL, 10);
-    // topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe URL:", m_recipeUrlHyperlinkCtrl), 0, wxALL, 10);
 
     // Recipe Servings wxTextCtrl
     m_recipeServingsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
@@ -92,7 +91,6 @@ void RecipeItemView::createRightFoodItemPanel(wxPanel *panel)
     m_recipeDeleteButton->Bind(wxEVT_BUTTON, &RecipeItemView::onDeleteRecipe, this);
     m_recipeNewButton = new wxButton(panel, -1, _T("New"), wxDefaultPosition, wxDefaultSize, 0);
     m_recipeNewButton->Bind(wxEVT_BUTTON, &RecipeItemView::onNewRecipe, this);
-
     m_recipeEditButton = new wxButton(panel, -1, _T("Edit"), wxDefaultPosition, wxDefaultSize, 0);
     m_recipeEditButton->Bind(wxEVT_BUTTON, &RecipeItemView::onEditRecipe, this);
     recipeButtonsSizer->Add(m_recipeDeleteButton, 0, wxALL, 10);

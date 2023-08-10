@@ -32,6 +32,7 @@
 #include "presenter/RecipeEditPresenter.h"
 #include "presenter/FatSecretPresenter.h"
 #include "presenter/OutlookPresenter.h"
+#include "presenter/TimeHelper.h"
 
 // MODEL
 #include "model/DailyModel.h"
@@ -60,6 +61,7 @@ private:
     wxLog *m_logOld;
     wxTextCtrl *m_logWindow;
     wxFrame *m_wxFrame;
+    TimeHelper m_timeHelper;
     ExplorerNotebook m_explorerNotebook;
     MainNotebook m_mainNotebook;
 

@@ -34,22 +34,22 @@ Stories
 -----
 Backlog
 
-    * Daily - Only create daily row if date is not in future
     * Goal - Create Goal top-level notebook
 
 Completed
 
-    * X Explorer - Add popularity to Food list
-    * X Explorer - Food/Recipe Search (filter)
-    * X Recipe - Add Build Recipe
-    * X Food - Add Unit ComboBox
-    * X Food - FoodItem Add Food manually
-    * X Food - Update Food manually
-    * X Recipe - Update Recipe
-    * X Food - Delete
-    * X Recipe - Delete
-    * X Daily - Auto-create Today Date DailyFood in Db
-    * X Daily - Add Daily Food
-    * X Macro - 3rd panel macro breakdown
-    * X Food - StaticText for FoodItem. Use FoodItemEdit and FoodItemEditView panels
-    * X Recipe - StaticText for RecipeItem
+    * Explorer - Add popularity to Food list
+    * Explorer - Food/Recipe Search (filter)
+    * Recipe - Add Build Recipe
+    * Food - Add Unit ComboBox
+    * Food - FoodItem Add Food manually
+    * Food - Update Food manually
+    * Recipe - Update Recipe
+    * Food - Delete
+    * Recipe - Delete
+    * Daily - Auto-create Today Date DailyFood in Db
+    * Daily - Add Daily Food
+    * Macro - 3rd panel macro breakdown
+    * Food - StaticText for FoodItem. Use FoodItemEdit and FoodItemEditView panels
+    * Recipe - StaticText for RecipeItem
+    * Daily - Only create daily row if date is not in future

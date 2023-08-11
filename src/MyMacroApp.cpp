@@ -37,7 +37,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_explorerNotebook(parent, &m_foodListView, &m_recipeListView),
     m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView),
     m_outlookView(parent),
-    m_outlookPresenter(&m_outlookView, &m_outlookModel, &m_timeHelper),
+    m_outlookPresenter(&m_outlookView, &m_outlookModel, &m_timeHelper, &m_dbDaily),
     m_outlookModel(&m_dbDaily, &m_dbGoal),
     m_wxFrame(parent)
 {

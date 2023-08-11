@@ -7,6 +7,17 @@ DbDaily::DbDaily(const std::string &dbfile): DbBase(dbfile)
 {
 }
 
+void DbDaily::attach(IDbDailyObserver *observer) {
+    m_observers.push_back(observer);
+}
+
+void DbDaily::notify() {
+    for (auto observer : m_observers)
+    {
+        observer->update();
+    }
+}
+
 DailyFood DbDaily::getDailyFood(const std::string& date) {
     DailyFood dailyFood;
     try {
@@ -118,6 +129,7 @@ void DbDaily::saveDailyFood(const DailyFood& df)
     } catch (SQLite::Exception &e) {
         std::cerr << e.what() << std::endl;
     }
+    notify();
 }
 
 void DbDaily::updateDailyFood(const DailyFood& df)
@@ -131,6 +143,7 @@ void DbDaily::updateDailyFood(const DailyFood& df)
     } catch (SQLite::Exception &e) {
         std::cerr << e.what() << std::endl;
     }
+    notify();
 }
 
 void DbDaily::addXrefDailyFood(const XrefDailyFood& xdf)
@@ -147,6 +160,7 @@ void DbDaily::addXrefDailyFood(const XrefDailyFood& xdf)
     } catch (SQLite::Exception &e) {
         std::cerr << e.what() << std::endl;
     }
+    notify();
 }
 
 void DbDaily::deleteXrefDailyFood(int id)
@@ -158,4 +172,5 @@ void DbDaily::deleteXrefDailyFood(int id)
     } catch (SQLite::Exception &e) {
         std::cerr << e.what() << std::endl;
     }
+    notify();
 }

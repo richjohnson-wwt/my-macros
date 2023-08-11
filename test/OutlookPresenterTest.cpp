@@ -14,8 +14,9 @@ TEST_CASE("OutlookPresenter")
     Mock<IOutlookView> mockView;
     Mock<IOutlookModel> mockModel;
     Mock<TimeHelper> mockTimeHelper;
+    Mock<IDbDailySubject> mockDbDailySubject;
 
-    OutlookPresenter testObject(&mockView.get(), &mockModel.get(), &mockTimeHelper.get());
+    OutlookPresenter testObject(&mockView.get(), &mockModel.get(), &mockTimeHelper.get(), &mockDbDailySubject.get());
     SECTION("populateCalorieSection empty foods")
     {
         std::vector<std::string> values;

@@ -8,14 +8,26 @@
 #include <sstream>
 #include <spdlog/spdlog.h>
 
-OutlookPresenter::OutlookPresenter(IOutlookView *view, IOutlookModel *model, TimeHelper *timeHelper) 
+OutlookPresenter::OutlookPresenter(
+    IOutlookView *view, 
+    IOutlookModel *model, 
+    TimeHelper *timeHelper, 
+    IDbDailySubject *dailySubject) 
 : m_outlookView(view), m_outlookModel(model), m_timeHelper(timeHelper)
 {
-    
+    dailySubject->attach(this);
+}
+
+void OutlookPresenter::update() {
+    refresh();
 }
 
 void OutlookPresenter::postInit()
 {
+    refresh();
+}
+
+void OutlookPresenter::refresh() {
     populateCalorieSection();
     populateProgressWeightSection();
     populateGoalWeightSection();

@@ -3,9 +3,26 @@
 
 #include "DbBase.h"
 
-class DbDaily : public DbBase {
+class IDbDailyObserver {
+public:
+    virtual void update() = 0;
+};
+
+class IDbDailySubject {
+public:
+    virtual void attach(IDbDailyObserver* observer) = 0;
+    virtual void notify() = 0;
+};
+
+class DbDaily : public DbBase, public IDbDailySubject {
+private:
+    std::vector<IDbDailyObserver*> m_observers;
+    void notify();
+
 public:
     DbDaily(const std::string& dbfile);
+
+    void attach(IDbDailyObserver* observer);
 
     DailyFood getDailyFood(const std::string& date);
     std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df);

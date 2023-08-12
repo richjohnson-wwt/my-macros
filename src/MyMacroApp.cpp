@@ -3,10 +3,10 @@
 #include <spdlog/spdlog.h>
 
 MyMacroApp::MyMacroApp(wxFrame *parent)
-: m_dbFood("../db/my-macro.sqlite3"),
-    m_dbRecipe("../db/my-macro.sqlite3", &m_dbFood),
-    m_dbDaily("../db/my-macro.sqlite3"),
-    m_dbGoal("../db/my-macro.sqlite3"),
+: m_dbFood("/Users/johnsori/Documents/code/cpp/MyMacroMvvm/db/my-macro.sqlite3"),
+    m_dbRecipe("/Users/johnsori/Documents/code/cpp/MyMacroMvvm/db/my-macro.sqlite3", &m_dbFood),
+    m_dbDaily("/Users/johnsori/Documents/code/cpp/MyMacroMvvm/db/my-macro.sqlite3"),
+    m_dbGoal("/Users/johnsori/Documents/code/cpp/MyMacroMvvm/db/my-macro.sqlite3"),
     m_foodModel(&m_dbFood, &m_foodListModel, &m_foodCommonModel), 
     m_foodEditModel(&m_dbFood, &m_foodListModel, &m_foodCommonModel), 
     m_foodListModel(&m_dbFood),
@@ -27,7 +27,7 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_recipeItemView(&m_recipePresenter, &m_recipeEditView),
     m_recipeEditView(&m_recipeEditPresenter),
     m_recipeEditPresenter(&m_recipeEditView, &m_recipeEditModel, &m_recipeListModel, &m_recipePresenter),
-    m_dailyModel(&m_dbDaily, &m_dbGoal, &m_foodListModel, &m_recipeListModel, &m_recipeModel),
+    m_dailyModel(&m_dbDaily, &m_dbGoal, &m_dbFood, &m_foodListModel, &m_recipeListModel, &m_recipeModel),
     m_dailyPresenter(&m_dailyView, &m_dailyModel, &m_timeHelper), 
     m_dailyView(&m_dailyPresenter),
     m_fatSecretModel(&m_dbFood),

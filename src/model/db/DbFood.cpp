@@ -123,6 +123,20 @@ void DbFood::deleteFood(int foodId) {
     notify();
 }
 
+void DbFood::updatePopularity(int foodId, int newPopularity)
+{
+    spdlog::debug("DbFood::updatePopularity");
+    try
+    {
+        SQLite::Statement query(m_db, "UPDATE Foods SET popularity = ? WHERE food_id = ?");
+        query.bind(1, newPopularity);
+        query.bind(2, foodId);
+        query.exec();
+    } catch (SQLite::Exception &e) {
+        std::cerr << e.what() << std::endl;
+    }
+}
+
 void DbFood::updateFood(const Food &f) {
     spdlog::debug("DbFood::updateFood");
     try

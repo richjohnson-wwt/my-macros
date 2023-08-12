@@ -173,7 +173,7 @@ void DailyPresenter::onAddDailyFood()
     xdf.dailyFoodId = df.id;
     xdfVector.push_back(xdf);
     
-    m_dailyModel->addXrefDailyFood(xdf);
+    m_dailyModel->addXrefDailyFood(xdf, food.id);
 
     refresh();
 }

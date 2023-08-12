@@ -38,6 +38,7 @@ public:
     void updateFood(const Food& f);
 
     void deleteFood(int id);
+    void updatePopularity(int foodId, int popularity);
 };
 
 

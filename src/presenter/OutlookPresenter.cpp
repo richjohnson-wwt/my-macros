@@ -13,9 +13,9 @@ OutlookPresenter::OutlookPresenter(
     IOutlookModel *model, 
     TimeHelper *timeHelper, 
     IDbDailySubject *dailySubject) 
-: m_outlookView(view), m_outlookModel(model), m_timeHelper(timeHelper)
+: m_outlookView(view), m_outlookModel(model), m_timeHelper(timeHelper), m_dbDailySubject(dailySubject)
 {
-    dailySubject->attach(this);
+    
 }
 
 void OutlookPresenter::update() {
@@ -24,6 +24,7 @@ void OutlookPresenter::update() {
 
 void OutlookPresenter::postInit()
 {
+    m_dbDailySubject->attach(this);
     refresh();
 }
 

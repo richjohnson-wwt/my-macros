@@ -13,6 +13,7 @@ private:
     IOutlookModel *m_outlookModel;
     IOutlookView *m_outlookView;
     TimeHelper *m_timeHelper;
+    IDbDailySubject *m_dbDailySubject;
 
     void refresh();
 

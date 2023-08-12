@@ -17,7 +17,7 @@ public:
     virtual std::vector<XrefDailyFood> getXrefDailyFoods(const DailyFood& df) = 0;
     virtual void addExercise(int exerciseCalories) = 0;
     virtual void addWeight(double weight) = 0;
-    virtual void addXrefDailyFood(const XrefDailyFood &XrefDailyFood) = 0;
+    virtual void addXrefDailyFood(const XrefDailyFood &XrefDailyFood, int foodId = -1) = 0;
     virtual Food getFood() = 0;
     virtual Recipe getRecipe() = 0;
     virtual std::vector<Ingredient> getIngredients() = 0;
@@ -36,6 +36,7 @@ class DailyModel : public IDailyModel {
 private:
     DbDaily *m_dbDaily;
     DbGoal *m_dbGoal;
+    DbFood *m_dbFood;
     IFoodListModel *m_foodListModel;
     IRecipeListModel *m_recipeListModel;
     IRecipeModel *m_recipeModel;
@@ -44,7 +45,7 @@ private:
     Goal m_goal;
 
 public:
-    DailyModel(DbDaily *dbDaily, DbGoal *dbGoal, IFoodListModel *foodListModel, IRecipeListModel *recipeListModel, IRecipeModel *recipeModel);
+    DailyModel(DbDaily *dbDaily, DbGoal *dbGoal, DbFood* dbFood, IFoodListModel *foodListModel, IRecipeListModel *recipeListModel, IRecipeModel *recipeModel);
 
     void setSelectedDate(const std::string& date) override;
     void createDailyFood(const DailyFood& df) override;
@@ -54,7 +55,7 @@ public:
     void addExercise(int exerciseCalories) override;
     void addWeight(double weight) override;
 
-    void addXrefDailyFood(const XrefDailyFood &XrefDailyFood) override;
+    void addXrefDailyFood(const XrefDailyFood &XrefDailyFood, int foodId) override;
 
     Food getFood() override;
     Recipe getRecipe() override;

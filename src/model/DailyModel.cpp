@@ -5,10 +5,16 @@
 
 DailyModel::DailyModel(DbDaily *dbDaily, 
     DbGoal *dbGoal,
+    DbFood *dbFood,
     IFoodListModel *foodListModel, 
     IRecipeListModel *recipeListModel, 
     IRecipeModel *recipeModel)
-: m_dbDaily(dbDaily), m_dbGoal(dbGoal), m_foodListModel(foodListModel), m_recipeListModel(recipeListModel), m_recipeModel(recipeModel)
+: m_dbDaily(dbDaily), 
+    m_dbGoal(dbGoal), 
+    m_dbFood(dbFood),
+    m_foodListModel(foodListModel), 
+    m_recipeListModel(recipeListModel), 
+    m_recipeModel(recipeModel)
 {
 }
 
@@ -59,10 +65,16 @@ void DailyModel::addWeight(double weight)
     m_dbDaily->updateDailyFood(df);
 }
 
-void DailyModel::addXrefDailyFood(const XrefDailyFood &xdf)
+void DailyModel::addXrefDailyFood(const XrefDailyFood &xdf, int foodId)
 {
     spdlog::debug("DailyModel::addDailyFood()");
     m_dbDaily->addXrefDailyFood(xdf);
+    if (foodId != -1) {
+        Food f = m_dbFood->getFood(foodId);
+        m_dbFood->updatePopularity(f.id, f.popularity + 1);
+    } else {
+        spdlog::debug("DailyModel::addDailyFood() - recipe. Not bumping popularity");
+    }
 }
 
 Food DailyModel::getFood()

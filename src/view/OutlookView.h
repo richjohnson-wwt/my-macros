@@ -12,6 +12,8 @@ private:
     wxTextCtrl *m_weekCalories;
     wxTextCtrl *m_weekExerciseCalories;
     wxTextCtrl *m_weeklyPoundage;
+    wxTextCtrl *m_bmrPlusExercise;
+    wxTextCtrl *m_deficitCalories;
 
     wxTextCtrl *m_goalDate;
     wxTextCtrl *m_progressDate;
@@ -32,6 +34,8 @@ public:
     void setTargetDate(const std::string &targetDate) override;
     void setPredictedPoundsLost(const std::string &poundsLost) override;
     void setActualPoundsLost(const std::string &poundsLost) override;
+    void setBmrPlusExercise(const std::string &bmrPlusExercise) override;
+    void setDeficitCalories(const std::string &deficitCalories) override;
 };
 
 #endif // OUTLOOK_VIEW_H

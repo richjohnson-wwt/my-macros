@@ -125,7 +125,7 @@ void DbFood::deleteFood(int foodId) {
 
 void DbFood::updatePopularity(int foodId, int newPopularity)
 {
-    spdlog::debug("DbFood::updatePopularity");
+    spdlog::info("DbFood::updatePopularity {} {}", foodId, newPopularity);
     try
     {
         SQLite::Statement query(m_db, "UPDATE Foods SET popularity = ? WHERE food_id = ?");

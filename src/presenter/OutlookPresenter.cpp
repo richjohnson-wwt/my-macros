@@ -69,6 +69,9 @@ void OutlookPresenter::populateCalorieSection()
     std::stringstream ss;
     ss << std::fixed << std::setprecision(1) << poundsLost;
     m_outlookView->setPredictedPoundsLost(ss.str());
+
+    m_outlookView->setDeficitCalories(std::to_string(deficit));
+    m_outlookView->setBmrPlusExercise(std::to_string(sevenDaysCaloriesPlusExercise));
 }
 
 void OutlookPresenter::populateGoalWeightSection()

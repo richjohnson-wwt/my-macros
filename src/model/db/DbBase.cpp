@@ -23,6 +23,7 @@ Food DbBase::foodHelper(SQLite::Statement &query)
         f.calories = query.getColumn(5);
         f.quantity = query.getColumn(6);
         f.unit_id = query.getColumn(7);
+        f.popularity = query.getColumn(8);
     }
     return f;
 }

@@ -71,6 +71,7 @@ void DailyModel::addXrefDailyFood(const XrefDailyFood &xdf, int foodId)
     m_dbDaily->addXrefDailyFood(xdf);
     if (foodId != -1) {
         Food f = m_dbFood->getFood(foodId);
+        spdlog::debug("DailyModel::addDailyFood() - food. Bumping popularity {}", f.popularity);
         m_dbFood->updatePopularity(f.id, f.popularity + 1);
     } else {
         spdlog::debug("DailyModel::addDailyFood() - recipe. Not bumping popularity");

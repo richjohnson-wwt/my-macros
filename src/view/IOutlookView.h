@@ -9,6 +9,8 @@ public:
     virtual void setTargetDate(const std::string &targetDate) = 0;
     virtual void setPredictedPoundsLost(const std::string &poundsLost) = 0;
     virtual void setActualPoundsLost(const std::string &poundsLost) = 0;
+    virtual void setBmrPlusExercise(const std::string &bmrPlusExercise) = 0;
+    virtual void setDeficitCalories(const std::string &deficitCalories) = 0;
 };
 
 #endif // IOUTLOOK_VIEW_H

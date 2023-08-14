@@ -4,6 +4,7 @@
 #include "TopDailyView.h"
 #include "TopFoodView.h"
 #include "TopRecipeView.h"
+#include "GoalView.h"
 
 #include <wx/wx.h>
 #include "wx/listctrl.h"
@@ -13,7 +14,11 @@ class MyFrame;
 
 class MainNotebook {
 public:
-    MainNotebook(wxFrame* parent, DailyView *topDailyView, TopFoodView *topFoodView, TopRecipeView *topRecipeView);
+    MainNotebook(wxFrame* parent, 
+        DailyView *topDailyView, 
+        TopFoodView *topFoodView, 
+        TopRecipeView *topRecipeView,
+        GoalView *goalView);
 
     wxNotebook *createMainBookCtrl();
 
@@ -23,6 +28,7 @@ private:
     DailyView *m_dailyView;
     TopFoodView *m_topFoodView;
     TopRecipeView *m_topRecipeView;
+    GoalView *m_goalView;
 };
 
 

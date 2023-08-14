@@ -35,10 +35,11 @@ MyMacroApp::MyMacroApp(wxFrame *parent)
     m_fatSecretView(&m_fatSecretPresenter),
     m_fatSecretPresenter(&m_fatSecretView, &m_fatSecretWrapper),
     m_explorerNotebook(parent, &m_foodListView, &m_recipeListView),
-    m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView),
+    m_mainNotebook(parent, &m_dailyView, &m_topFoodView, &m_topRecipeView, &m_goalView),
     m_outlookView(parent),
     m_outlookPresenter(&m_outlookView, &m_outlookModel, &m_timeHelper, &m_dbDaily),
     m_outlookModel(&m_dbDaily, &m_dbGoal),
+    m_goalPresenter(&m_dbGoal, &m_goalView),
     m_wxFrame(parent)
 {
 }
@@ -84,4 +85,5 @@ void MyMacroApp::postInit()
     m_recipeListPresenter.postInit();
     m_dailyPresenter.postInit();
     m_outlookPresenter.postInit();
+    m_goalPresenter.postInit();
 }

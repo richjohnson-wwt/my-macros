@@ -21,6 +21,7 @@
 #include "view/FoodItemView.h"
 #include "view/RecipeItemView.h"
 #include "view/RecipeEditView.h"
+#include "view/GoalView.h"
 
 // PRESENTER
 #include "presenter/FoodPresenter.h"
@@ -32,6 +33,7 @@
 #include "presenter/RecipeEditPresenter.h"
 #include "presenter/FatSecretPresenter.h"
 #include "presenter/OutlookPresenter.h"
+#include "presenter/GoalPresenter.h"
 #include "presenter/TimeHelper.h"
 
 // MODEL
@@ -107,6 +109,9 @@ private:
     FatSecretPresenter m_fatSecretPresenter;
     FatSecretWrapper m_fatSecretWrapper;
     FatSecretModel m_fatSecretModel;
+
+    GoalView m_goalView;
+    GoalPresenter m_goalPresenter;
 
     DbFood m_dbFood;
     DbRecipe m_dbRecipe;

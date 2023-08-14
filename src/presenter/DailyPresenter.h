@@ -6,12 +6,6 @@
 
 class TimeHelper;
 
-enum class DailyPage
-{
-    FoodBook,
-    RecipeBook
-};
-
 class IDailyCallback
 {
 public:

@@ -14,6 +14,7 @@ public:
     virtual void onAddWeight() = 0;
     virtual void onAddDailyFood() = 0;
     virtual void onAddDailyRecipe() = 0;
+    virtual void onOneOff() = 0;
     virtual void onDeleteDailyFood() = 0;
     virtual void onSelectedDailyFoodChanged(int id) = 0;
 };
@@ -52,6 +53,7 @@ public:
     void onAddWeight() override;
     void onAddDailyFood() override;
     void onAddDailyRecipe() override;
+    void onOneOff() override;
     void onDeleteDailyFood() override;
     void onSelectedDailyFoodChanged(int id) override;
 };

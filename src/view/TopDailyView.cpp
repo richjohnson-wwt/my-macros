@@ -1,7 +1,6 @@
 #include "TopDailyView.h"
 #include "../presenter/DailyPresenter.h"
-// #include "../presenter/FoodListPresenter.h"
-// #include "../presenter/RecipeListPresenter.h"
+#include "OneOffDialog.h"
 #include <spdlog/spdlog.h>
 
 DailyView::DailyView(IDailyCallback *callback) 
@@ -12,6 +11,7 @@ DailyView::DailyView(IDailyCallback *callback)
 wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
 {
     spdlog::debug("DailyView::createDailyPanel");
+    m_parent = parent;
     wxPanel *panel = new wxPanel(parent);
     wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 
@@ -43,9 +43,13 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     m_addDailyFoodButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyFood, this);
     m_addDailyRecipeButton = new wxButton(panel, -1, _T("Add Recipe"), wxDefaultPosition, wxDefaultSize, 0);
     m_addDailyRecipeButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyRecipe, this);
+    m_oneOffButton = new wxButton(panel, -1, _T("One Off"), wxDefaultPosition, wxDefaultSize, 0);
+    m_oneOffButton->Bind(wxEVT_BUTTON, &DailyView::onOneOff, this);
+    
 
     addFoodSizer->Add(m_addDailyFoodButton, 0, wxALL, 10);
     addFoodSizer->Add(m_addDailyRecipeButton, 0, wxALL, 10);
+    addFoodSizer->Add(m_oneOffButton, 0, wxALL, 10);
     topsizer->Add(addFoodSizer, 0, wxALL, 10);
 
     m_dailyFoodListView = new wxListView(panel);
@@ -118,6 +122,12 @@ void DailyView::onAddDailyFood(wxCommandEvent& event) {
 void DailyView::onAddDailyRecipe(wxCommandEvent& event) {
     spdlog::debug("DailyView::onAddDailyRecipe");
     m_dailyCallback->onAddDailyRecipe();
+}
+
+void DailyView::onOneOff(wxCommandEvent &event)
+{
+    spdlog::debug("DailyView::onOneOff");
+    m_dailyCallback->onOneOff();
 }
 
 void DailyView::onDeleteDailyFood(wxCommandEvent& event) {
@@ -209,4 +219,22 @@ void DailyView::resetDailyMultiplier(const std::vector<std::string> &increments,
         m_multiplierUnitComboBox->Append(i);
     }
     m_multiplierUnitComboBox->SetSelection(defaultIndex);
+}
+
+XrefDailyFood DailyView::promptUserForOneOff()
+{
+    spdlog::info("DailyView::promptUserForOneOff");
+    OneOffDialog oneOffDialog(m_parent, wxID_ANY, "Enter One-off data");
+    if (oneOffDialog.ShowModal() == wxID_OK) {
+        XrefDailyFood xfd;
+        xfd.name = oneOffDialog.getName();
+        xfd.calories = wxAtoi(oneOffDialog.getCalories());
+        xfd.fat = wxAtoi(oneOffDialog.getFat());
+        xfd.protein = wxAtoi(oneOffDialog.getProtein());
+        xfd.carb = wxAtoi(oneOffDialog.getCarb());
+        return xfd;
+    } else {
+        spdlog::info("DailyView::promptUserForOneOff cancelled");
+    }
+    return XrefDailyFood();
 }

@@ -39,10 +39,12 @@ public:
     virtual double getWeight() = 0;
     virtual int getDailyMultiplier() = 0;
     virtual void warnFutureDate() = 0;
+    virtual XrefDailyFood promptUserForOneOff() = 0;
 };
 
 class DailyView : public wxEvtHandler, public IDailyView {
 private:
+    wxNotebook *m_parent;
     wxNotebook *m_foodRecipeBookCtrl;
     IDailyCallback *m_dailyCallback;
 
@@ -55,10 +57,10 @@ private:
     wxButton *m_addWeightButton;
     
     wxListView *m_dailyFoodListView;
-    // wxTextCtrl *m_foodMultiplierTextCtrl;
     wxComboBox *m_multiplierUnitComboBox;
     wxButton *m_addDailyFoodButton;
     wxButton *m_addDailyRecipeButton;
+    wxButton *m_oneOffButton;
     wxButton *m_deleteDailyFoodButton;
 
     wxListView *m_totalsListView;
@@ -75,6 +77,7 @@ protected:
     void onAddActivityBonus(wxCommandEvent& event);
     void onAddWeight(wxCommandEvent& event);
     void onSelectDailyFood(wxListEvent& event);
+    void onOneOff(wxCommandEvent& event);
 
 public:
     DailyView(IDailyCallback *callback);
@@ -92,6 +95,7 @@ public:
     int getDailyMultiplier() override;
     void warnFutureDate() override;
     void resetDailyMultiplier(const std::vector<std::string> &increments, int defaultIndex) override;
+    XrefDailyFood promptUserForOneOff() override;
 
 };
 

@@ -162,7 +162,7 @@ void DailyPresenter::onAddDailyFood()
     DailyFood df = m_dailyModel->getDailyFood();
     Food food = m_dailyModel->getFood();
     double multiplier = getServingMultiplier(m_dailyView->getDailyMultiplier());
-    std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
+    // std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
 
     CalculatedMacros cm = calculateFoodMacros(food, multiplier);
     std::stringstream ss;
@@ -177,7 +177,7 @@ void DailyPresenter::onAddDailyFood()
     xdf.calories = cm.calories;
 
     xdf.dailyFoodId = df.id;
-    xdfVector.push_back(xdf);
+    // xdfVector.push_back(xdf);
     
     m_dailyModel->addXrefDailyFood(xdf, food.id);
 
@@ -220,6 +220,20 @@ void DailyPresenter::onAddDailyRecipe()
 
     m_dailyModel->addXrefDailyFood(xdf);
 
+    refresh();
+}
+
+void DailyPresenter::onOneOff() {
+    XrefDailyFood xdf = m_dailyView->promptUserForOneOff();
+    if (xdf.name == "") {
+        spdlog::info("DailyPresenter::onOneOff action cancelled");
+        return;
+    }
+    spdlog::info("DailyPresenter::onOneOff");
+    DailyFood df = m_dailyModel->getDailyFood();
+
+    xdf.dailyFoodId = df.id;
+    m_dailyModel->addXrefDailyFood(xdf);
     refresh();
 }
 

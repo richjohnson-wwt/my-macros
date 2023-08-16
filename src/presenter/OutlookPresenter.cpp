@@ -119,7 +119,7 @@ void OutlookPresenter::populateActualWeightLostLastWeek()
             // std::cout << "\tlow: " << low << std::endl;
         }
     }
-    double diff = high - low;
+    double diff = (high - low) * -1;
     std::stringstream ss;
     ss << std::fixed << std::setprecision(1) << diff;
     m_outlookView->setActualPoundsLost(ss.str());

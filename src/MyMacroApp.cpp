@@ -57,10 +57,16 @@ void MyMacroApp::create() {
     m_mgr.SetManagedWindow(m_wxFrame);
 
     // add the panes to the manager
-    m_mgr.AddPane(m_explorerNotebook.createExplorerBookCtrl(), wxLEFT, wxT("Foods/Recipes"));
+    auto explorerPanel = m_explorerNotebook.createExplorerBookCtrl();
+    m_mgr.AddPane(explorerPanel, wxLEFT, wxT("Foods/Recipes"));
     auto outlookPanel = m_outlookView.createRecipePanel();
     m_mgr.AddPane(outlookPanel, wxBOTTOM, wxT("Progress"));
     m_mgr.AddPane(m_mainNotebook.createMainBookCtrl(), wxCENTER);
+
+    // Hack 1
+    m_mgr.GetPane(explorerPanel).MinSize(450, -1);
+    m_mgr.GetPane(explorerPanel).Fixed();
+    m_mgr.Update();
 
     // hack
     m_mgr.GetPane(outlookPanel).MinSize(-1, 200);

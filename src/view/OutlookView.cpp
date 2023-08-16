@@ -23,22 +23,19 @@ wxPanel *OutlookView::createRecipePanel()
     wxStaticBox *calorieStaticBox = new wxStaticBox(panel, wxID_ANY, "&Last 7 Days");
 
     wxSizer *sizerCalorieBox = new wxStaticBoxSizer(calorieStaticBox, wxVERTICAL);
-
     wxSizer *sizerFirstRow = new wxBoxSizer(wxHORIZONTAL);
-    
     m_bmrPlusExercise = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
     sizerFirstRow->Add(CreateTextWithLabelSizer(panel, "BMR + Activity:", m_bmrPlusExercise), 0, wxALL, 10);
     m_consumedCalories = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
     sizerFirstRow->Add(CreateTextWithLabelSizer(panel, "-    Consumed Calories:", m_consumedCalories), 0, wxALL, 10);
-    sizerCalorieBox->Add(sizerFirstRow, 5, wxGROW | wxALL, 5);
+    sizerCalorieBox->Add(sizerFirstRow, 0, wxGROW | wxALL, 0);
 
     wxSizer *sizerSecondRow = new wxBoxSizer(wxHORIZONTAL);
-    
     m_netInOut = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
     sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "= NET In/Out:", m_netInOut), 0, wxALL, 10);
     m_activityCalories = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
     sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "Activity Calories:", m_activityCalories), 0, wxALL, 10);
-    sizerCalorieBox->Add(sizerSecondRow, 5, wxGROW | wxALL, 5);
+    sizerCalorieBox->Add(sizerSecondRow, 0, wxGROW | wxALL, 0);
 
     m_expectedWeightDelta = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
     sizerCalorieBox->Add(CreateTextWithLabelSizer(panel, "Expected Weight +/-:", m_expectedWeightDelta), 0, wxALL, 10);
@@ -50,7 +47,7 @@ wxPanel *OutlookView::createRecipePanel()
     m_goalDate = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
     sizerWeightBox->Add(CreateTextWithLabelSizer(panel, "Goal Date:", m_goalDate), 0, wxALL, 10);
     m_actualWeightLost = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
-    sizerWeightBox->Add(CreateTextWithLabelSizer(panel, "Actual Weight Lost:", m_actualWeightLost), 0, wxALL, 10);
+    sizerWeightBox->Add(CreateTextWithLabelSizer(panel, "Actual Weight +/-:", m_actualWeightLost), 0, wxALL, 10);
     
     topsizer->Add(sizerCalorieBox, 5, wxGROW | wxALL, 5);
     topsizer->Add(sizerWeightBox, 5, wxGROW | wxALL, 5);

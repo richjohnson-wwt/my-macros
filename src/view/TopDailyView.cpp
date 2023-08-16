@@ -37,8 +37,8 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
 
     wxBoxSizer *addFoodSizer = new wxBoxSizer(wxHORIZONTAL);
     addFoodSizer->Add(new wxStaticText(panel, wxID_ANY, "Multiplier"), 0, wxALIGN_CENTRE_VERTICAL | wxRIGHT, 5);
-    m_foodMultiplierTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(75, 20));
-    addFoodSizer->Add(m_foodMultiplierTextCtrl, 0, wxALL, 10);
+    m_multiplierUnitComboBox = new wxComboBox(panel, wxID_ANY, "", wxDefaultPosition, wxSize(75, 20));
+    addFoodSizer->Add(m_multiplierUnitComboBox, 0, wxALL, 10);
     m_addDailyFoodButton = new wxButton(panel, -1, _T("Add Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_addDailyFoodButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyFood, this);
     m_addDailyRecipeButton = new wxButton(panel, -1, _T("Add Recipe"), wxDefaultPosition, wxDefaultSize, 0);
@@ -193,11 +193,20 @@ double DailyView::getWeight() {
     return std::stod(m_dailyWeightTextCtrl->GetValue().ToStdString());
 }
 
-double DailyView::getDailyMultiplier() {
+int DailyView::getDailyMultiplier() {
     spdlog::debug("DailyView::getDailyMultiplier");
-    return std::stod(m_foodMultiplierTextCtrl->GetValue().ToStdString());
+    return m_multiplierUnitComboBox->GetSelection();
 }
 
 void DailyView::warnFutureDate() {
     wxMessageBox("You cannot enter data for a future date", "Warning", wxICON_WARNING);
+}
+
+void DailyView::resetDailyMultiplier(const std::vector<std::string> &increments, int defaultIndex) {
+    spdlog::debug("DailyView::resetDailyMultiplier");
+    m_multiplierUnitComboBox->Clear();
+    for (auto i : increments) {
+        m_multiplierUnitComboBox->Append(i);
+    }
+    m_multiplierUnitComboBox->SetSelection(defaultIndex);
 }

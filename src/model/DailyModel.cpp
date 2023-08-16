@@ -16,6 +16,13 @@ DailyModel::DailyModel(DbDaily *dbDaily,
     m_recipeListModel(recipeListModel), 
     m_recipeModel(recipeModel)
 {
+    m_dailyFoodServingIncrements = {"0.1", "0.25", "0.33", "0.5", "0.75", "1", "1.5", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+}
+
+std::vector<std::string> DailyModel::getDailyFoodServingIncrements() 
+{
+    spdlog::debug("DailyModel::getDailyFoodServingIncrements()");
+    return m_dailyFoodServingIncrements;
 }
 
 void DailyModel::createDailyFood(const DailyFood& df)
@@ -112,33 +119,33 @@ void DailyModel::loadGoal() {
     m_goal = m_dbGoal->getGoal();
 }
 
-int DailyModel::getGoalFatGrams()
+int DailyModel::getGoalFatGrams(int activityBonus)
 {
     spdlog::debug("DailyModel::getGoalFatGrams() fatPercent: {} bmrCalories: {}", m_goal.fatPercent, m_goal.bmrCalories);
-    int fatCalories = (m_goal.fatPercent * m_goal.bmrCalories) / 100;
+    int fatCalories = (m_goal.fatPercent * (m_goal.bmrCalories + activityBonus)) / 100;
     int grams = fatCalories / 9;
     spdlog::debug("DailyModel::getGoalFatGrams()fatCalories: {} grams: {}", fatCalories, grams);
     return grams;
 }
 
-int DailyModel::getGoalProteinGrams()
+int DailyModel::getGoalProteinGrams(int activityBonus)
 {
-    int proteinCalories = m_goal.proteinPercent * m_goal.bmrCalories / 100;
+    int proteinCalories = (m_goal.proteinPercent * (m_goal.bmrCalories + activityBonus)) / 100;
     int grams = proteinCalories / 4;
     spdlog::debug("DailyModel::getGoalProteinGrams() {}", grams);
     return grams;
 }
 
-int DailyModel::getGoalCarbGrams()
+int DailyModel::getGoalCarbGrams(int activityBonus)
 {
-    int carbCalories = m_goal.carbPercent * m_goal.bmrCalories / 100;
+    int carbCalories = (m_goal.carbPercent * (m_goal.bmrCalories + activityBonus)) / 100;
     int grams = carbCalories / 4;
     spdlog::debug("DailyModel::getGoalCarbGrams() {}", grams);
     return grams;
 }
 
-int DailyModel::getGoalCalories()
+int DailyModel::getGoalCalories(int activityBonus)
 {
     spdlog::debug("DailyModel::getGoalCalories() {}", m_goal.bmrCalories);
-    return m_goal.bmrCalories;
+    return m_goal.bmrCalories + activityBonus;
 }

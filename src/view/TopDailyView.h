@@ -31,12 +31,13 @@ public:
     virtual void setDailyActivityBonus(const std::string& bonus) = 0;
     virtual void setDailyWeight(const std::string& weight) = 0;
     virtual void setDailyFoodList(const std::vector<XrefDailyFood> &xrefDailyFoods) = 0;
+    virtual void resetDailyMultiplier(const std::vector<std::string> &increments, int defaultIndex) = 0;
 
     virtual void setTotalsList(const std::vector<XrefDailyFood> &totals, int percentFat, int percentProtein, int percentCarb) = 0;
 
     virtual int getActivityBonus() = 0;
     virtual double getWeight() = 0;
-    virtual double getDailyMultiplier() = 0;
+    virtual int getDailyMultiplier() = 0;
     virtual void warnFutureDate() = 0;
 };
 
@@ -54,7 +55,8 @@ private:
     wxButton *m_addWeightButton;
     
     wxListView *m_dailyFoodListView;
-    wxTextCtrl *m_foodMultiplierTextCtrl;
+    // wxTextCtrl *m_foodMultiplierTextCtrl;
+    wxComboBox *m_multiplierUnitComboBox;
     wxButton *m_addDailyFoodButton;
     wxButton *m_addDailyRecipeButton;
     wxButton *m_deleteDailyFoodButton;
@@ -87,8 +89,9 @@ public:
 
     int getActivityBonus() override;
     double getWeight() override;
-    double getDailyMultiplier() override;
+    int getDailyMultiplier() override;
     void warnFutureDate() override;
+    void resetDailyMultiplier(const std::vector<std::string> &increments, int defaultIndex) override;
 
 };
 

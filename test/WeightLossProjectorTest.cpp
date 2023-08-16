@@ -39,3 +39,7 @@ TEST_CASE("WeightLossProjector target", "[WeightLossProjector]") {
     CHECK(45 == numberOfWeeks);
 }
 
+// Create a function to sum two integers
+int sum(int a, int b) {
+    return a + b;
+}

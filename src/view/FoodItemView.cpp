@@ -45,7 +45,6 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
 
     wxSizer *comboSizerRow = new wxBoxSizer(wxHORIZONTAL); 
     m_foodUnitComboBox = new wxComboBox(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
-    // m_foodUnitComboBox->Bind(wxEVT_COMBOBOX, &FoodItemView::onFoodUnitComboBox, this);
     comboSizerRow->Add(new wxStaticText(panel, wxID_ANY, "Food Unit: ", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY), 0, wxALIGN_LEFT | wxRIGHT, 5);
     comboSizerRow->Add(m_foodUnitComboBox, 0, wxALIGN_LEFT);
     topsizer->Add(comboSizerRow, 0, wxALL, 10);

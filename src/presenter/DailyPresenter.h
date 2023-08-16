@@ -39,6 +39,9 @@ private:
         const std::vector<Ingredient> &ingredients,
         double multiplier = 1.0);
 
+    void updateDailyFoodServingIncrements();
+    double getServingMultiplier(int multiplierIndex);
+
 public:
     DailyPresenter(IDailyView *view, IDailyModel *model, TimeHelper *timeHelper);
 

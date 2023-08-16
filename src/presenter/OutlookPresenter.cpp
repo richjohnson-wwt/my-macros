@@ -65,7 +65,7 @@ void OutlookPresenter::populateCalorieSection()
     auto sevenDaysCalories = bmr * 7;
     auto sevenDaysCaloriesPlusExercise = sevenDaysCalories + exerciseCalories;
     auto deficit = sevenDaysCaloriesPlusExercise - totalCalories;
-    double poundsLost = static_cast<double>(deficit) / 3500;
+    double poundsLost = (static_cast<double>(deficit) / 3500) * -1;
     std::stringstream ss;
     ss << std::fixed << std::setprecision(1) << poundsLost;
     m_outlookView->setPredictedPoundsLost(ss.str());

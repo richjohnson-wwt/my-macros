@@ -22,6 +22,7 @@ void FoodEditPresenter::onSaveFood()
     food.calories = std::stoi(m_foodItemEditView->getFoodCalories());
     food.quantity = std::stoi(m_foodItemEditView->getFoodQuantity());
     food.unit_id = m_foodItemEditView->getFoodUnitId();
+    food.popularity = 1;
     m_foodModel->saveFood(food);
     m_foodListSubject->notify();
 }

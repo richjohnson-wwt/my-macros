@@ -56,6 +56,8 @@ void DailyPresenter::refresh() {
     std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
     populateDailyFood(df, xdfVector);
     populateTotals(xdfVector);
+
+    updateDailyFoodServingIncrements();
 }
 
 void DailyPresenter::populateDailyFood(const DailyFood &df, const std::vector<XrefDailyFood>& xdfVector)
@@ -68,16 +70,20 @@ void DailyPresenter::populateDailyFood(const DailyFood &df, const std::vector<Xr
     m_dailyView->setDailyWeight(ss.str());
     
     m_dailyView->setDailyFoodList(xdfVector);
+
+
 }
 
 void DailyPresenter::populateTotals(const std::vector<XrefDailyFood>& xdfVector)
 {
     spdlog::debug("DailyPresenter::populateTotals");
 
-    int goalFat = m_dailyModel->getGoalFatGrams();
-    int goalProtein = m_dailyModel->getGoalProteinGrams();
-    int goalCarb = m_dailyModel->getGoalCarbGrams();
-    int goalCalories = m_dailyModel->getGoalCalories() + m_dailyView->getActivityBonus();
+    auto bonusCalories = m_dailyView->getActivityBonus();
+
+    int goalFat = m_dailyModel->getGoalFatGrams(bonusCalories);
+    int goalProtein = m_dailyModel->getGoalProteinGrams(bonusCalories);
+    int goalCarb = m_dailyModel->getGoalCarbGrams(bonusCalories);
+    int goalCalories = m_dailyModel->getGoalCalories(bonusCalories);
 
     int totalCalories = 0;
     int totalFat = 0;
@@ -155,7 +161,7 @@ void DailyPresenter::onAddDailyFood()
     spdlog::debug("DailyPresenter::onAddDailyFood");
     DailyFood df = m_dailyModel->getDailyFood();
     Food food = m_dailyModel->getFood();
-    double multiplier = m_dailyView->getDailyMultiplier();
+    double multiplier = getServingMultiplier(m_dailyView->getDailyMultiplier());
     std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
 
     CalculatedMacros cm = calculateFoodMacros(food, multiplier);
@@ -175,7 +181,19 @@ void DailyPresenter::onAddDailyFood()
     
     m_dailyModel->addXrefDailyFood(xdf, food.id);
 
+    updateDailyFoodServingIncrements();
+
     refresh();
+}
+
+void DailyPresenter::updateDailyFoodServingIncrements() {
+    spdlog::debug("DailyPresenter::updateDailyFoodServingIncrements");
+    m_dailyView->resetDailyMultiplier(m_dailyModel->getDailyFoodServingIncrements(), 5);
+}
+
+double DailyPresenter::getServingMultiplier(int multiplierIndex) {
+    spdlog::debug("DailyPresenter::getServingMultiplier");
+    return std::stod(m_dailyModel->getDailyFoodServingIncrements()[multiplierIndex]);
 }
 
 void DailyPresenter::onAddDailyRecipe()
@@ -184,7 +202,7 @@ void DailyPresenter::onAddDailyRecipe()
     DailyFood df = m_dailyModel->getDailyFood();
     std::vector<Ingredient> ingredients = m_dailyModel->getIngredients();
     Recipe recipe = m_dailyModel->getRecipe();
-    double multiplier = m_dailyView->getDailyMultiplier();
+    double multiplier = getServingMultiplier(m_dailyView->getDailyMultiplier());
     std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
 
     CalculatedMacros cm = calculateRecipeMacros(recipe.servings, ingredients, multiplier);

@@ -9,11 +9,11 @@ class OutlookView : public IOutlookView
 {
 private:
     wxFrame *m_wxFrame;
-    wxTextCtrl *m_weekCalories;
-    wxTextCtrl *m_weekExerciseCalories;
-    wxTextCtrl *m_weeklyPoundage;
+    wxTextCtrl *m_consumedCalories;
+    wxTextCtrl *m_activityCalories;
+    wxTextCtrl *m_expectedWeightDelta;
     wxTextCtrl *m_bmrPlusExercise;
-    wxTextCtrl *m_deficitCalories;
+    wxTextCtrl *m_netInOut;
 
     wxTextCtrl *m_goalDate;
     wxTextCtrl *m_progressDate;
@@ -22,10 +22,11 @@ private:
     wxSizer *CreateTextWithLabelSizer(wxPanel *panel,
                                       const wxString &label,
                                       wxTextCtrl *text);
-public:
-    OutlookView(wxFrame* parent);
 
-     wxPanel *createRecipePanel();
+public:
+    OutlookView(wxFrame *parent);
+
+    wxPanel *createRecipePanel();
 
     void setTotalCaloriesForWeek(int totalCalories) override;
     void setTotalExerciseCaloriesForWeek(int totalCalories) override;

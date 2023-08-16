@@ -23,12 +23,13 @@ public:
     virtual std::vector<Ingredient> getIngredients() = 0;
     virtual void setSelectedDailyFoodId(int id) = 0;
     virtual void deleteXrefDailyFood() = 0;
-    virtual int getGoalFatGrams() = 0;
-    virtual int getGoalProteinGrams() = 0;
-    virtual int getGoalCarbGrams() = 0;
-    virtual int getGoalCalories() = 0;
+    virtual int getGoalFatGrams(int activityBonus) = 0;
+    virtual int getGoalProteinGrams(int activityBonus) = 0;
+    virtual int getGoalCarbGrams(int activityBonus) = 0;
+    virtual int getGoalCalories(int activityBonus) = 0;
     virtual void loadGoal() = 0;
     virtual bool doesDateExist(const std::string& date) = 0;
+    virtual std::vector<std::string> getDailyFoodServingIncrements() = 0;
 
 };
 
@@ -43,6 +44,7 @@ private:
     std::string m_dateString;
     int m_selectedDailyFoodId;
     Goal m_goal;
+    std::vector<std::string> m_dailyFoodServingIncrements;
 
 public:
     DailyModel(DbDaily *dbDaily, DbGoal *dbGoal, DbFood* dbFood, IFoodListModel *foodListModel, IRecipeListModel *recipeListModel, IRecipeModel *recipeModel);
@@ -63,13 +65,14 @@ public:
     void setSelectedDailyFoodId(int id) override;
     void deleteXrefDailyFood() override;
 
-    int getGoalFatGrams() override;
-    int getGoalProteinGrams() override;
-    int getGoalCarbGrams() override;
-    int getGoalCalories() override;
+    int getGoalFatGrams(int activityBonus) override;
+    int getGoalProteinGrams(int activityBonus) override;
+    int getGoalCarbGrams(int activityBonus) override;
+    int getGoalCalories(int activityBonus) override;
 
     void loadGoal() override;
     bool doesDateExist(const std::string& date) override;
+    std::vector<std::string> getDailyFoodServingIncrements() override;
 
 
 };

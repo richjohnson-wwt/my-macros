@@ -25,21 +25,23 @@ wxPanel *OutlookView::createRecipePanel()
     wxSizer *sizerCalorieBox = new wxStaticBoxSizer(calorieStaticBox, wxVERTICAL);
 
     wxSizer *sizerFirstRow = new wxBoxSizer(wxHORIZONTAL);
-    m_weekCalories = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
-    sizerFirstRow->Add(CreateTextWithLabelSizer(panel, "Consumed Calories:", m_weekCalories), 0, wxALL, 10);
+    
     m_bmrPlusExercise = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
-    sizerFirstRow->Add(CreateTextWithLabelSizer(panel, "BMR + Exercise:", m_bmrPlusExercise), 0, wxALL, 10);
+    sizerFirstRow->Add(CreateTextWithLabelSizer(panel, "BMR + Activity:", m_bmrPlusExercise), 0, wxALL, 10);
+    m_consumedCalories = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
+    sizerFirstRow->Add(CreateTextWithLabelSizer(panel, "-    Consumed Calories:", m_consumedCalories), 0, wxALL, 10);
     sizerCalorieBox->Add(sizerFirstRow, 5, wxGROW | wxALL, 5);
 
     wxSizer *sizerSecondRow = new wxBoxSizer(wxHORIZONTAL);
-    m_weekExerciseCalories = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
-    sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "Exercise Calories:", m_weekExerciseCalories), 0, wxALL, 10);
-    m_deficitCalories = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
-    sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "Deficit Calories:", m_deficitCalories), 0, wxALL, 10);
+    
+    m_netInOut = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
+    sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "= NET In/Out:", m_netInOut), 0, wxALL, 10);
+    m_activityCalories = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
+    sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "Activity Calories:", m_activityCalories), 0, wxALL, 10);
     sizerCalorieBox->Add(sizerSecondRow, 5, wxGROW | wxALL, 5);
 
-    m_weeklyPoundage = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
-    sizerCalorieBox->Add(CreateTextWithLabelSizer(panel, "Predicted Pounds Lost:", m_weeklyPoundage), 0, wxALL, 10);
+    m_expectedWeightDelta = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
+    sizerCalorieBox->Add(CreateTextWithLabelSizer(panel, "Expected Weight +/-:", m_expectedWeightDelta), 0, wxALL, 10);
 
     wxStaticBox *weightStaticBox = new wxStaticBox(panel, wxID_ANY, "&Weight Progress");
     wxSizer *sizerWeightBox = new wxStaticBoxSizer(weightStaticBox, wxVERTICAL);
@@ -58,12 +60,12 @@ wxPanel *OutlookView::createRecipePanel()
 
 void OutlookView::setTotalCaloriesForWeek(int totalCalories)
 {
-    m_weekCalories->SetValue(std::to_string(totalCalories));
+    m_consumedCalories->SetValue(std::to_string(totalCalories));
 }
 
 void OutlookView::setTotalExerciseCaloriesForWeek(int totalCalories)
 {
-    m_weekExerciseCalories->SetValue(std::to_string(totalCalories));
+    m_activityCalories->SetValue(std::to_string(totalCalories));
 }
 
 void OutlookView::setProgressDate(const std::string &progressDate)
@@ -78,7 +80,7 @@ void OutlookView::setTargetDate(const std::string &targetDate)
 
 void OutlookView::setPredictedPoundsLost(const std::string &poundsLost)
 {
-    m_weeklyPoundage->SetValue(poundsLost);
+    m_expectedWeightDelta->SetValue(poundsLost);
 }
 
 void OutlookView::setActualPoundsLost(const std::string &poundsLost)
@@ -91,5 +93,5 @@ void OutlookView::setBmrPlusExercise(const std::string &bmrPlusExercise) {
 }
 
 void OutlookView::setDeficitCalories(const std::string &deficitCalories) {
-    m_deficitCalories->SetValue(deficitCalories);
+    m_netInOut->SetValue(deficitCalories);
 }

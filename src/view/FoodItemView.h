@@ -20,6 +20,7 @@ public:
     virtual void setFoodCarb(const std::string& carb) = 0;
     virtual void setFoodCalories(const std::string& calories) = 0;
     virtual void setFoodQuantity(const std::string& quantity) = 0;
+    virtual void setFoodPopularity(const std::string& popularity) = 0;
     virtual void setFoodUnit(int unitId, const std::vector<Unit>& units) = 0;
 
     virtual void insertNewPage(bool isNew) = 0;
@@ -40,6 +41,7 @@ private:
     wxTextCtrl *m_foodCaloriesTextCtrl;
     wxTextCtrl *m_foodQuantityTextCtrl;
     wxComboBox *m_foodUnitComboBox;
+    wxTextCtrl *m_popularityTextCtrl;
 
     wxButton *m_foodEditButton;
     wxButton *m_foodDeleteButton;
@@ -68,6 +70,7 @@ public:
     void setFoodCarb(const std::string& carb) override;
     void setFoodCalories(const std::string& calories) override;
     void setFoodQuantity(const std::string& quantity) override;
+    void setFoodPopularity(const std::string& popularity) override;
     void setFoodUnit(int unitId, const std::vector<Unit>& units) override;
 
     void insertNewPage(bool isNew) override;

@@ -25,8 +25,6 @@ private:
     wxListView *m_foodsListView;
     IFoodListCallback *m_foodListCallback;
 
-    // int getZeroBasedIndexOfItem(wxString id);
-
 protected:
     void onFoodSelChange(wxListEvent &event);
     void OnSearch(wxCommandEvent& event);

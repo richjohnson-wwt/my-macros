@@ -78,4 +78,12 @@ struct Goal
     int carbPercent;
 };
 
+struct CalculatedMacros
+{
+    double fatGrams;
+    double proteinGrams;
+    double carbGrams;
+    int calories;
+};
+
 #endif // MY_MACRO_TYPES_H

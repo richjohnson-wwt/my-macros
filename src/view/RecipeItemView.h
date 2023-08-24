@@ -24,6 +24,11 @@ public:
     virtual void setRecipeIngredients(const std::vector<Ingredient> &ingredients) = 0;
     virtual void insertNewPage(bool isNew) = 0;
     virtual void setButtonStatus(bool isEdit) = 0;
+
+    virtual void setMacroCalories(const std::string& calories) = 0;
+    virtual void setFatPercent(const std::string& percent) = 0;
+    virtual void setProteinPercent(const std::string& percent) = 0;
+    virtual void setCarbPercent(const std::string& percent) = 0;
 };
 
 class RecipeItemView : public wxEvtHandler, public IRecipeItemView
@@ -46,6 +51,11 @@ private:
     wxButton *m_recipeDeleteButton;
     wxButton *m_recipeNewButton;
     wxButton *m_recipeEditButton;
+
+    wxTextCtrl *m_macroCaloriesPerServingTextCtrl;
+    wxTextCtrl *m_macroFatPercentPerServingTextCtrl;
+    wxTextCtrl *m_macroProteinPercentPerServingTextCtrl;
+    wxTextCtrl *m_macroCarbPercentPerServingTextCtrl;
 
     wxSizer *CreateTextWithLabelSizer(wxPanel *panel,
                                       const wxString &label,
@@ -72,6 +82,11 @@ public:
 
     void insertNewPage(bool isNew) override;
     void setButtonStatus(bool isEdit) override;
+
+    void setMacroCalories(const std::string& calories) override;
+    void setFatPercent(const std::string& percent) override;
+    void setProteinPercent(const std::string& percent) override;
+    void setCarbPercent(const std::string& percent) override;
 };
 
 #endif // RECIPE_ITEM_VIEW_H

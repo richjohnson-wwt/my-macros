@@ -76,14 +76,3 @@ void FoodListView::OnSearchCancel(wxCommandEvent& event)
     spdlog::debug("FoodListView::OnSearchCancel");
     m_foodListCallback->onSearchCancel();
 }
-
-// int FoodListView::getZeroBasedIndexOfItem(wxString id) {
-//     spdlog::debug("FoodListView::getZeroBasedIndexOfItem");
-//     // iterate over the m_foodsListView
-//     for (int i = 0; i < m_foodsListView->GetItemCount(); ++i) {
-//         if (m_foodsListView->GetItemText(i, 0) == id) {
-//             return i;
-//         }    
-//     }
-//     return 0;
-// }

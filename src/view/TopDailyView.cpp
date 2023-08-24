@@ -45,7 +45,6 @@ wxPanel *DailyView::createDailyPanel(wxNotebook *parent)
     m_addDailyRecipeButton->Bind(wxEVT_BUTTON, &DailyView::onAddDailyRecipe, this);
     m_oneOffButton = new wxButton(panel, -1, _T("One Off"), wxDefaultPosition, wxDefaultSize, 0);
     m_oneOffButton->Bind(wxEVT_BUTTON, &DailyView::onOneOff, this);
-    
 
     addFoodSizer->Add(m_addDailyFoodButton, 0, wxALL, 10);
     addFoodSizer->Add(m_addDailyRecipeButton, 0, wxALL, 10);

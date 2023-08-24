@@ -19,6 +19,7 @@ public:
     virtual void setFoodCarb(const std::string& carb) = 0;
     virtual void setFoodCalories(const std::string& calories) = 0;
     virtual void setFoodQuantity(const std::string& quantity) = 0;
+    virtual void setFoodPopularity(const std::string& popularity) = 0;
     virtual void setFoodUnit(int unitId, const std::vector<Unit>& units) = 0;
 
     virtual std::string getFoodId() = 0;
@@ -28,6 +29,7 @@ public:
     virtual std::string getFoodCarb() = 0;
     virtual std::string getFoodCalories() = 0;
     virtual std::string getFoodQuantity() = 0;
+    virtual std::string getFoodPopularity() = 0;
     virtual int getFoodUnitId() = 0;
 };
 
@@ -43,6 +45,7 @@ private:
     wxTextCtrl *m_foodCarbTextCtrl;
     wxTextCtrl *m_foodCaloriesTextCtrl;
     wxTextCtrl *m_foodQuantityTextCtrl;
+    wxTextCtrl *m_foodPopularityTextCtrl;
     wxComboBox *m_foodUnitComboBox;
 
     wxButton *m_foodSaveButton;
@@ -72,6 +75,7 @@ public:
     void setFoodCarb(const std::string& carb);
     void setFoodCalories(const std::string& calories);
     void setFoodQuantity(const std::string& quantity);
+    void setFoodPopularity(const std::string& popularity);
     void setFoodUnit(int unitId, const std::vector<Unit>& units);
 
     std::string getFoodId();
@@ -81,6 +85,7 @@ public:
     std::string getFoodCarb();
     std::string getFoodCalories();
     std::string getFoodQuantity();
+    std::string getFoodPopularity();
     int getFoodUnitId();
 
 };

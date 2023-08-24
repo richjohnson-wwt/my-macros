@@ -122,21 +122,9 @@ void DailyPresenter::populateTotals(const std::vector<XrefDailyFood>& xdfVector)
     totalsXdf.push_back(goal);
     totalsXdf.push_back(remaining);
 
-    double percentFat = 0.0;
-    if (totalFat > 0) {
-        auto fatCal = totalCalories - (totalCalories - (totalFat * 9));
-        percentFat = ((static_cast<double>(fatCal)) / totalCalories) * 100;
-    }
-    double percentProtein = 0.0;
-    if (totalProtein > 0) {
-        auto proteinCal = totalCalories - (totalCalories - (totalProtein * 4));
-        percentProtein = ((static_cast<double>(proteinCal)) / totalCalories) * 100;
-    }
-    double percentCarb = 0.0;
-    if (totalCarb > 0) {
-        auto carbCal = totalCalories - (totalCalories - (totalCarb * 4));
-        percentCarb = ((static_cast<double>(carbCal)) / totalCalories) * 100;
-    }
+    double percentFat = m_macroCalculator.calculateFatPercent(totalFat, totalCalories);
+    double percentProtein = m_macroCalculator.calculateProteinPercent(totalProtein, totalCalories);
+    double percentCarb = m_macroCalculator.calculateCarbPercent(totalCarb, totalCalories);
     
     spdlog::debug("DailyPresenter::populateTotals percentFat:{} percentProtein: {}, percentCarb: {}", percentFat, percentProtein, percentCarb);
     m_dailyView->setTotalsList(totalsXdf, percentFat, percentProtein, percentCarb);
@@ -162,9 +150,8 @@ void DailyPresenter::onAddDailyFood()
     DailyFood df = m_dailyModel->getDailyFood();
     Food food = m_dailyModel->getFood();
     double multiplier = getServingMultiplier(m_dailyView->getDailyMultiplier());
-    // std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
 
-    CalculatedMacros cm = calculateFoodMacros(food, multiplier);
+    CalculatedMacros cm = m_macroCalculator.calculateFoodMacros(food, multiplier);
     std::stringstream ss;
     ss << food.name << " x " << multiplier;
     XrefDailyFood xdf;
@@ -177,7 +164,6 @@ void DailyPresenter::onAddDailyFood()
     xdf.calories = cm.calories;
 
     xdf.dailyFoodId = df.id;
-    // xdfVector.push_back(xdf);
     
     m_dailyModel->addXrefDailyFood(xdf, food.id);
 
@@ -205,7 +191,7 @@ void DailyPresenter::onAddDailyRecipe()
     double multiplier = getServingMultiplier(m_dailyView->getDailyMultiplier());
     std::vector<XrefDailyFood> xdfVector = m_dailyModel->getXrefDailyFoods(df);
 
-    CalculatedMacros cm = calculateRecipeMacros(recipe.servings, ingredients, multiplier);
+    CalculatedMacros cm = m_macroCalculator.calculateRecipeMacros(recipe.servings, ingredients, multiplier);
     std::stringstream ss;
     ss << recipe.name << " x " << multiplier;
     XrefDailyFood xdf;
@@ -235,82 +221,7 @@ void DailyPresenter::onOneOff() {
     xdf.dailyFoodId = df.id;
     m_dailyModel->addXrefDailyFood(xdf);
     refresh();
-}
 
-CalculatedMacros DailyPresenter::calculateFoodMacros(const Food &food, double multiplier)
-{
-    CalculatedMacros m{0, 0, 0, 0};
-    double fatCalories = (food.fat * 9) * multiplier;
-    double proteinCalories = (food.protein * 4) * multiplier;
-    double carbCalories = (food.carb * 4) * multiplier;
-    m.calories = fatCalories + proteinCalories + carbCalories;
-
-    m.fatGrams = food.fat * multiplier;
-    m.proteinGrams = food.protein * multiplier;
-    m.carbGrams = food.carb * multiplier;
-
-    return m;
-}
-
-CalculatedMacros DailyPresenter::calculateRecipeMacros(int servings, const std::vector<Ingredient> &ingredients, double multiplier)
-{
-    CalculatedMacros m{0, 0, 0, 0};
-    auto totalFatGrams = calculateTotalFatGrams(ingredients);
-    auto totalProteinGrams = calculateTotalProteinGrams(ingredients);
-    auto totalCarbGrams = calculateTotalCarbGrams(ingredients);
-
-    m.fatGrams = (totalFatGrams / servings) * multiplier;
-    m.proteinGrams = (totalProteinGrams / servings) * multiplier;
-    m.carbGrams = (totalCarbGrams / servings) * multiplier;
-
-    auto fatCalories = (m.fatGrams * 9);
-    auto proteinCalories = (m.proteinGrams * 4);
-    auto carbCalories = (m.carbGrams * 4);
-    m.calories = fatCalories + proteinCalories + carbCalories;
-
-    return m;
-}
-
-double DailyPresenter::calculateTotalFatGrams(const std::vector<Ingredient> &ingredients)
-{
-    double totalFatGrams = 0;
-    for (auto ingredient : ingredients)
-    {
-        if (ingredient.food.unit_id == ingredient.unit.id) {
-            totalFatGrams += ingredient.food.fat * ingredient.unitMultiplier;
-        } else {
-            spdlog::warn("DEV ERROR: {} unit mismatch {} {}", ingredient.food.name, ingredient.food.unit_id, ingredient.unit.id);
-        }
-    }
-    return totalFatGrams;
-}
-
-double DailyPresenter::calculateTotalProteinGrams(const std::vector<Ingredient> &ingredients)
-{
-    double totalProteinGrams = 0;
-    for (auto ingredient : ingredients)
-    {
-        if (ingredient.food.unit_id == ingredient.unit.id) {
-            totalProteinGrams += ingredient.food.protein * ingredient.unitMultiplier;
-        } else {
-            spdlog::warn("DEV ERROR: {} unit mismatch {} {}", ingredient.food.name, ingredient.food.unit_id, ingredient.unit.id);
-        }
-    }
-    return totalProteinGrams;
-}
-
-double DailyPresenter::calculateTotalCarbGrams(const std::vector<Ingredient> &ingredients)
-{
-    double totalCarbGrams = 0;
-    for (auto ingredient : ingredients)
-    {
-        if (ingredient.food.unit_id == ingredient.unit.id) {
-            totalCarbGrams += ingredient.food.carb * ingredient.unitMultiplier;
-        } else {
-            spdlog::warn("DEV ERROR: {} unit mismatch {} {}", ingredient.food.name, ingredient.food.unit_id, ingredient.unit.id);
-        }
-    }
-    return totalCarbGrams;
 }
 
 void DailyPresenter::onSelectedDailyFoodChanged(int id)

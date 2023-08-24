@@ -22,7 +22,7 @@ void FoodEditPresenter::onSaveFood()
     food.calories = std::stoi(m_foodItemEditView->getFoodCalories());
     food.quantity = std::stoi(m_foodItemEditView->getFoodQuantity());
     food.unit_id = m_foodItemEditView->getFoodUnitId();
-    food.popularity = 1;
+    food.popularity = std::stoi(m_foodItemEditView->getFoodPopularity());
     m_foodModel->saveFood(food);
     m_foodListSubject->notify();
 }
@@ -45,6 +45,7 @@ void FoodEditPresenter::initNewPage()
     m_foodItemEditView->setFoodCarb(std::to_string(food.carb));
     m_foodItemEditView->setFoodCalories(std::to_string(food.calories));
     m_foodItemEditView->setFoodQuantity(std::to_string(food.quantity));
+    m_foodItemEditView->setFoodPopularity(std::to_string(food.popularity));
     m_foodItemEditView->setFoodUnit(food.unit_id, units);
 }
 
@@ -60,5 +61,6 @@ void FoodEditPresenter::initEditPage()
     m_foodItemEditView->setFoodCarb(std::to_string(food.carb));
     m_foodItemEditView->setFoodCalories(std::to_string(food.calories));
     m_foodItemEditView->setFoodQuantity(std::to_string(food.quantity));
+    m_foodItemEditView->setFoodPopularity(std::to_string(food.popularity));
     m_foodItemEditView->setFoodUnit(food.unit_id, units);
 }

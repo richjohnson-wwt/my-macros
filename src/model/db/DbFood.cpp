@@ -138,7 +138,7 @@ void DbFood::updatePopularity(int foodId, int newPopularity)
 }
 
 void DbFood::updateFood(const Food &f) {
-    spdlog::debug("DbFood::updateFood");
+    spdlog::info("DbFood::updateFood {}", f.popularity);
     try
     {
         SQLite::Statement query(m_db, "UPDATE Foods SET name = ?, fat = ?, protein = ?, carb = ?, calories = ?, quantity = ?, unit_id = ?, popularity = ? WHERE food_id = ?");

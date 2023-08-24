@@ -36,7 +36,7 @@ void RecipeItemView::setButtonStatus(bool isEdit)
 wxSizer *RecipeItemView::CreateTextWithLabelSizer(wxPanel *panel, const wxString &label, wxTextCtrl *text)
 {
     wxSizer *sizerRow = new wxBoxSizer(wxHORIZONTAL);
-    sizerRow->Add(new wxStaticText(panel, wxID_ANY, label, wxDefaultPosition, wxSize(200, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
+    sizerRow->Add(new wxStaticText(panel, wxID_ANY, label, wxDefaultPosition, wxSize(100, 20)), 0, wxALIGN_LEFT | wxRIGHT, 5);
     sizerRow->Add(text, 0, wxALIGN_LEFT);
     return sizerRow;
 }
@@ -47,15 +47,15 @@ void RecipeItemView::createRightFoodItemPanel(wxPanel *panel)
 
     // Create RecipeID as wxTextCtrl
     m_recipeIdTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
-    topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe ID:", m_recipeIdTextCtrl), 0, wxALL, 10);
+    topsizer->Add(CreateTextWithLabelSizer(panel, "ID:", m_recipeIdTextCtrl), 0, wxALL, 10);
 
     // Recipe Name wxTextCtrl
     m_recipeNameTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
-    topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Name:", m_recipeNameTextCtrl), 0, wxALL, 10);
+    topsizer->Add(CreateTextWithLabelSizer(panel, "Name:", m_recipeNameTextCtrl), 0, wxALL, 10);
 
     // Recipe Description wxTextCtrl
     m_recipeDescriptionTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
-    topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Description:", m_recipeDescriptionTextCtrl), 0, wxALL, 10);
+    topsizer->Add(CreateTextWithLabelSizer(panel, "Description:", m_recipeDescriptionTextCtrl), 0, wxALL, 10);
 
     // Recipe URL wxTextCtrl
     m_recipeUrlHyperlinkCtrl = new wxHyperlinkCtrl(panel, wxID_ANY, "Recipe URL", "www.google.com", wxDefaultPosition, wxSize(300, 20), wxHL_ALIGN_LEFT);
@@ -66,11 +66,11 @@ void RecipeItemView::createRightFoodItemPanel(wxPanel *panel)
 
     // Recipe Servings wxTextCtrl
     m_recipeServingsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "1", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
-    topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Servings:", m_recipeServingsTextCtrl), 0, wxALL, 10);
+    topsizer->Add(CreateTextWithLabelSizer(panel, "Servings:", m_recipeServingsTextCtrl), 0, wxALL, 10);
 
     // Recipe Instructions wxTextCtrl
     m_recipeInstructionsTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
-    topsizer->Add(CreateTextWithLabelSizer(panel, "Recipe Instructions:", m_recipeInstructionsTextCtrl), 0, wxALL, 10);
+    topsizer->Add(CreateTextWithLabelSizer(panel, "Instructions:", m_recipeInstructionsTextCtrl), 0, wxALL, 10);
 
     // Recipe Ingredients - List Ctrl
     m_recipeIngredientsListView = new wxListView(panel);
@@ -97,6 +97,24 @@ void RecipeItemView::createRightFoodItemPanel(wxPanel *panel)
     recipeButtonsSizer->Add(m_recipeNewButton, 0, wxALL, 10);
     recipeButtonsSizer->Add(m_recipeEditButton, 0, wxALL, 10);
     topsizer->Add(recipeButtonsSizer, 1, wxALL, 10);
+
+    wxStaticBox *macroStaticBox = new wxStaticBox(panel, wxID_ANY, "&Recipe Macros Per Serving");
+    wxSizer *sizerMacroStaticBox = new wxStaticBoxSizer(macroStaticBox, wxVERTICAL);
+    wxSizer *sizerFirstRow = new wxBoxSizer(wxHORIZONTAL);
+    m_macroCaloriesPerServingTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
+    sizerFirstRow->Add(CreateTextWithLabelSizer(panel, "Calories:", m_macroCaloriesPerServingTextCtrl), 0, wxALL, 10);
+    sizerMacroStaticBox->Add(sizerFirstRow, 0, wxGROW | wxALL, 0);
+
+    wxSizer *sizerSecondRow = new wxBoxSizer(wxHORIZONTAL);
+    m_macroFatPercentPerServingTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
+    sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "Fat:", m_macroFatPercentPerServingTextCtrl), 0, wxALL, 10);
+    m_macroProteinPercentPerServingTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
+    sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "Protein:", m_macroProteinPercentPerServingTextCtrl), 0, wxALL, 10);
+    m_macroCarbPercentPerServingTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(100, 20), wxTE_READONLY);
+    sizerSecondRow->Add(CreateTextWithLabelSizer(panel, "Carb:", m_macroCarbPercentPerServingTextCtrl), 0, wxALL, 10);
+    sizerMacroStaticBox->Add(sizerSecondRow, 0, wxGROW | wxALL, 0);
+
+    topsizer->Add(sizerMacroStaticBox, 5, wxGROW | wxALL, 5);
 
     panel->SetSizer(topsizer);
 }
@@ -179,4 +197,20 @@ void RecipeItemView::setRecipeIngredients(const std::vector<Ingredient> &ingredi
         m_recipeIngredientsListView->SetItem(row, 4, std::to_string(i.unitMultiplier));
         row++;
     }
+}
+
+void RecipeItemView::setMacroCalories(const std::string& calories) {
+    m_macroCaloriesPerServingTextCtrl->SetValue(calories);
+}
+    
+void RecipeItemView::setFatPercent(const std::string& percent) {
+    m_macroFatPercentPerServingTextCtrl->SetValue(percent);
+}
+
+void RecipeItemView::setProteinPercent(const std::string& percent) {
+    m_macroProteinPercentPerServingTextCtrl->SetValue(percent);
+}
+
+void RecipeItemView::setCarbPercent(const std::string& percent) {
+    m_macroCarbPercentPerServingTextCtrl->SetValue(percent);
 }

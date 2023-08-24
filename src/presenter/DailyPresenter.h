@@ -1,6 +1,7 @@
 #ifndef DAILY_PRESENTER_H
 #define DAILY_PRESENTER_H
 
+#include "MacroCalculator.h"
 #include "../model/DailyModel.h"
 #include "../view/TopDailyView.h"
 
@@ -25,20 +26,21 @@ private:
     IDailyModel *m_dailyModel;
     IDailyView *m_dailyView;
     TimeHelper *m_timeHelper;
+    MacroCalculator m_macroCalculator;
 
     void refresh();
 
     void populateDailyFood(const DailyFood &df, const std::vector<XrefDailyFood> &xdfVector);
     void populateTotals(const std::vector<XrefDailyFood> &xdfVector);
 
-    double calculateTotalFatGrams(const std::vector<Ingredient> &ingredients);
-    double calculateTotalProteinGrams(const std::vector<Ingredient> &ingredients);
-    double calculateTotalCarbGrams(const std::vector<Ingredient> &ingredients);
-    CalculatedMacros calculateFoodMacros(const Food &food, double multiplier = 1.0);
-    CalculatedMacros calculateRecipeMacros(
-        int servings,
-        const std::vector<Ingredient> &ingredients,
-        double multiplier = 1.0);
+    // double calculateTotalFatGrams(const std::vector<Ingredient> &ingredients);
+    // double calculateTotalProteinGrams(const std::vector<Ingredient> &ingredients);
+    // double calculateTotalCarbGrams(const std::vector<Ingredient> &ingredients);
+    // CalculatedMacros calculateFoodMacros(const Food &food, double multiplier = 1.0);
+    // CalculatedMacros calculateRecipeMacros(
+    //     int servings,
+    //     const std::vector<Ingredient> &ingredients,
+    //     double multiplier = 1.0);
 
     void updateDailyFoodServingIncrements();
     double getServingMultiplier(int multiplierIndex);

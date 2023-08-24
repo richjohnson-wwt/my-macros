@@ -49,6 +49,9 @@ wxPanel *FoodItemView::createFoodItemPanel(wxNotebook *parent)
     comboSizerRow->Add(m_foodUnitComboBox, 0, wxALIGN_LEFT);
     topsizer->Add(comboSizerRow, 0, wxALL, 10);
 
+    m_popularityTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20), wxTE_READONLY);
+    topsizer->Add(CreateTextWithLabelSizer(panel, "Popularity:", m_popularityTextCtrl), 0, wxALL, 10);
+
     m_foodDeleteButton = new wxButton(panel, -1, _T("Delete Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_foodDeleteButton->Bind(wxEVT_BUTTON, &FoodItemView::onDeleteFood, this);
 
@@ -95,7 +98,7 @@ void FoodItemView::insertNewPage(bool isNew)
     wxPanel *page = m_foodItemEditView->createFoodItemEditPanel(m_parent);
     if (m_parent) {
         m_parent->InsertPage( 0, page,
-                wxString::Format("NEWBIE" "%u", ++s_pageIns), false, 0 );
+                wxString::Format("NEW FOOD" "%u", ++s_pageIns), false, 0 );
 
         m_parent->SetSelection(0);
         m_foodItemEditView->initNewPage(isNew);
@@ -148,6 +151,11 @@ void FoodItemView::setFoodCalories(const std::string &calories)
 void FoodItemView::setFoodQuantity(const std::string &quantity)
 {
     m_foodQuantityTextCtrl->SetValue(quantity);
+}
+
+void FoodItemView::setFoodPopularity(const std::string &popularity)
+{
+    m_popularityTextCtrl->SetValue(popularity);
 }
 
 void FoodItemView::setFoodUnit(int unitId, const std::vector<Unit>& units)

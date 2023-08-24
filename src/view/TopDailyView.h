@@ -16,13 +16,13 @@ struct Goals {
     int calories;
 };
 
-struct CalculatedMacros
-{
-    double fatGrams;
-    double proteinGrams;
-    double carbGrams;
-    int calories;
-};
+// struct CalculatedMacros
+// {
+//     double fatGrams;
+//     double proteinGrams;
+//     double carbGrams;
+//     int calories;
+// };
 
 class IDailyCallback;
 

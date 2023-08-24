@@ -52,6 +52,9 @@ wxPanel *FoodItemEditView::createFoodItemEditPanel(wxNotebook *parent)
     comboSizerRow->Add(m_foodUnitComboBox, 0, wxALIGN_LEFT);
     topsizer->Add(comboSizerRow, 0, wxALL, 10);
 
+    m_foodPopularityTextCtrl = new wxTextCtrl(panel, wxID_ANY, "", wxDefaultPosition, wxSize(200, 20));
+    topsizer->Add(CreateTextWithLabelSizer(panel, "Food Popularity:", m_foodPopularityTextCtrl), 0, wxALL, 10);
+
     m_foodSaveButton = new wxButton(panel, -1, _T("Save Food"), wxDefaultPosition, wxDefaultSize, 0);
     m_foodSaveButton->Bind(wxEVT_BUTTON, &FoodItemEditView::onSaveFood, this);
 
@@ -145,6 +148,11 @@ void FoodItemEditView::setFoodQuantity(const std::string &quantity)
     m_foodQuantityTextCtrl->SetValue(quantity);
 }
 
+void FoodItemEditView::setFoodPopularity(const std::string &popularity)
+{
+    m_foodPopularityTextCtrl->SetValue(popularity);
+}
+
 void FoodItemEditView::setFoodUnit(int unitId, const std::vector<Unit>& units)
 {
     m_foodUnitComboBox->Clear();
@@ -188,6 +196,11 @@ std::string FoodItemEditView::getFoodCalories()
 std::string FoodItemEditView::getFoodQuantity()
 {
     return m_foodQuantityTextCtrl->GetValue().ToStdString();
+}
+
+std::string FoodItemEditView::getFoodPopularity()
+{
+    return m_foodPopularityTextCtrl->GetValue().ToStdString();
 }
 
 int FoodItemEditView::getFoodUnitId()

@@ -27,6 +27,7 @@ void FoodPresenter::update()
     m_foodItemView->setFoodCarb(std::to_string(food.carb));
     m_foodItemView->setFoodCalories(std::to_string(food.calories));
     m_foodItemView->setFoodQuantity(std::to_string(food.quantity));
+    m_foodItemView->setFoodPopularity(std::to_string(food.popularity));
     m_foodItemView->setFoodUnit(food.unit_id, units);
 }
 

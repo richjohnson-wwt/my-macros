@@ -53,3 +53,10 @@ Completed
     * Food - StaticText for FoodItem. Use FoodItemEdit and FoodItemEditView panels
     * Recipe - StaticText for RecipeItem
     * Daily - Only create daily row if date is not in future
+
+Running Tests
+----------
+
+From the build directory
+
+    ctest
